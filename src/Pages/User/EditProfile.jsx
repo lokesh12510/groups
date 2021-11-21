@@ -1,0 +1,250 @@
+import React, { useState } from "react";
+// Styles
+import { styled } from "@mui/material/styles";
+import { Button, Container, IconButton, InputAdornment } from "@mui/material";
+import { Link } from "react-router-dom";
+import { BOTTOM_SVG, DEFAULT_PROFILE } from "../../UIElements/Images";
+import Grid from "@mui/material/Grid";
+import { FormTextField } from "../../UIElements/Form";
+import { DefaultTheme } from "../../Constant";
+import { SecondaryBtn } from "../../UIElements/Buttons";
+import DatePicker from "@mui/lab/DatePicker";
+import DateAdapter from "@mui/lab/AdapterMoment";
+
+// ICONS
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import DateRangeIcon from "@mui/icons-material/DateRange";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import CameraEnhanceIcon from "@mui/icons-material/CameraEnhance";
+
+const Root = styled("div")((theme) => ({
+  width: "100%",
+  height: "100vh",
+  background: `url(${BOTTOM_SVG}) no-repeat bottom left fixed`,
+  zIndex: -1,
+
+  "& .MuiContainer-root": {
+    paddingTop: "20px",
+    background: "#fff",
+  },
+  "& .backBtn": {
+    color: "#000",
+    fontSize: "18px",
+  },
+
+  "& .title": {
+    marginBottom: "35px",
+  },
+
+  "& .pageLogo img": {
+    width: "32px",
+    height: "32px",
+  },
+  "& .secondaryTitle": {
+    fontSize: "22px",
+    color: "#000",
+  },
+  "& .formFields": { marginBottom: "30px" },
+  "& .cta_btns a": {
+    textDecoration: "none",
+  },
+  "& .dateInput": {
+    "&::-webkit-calendar-picker-indicator": {
+      display: "none",
+      "-webkit-appearance": "none",
+    },
+  },
+}));
+
+const HeaderSection = styled("div")((theme) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  paddingBottom: "20px",
+}));
+
+const ProfileImageContainer = styled("div")((theme) => ({
+  width: 100,
+  height: 100,
+  borderRadius: "50%",
+  objectFit: "cover",
+  overflow: "hidden",
+  border: `1px solid ${DefaultTheme.palette.primary.main}`,
+}));
+
+const EditIconBtn = styled("div")((theme) => ({
+  background: "#fff",
+  borderRadius: "50%",
+  position: "absolute",
+  bottom: "5px",
+  right: "10px",
+  border: `1px solid ${DefaultTheme.palette.secondary.main}`,
+}));
+
+const EditProfile = () => {
+  // Password Field
+  const [passToggle, setPassToggle] = useState(false);
+
+  const handlePassToggle = () => {
+    setPassToggle((passToggle) => !passToggle);
+  };
+
+  //Date Field
+  const [value, setValue] = React.useState([]);
+
+  return (
+    <Root>
+      <Container>
+        <HeaderSection>
+          <Link to="/start">
+            <Button
+              className="backBtn"
+              variant="text"
+              startIcon={<ArrowBackIcon />}
+            >
+              Edit Profile
+            </Button>
+          </Link>
+        </HeaderSection>
+
+        <form action="">
+          <Grid container direction="row" className="formFields" spacing={4}>
+            <Grid
+              container
+              item
+              xs={12}
+              alignItems="center"
+              justifyContent="center"
+            >
+              <IconButton focusRipple>
+                <ProfileImageContainer>
+                  <DEFAULT_PROFILE />
+                  {/* <ProfileImage src={DEFAULT_PROFILE} /> */}
+                </ProfileImageContainer>
+                <EditIconBtn>
+                  <IconButton>
+                    <CameraEnhanceIcon
+                      style={{
+                        color: DefaultTheme.palette.secondary.main,
+                      }}
+                    />
+                  </IconButton>
+                </EditIconBtn>
+              </IconButton>
+            </Grid>
+            <Grid item xs={12}>
+              <FormTextField
+                label="Full Name"
+                id="name"
+                type="text"
+                required
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <AccountCircle
+                        style={{ color: DefaultTheme.palette.primary.main }}
+                      />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <FormTextField
+                label="Phone Number"
+                id="phone"
+                type="number"
+                required
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LocalPhoneIcon
+                        style={{ color: DefaultTheme.palette.primary.main }}
+                      />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              <LocalizationProvider dateAdapter={DateAdapter}>
+                <DatePicker
+                  disableFuture
+                  label="Date of Birth"
+                  openTo="year"
+                  views={["year", "month", "day"]}
+                  value={value}
+                  onChange={(newValue) => {
+                    setValue(newValue);
+                  }}
+                  renderInput={(params) => (
+                    <FormTextField
+                      required
+                      {...params}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <DateRangeIcon
+                              style={{
+                                color: DefaultTheme.palette.primary.main,
+                              }}
+                            />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  )}
+                />
+              </LocalizationProvider>
+
+              <FormTextField
+                label="Password"
+                id="password"
+                type={passToggle === true ? "text" : "password"}
+                required
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 14 18"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6.79004 17.251C6.92285 17.251 7.13037 17.2012 7.33789 17.0933C12.061 14.6196 13.5801 13.3828 13.5801 10.4028V4.14404C13.5801 3.28906 13.2148 3.01514 12.5176 2.72461C11.5464 2.32617 8.44189 1.19727 7.479 0.865234C7.25488 0.790527 7.02246 0.749023 6.79004 0.749023C6.55762 0.749023 6.3252 0.798828 6.10938 0.865234C5.13818 1.18066 2.03369 2.33447 1.0625 2.72461C0.373535 3.00684 0 3.28906 0 4.14404V10.4028C0 13.3828 1.60205 14.4785 6.24219 17.0933C6.45801 17.2095 6.65723 17.251 6.79004 17.251ZM3.70215 11.9634V8.56006C3.70215 7.9541 3.95117 7.65527 4.44922 7.62207V6.61768C4.44922 5.04053 5.39551 3.97803 6.79004 3.97803C8.18457 3.97803 9.13086 5.04053 9.13086 6.61768V7.62207C9.62891 7.65527 9.87793 7.9541 9.87793 8.56006V11.9634C9.87793 12.6025 9.5957 12.9014 9.00635 12.9014H4.57373C3.98438 12.9014 3.70215 12.6025 3.70215 11.9634ZM5.3457 7.61377H8.23438V6.51807C8.23438 5.51367 7.65332 4.84131 6.79004 4.84131C5.92676 4.84131 5.3457 5.51367 5.3457 6.51807V7.61377Z"
+                          fill={DefaultTheme.palette.primary.main}
+                        />
+                      </svg>
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handlePassToggle}>
+                        {passToggle ? (
+                          <VisibilityOutlinedIcon />
+                        ) : (
+                          <VisibilityOffOutlinedIcon />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+          </Grid>
+          <div className="cta_btns">
+            <Link to="/thankyou"></Link>
+            <SecondaryBtn variant="contained" type="submit">
+              SAVE
+            </SecondaryBtn>
+          </div>
+        </form>
+      </Container>
+    </Root>
+  );
+};
+
+export default EditProfile;
