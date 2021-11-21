@@ -58,7 +58,7 @@ const EventSection = () => {
           className="BlogScroll"
         >
           {[...new Array(3)].map((item, index) => {
-            return <EventCard key={index} />;
+            return <EventCard key={index} count={index} />;
           })}
         </Grid>
       </Container>

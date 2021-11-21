@@ -70,7 +70,7 @@ const BlogCard = styled("div")((theme) => ({
   },
 }));
 
-const EventCard = ({ index }) => {
+const EventCard = ({ count }) => {
   return (
     <Grid item xs={11}>
       <BlogCard>
@@ -91,7 +91,7 @@ const EventCard = ({ index }) => {
             </Typography>
           </div>
           <div className="eventPosition">
-            <div className="count">{index + 1}</div>
+            <div className="count">{count + 1}</div>
           </div>
         </Button>
       </BlogCard>
