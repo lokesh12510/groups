@@ -2,8 +2,8 @@ import React from "react";
 // Styles
 import { styled } from "@mui/material/styles";
 import { Container, Grid, Typography } from "@mui/material";
-import { TopEventsIcon } from "../../../UIElements/Icons";
-import EventCard from "./EventCard";
+import { TopEventsIcon } from "../../UIElements/Icons";
+import EventCard from "../Events/EventCard";
 
 const Root = styled("section")((theme) => ({
   paddingBottom: "30px",
@@ -20,6 +20,8 @@ const Root = styled("section")((theme) => ({
   },
   "& .BlogScroll": {
     overflowX: "auto",
+    webkitOverflowScrolling: "touch",
+    scrollSnapType: "x mandatory",
 
     "& .MuiGrid-root": {
       flex: "0 0 auto",
@@ -40,6 +42,11 @@ const Root = styled("section")((theme) => ({
       width: 0,
       height: 0,
     },
+    "& .blogScroll_item": {
+      scrollSnapAlign: "center",
+      scrollBehavior: "smooth",
+      scrollSnapStop: "always",
+    },
   },
 }));
 
@@ -57,8 +64,8 @@ const EventSection = () => {
           flexWrap="nowrap"
           className="BlogScroll"
         >
-          {[...new Array(3)].map((item, index) => {
-            return <EventCard key={index} count={index} />;
+          {timelines.map((item, index) => {
+            return <EventCard key={index} index={index} data={item} />;
           })}
         </Grid>
       </Container>
@@ -67,3 +74,38 @@ const EventSection = () => {
 };
 
 export default EventSection;
+
+const timelines = [
+  {
+    id: 1,
+    year: 2021,
+    title: "Sports event 2021",
+    date: "1st Nov",
+    image:
+      "https://img.etimg.com/thumb/msid-77734860,width-650,imgsize-951020,,resizemode-4,quality-100/sports_istock.jpg",
+  },
+  {
+    id: 2,
+    year: 2021,
+    title: "Go Green 2021",
+    date: "1st Jan",
+    image:
+      "https://img.etimg.com/thumb/msid-77734860,width-650,imgsize-951020,,resizemode-4,quality-100/sports_istock.jpg",
+  },
+  {
+    id: 3,
+    year: 2020,
+    title: "Sports event 2020",
+    date: "1st Nov",
+    image:
+      "https://img.etimg.com/thumb/msid-77734860,width-650,imgsize-951020,,resizemode-4,quality-100/sports_istock.jpg",
+  },
+  {
+    id: 4,
+    year: 2020,
+    title: "Go Green 2020",
+    date: "1st Nov",
+    image:
+      "https://img.etimg.com/thumb/msid-77734860,width-650,imgsize-951020,,resizemode-4,quality-100/sports_istock.jpg",
+  },
+];

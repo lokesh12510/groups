@@ -47,7 +47,7 @@ const Header = () => {
     <HeaderSection>
       <Container>
         <Typography variant="h5" mt={4} mb={4} component="div">
-          Hi, Adam
+          Hi, Loki
         </Typography>
         <Button className="card" waves="light">
           <GradientCard bg={BG_VARIANT_2}>

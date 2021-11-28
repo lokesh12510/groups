@@ -66,7 +66,7 @@ const Login = () => {
     <Root>
       <Container>
         <HeaderSection>
-          <Link to="/start">
+          <Link to="/auth/start">
             <Button
               className="backBtn"
               variant="text"
@@ -138,7 +138,7 @@ const Login = () => {
             </Grid>
           </Grid>
           <div className="cta_btns">
-            <Link to="/thankyou">
+            <Link to="/auth/thankyou">
               <PrimaryBtn variant="contained">LOGIN</PrimaryBtn>
             </Link>
           </div>

@@ -2,7 +2,7 @@ import React from "react";
 // Styles
 import { styled } from "@mui/material/styles";
 import { Typography } from "@mui/material";
-import { PAYMENT_BG, PAYMENT_BG_FINE } from "../../../UIElements/Images";
+import { PAYMENT_BG, PAYMENT_BG_FINE } from "../../UIElements/Images";
 
 const Root = styled("div")((theme) => ({
   display: "flex",

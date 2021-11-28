@@ -266,7 +266,7 @@ export const TopEventsIcon = ({ width, height }) => {
 };
 
 export const HomeIcon = ({ status }) => {
-  return status === 0 ? (
+  return status === "/" ? (
     <svg
       width="24"
       height="24"
@@ -309,7 +309,7 @@ export const HomeIcon = ({ status }) => {
 };
 
 export const MembersIcon = ({ status }) => {
-  return status === 1 ? (
+  return status === "/members" ? (
     <svg
       width="24"
       height="24"
@@ -417,7 +417,7 @@ export const MembersIcon = ({ status }) => {
 };
 
 export const EventIcon = ({ status }) => {
-  return status === 2 ? (
+  return status === "/events" ? (
     <svg
       width="24"
       height="24"

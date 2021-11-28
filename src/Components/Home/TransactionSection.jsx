@@ -3,9 +3,9 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import { Container, Typography } from "@mui/material";
 
-import { RecentTransaction } from "../../../UIElements/Icons";
-import PaymentCard from "./PaymentCard";
-import { ViewOutlinedBtn } from "../../../UIElements/Buttons";
+import { RecentTransaction } from "../../UIElements/Icons";
+import PaymentCard from "../Payments/PaymentCard";
+import { ViewOutlinedBtn } from "../../UIElements/Buttons";
 
 const Root = styled("section")((theme) => ({
   "& .sectionTitle": {

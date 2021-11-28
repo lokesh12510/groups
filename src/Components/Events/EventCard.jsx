@@ -2,9 +2,10 @@ import React from "react";
 // Styles
 import { styled } from "@mui/material/styles";
 import { Button, Grid, Typography } from "@mui/material";
-import { BLOG_OVERLAY } from "../../../UIElements/Images";
+import { BLOG_OVERLAY } from "../../UIElements/Images";
 
-import { DefaultTheme } from "../../../Constant";
+import { DefaultTheme } from "../../Constant";
+import { Link } from "react-router-dom";
 
 const BlogCard = styled("div")((theme) => ({
   "& .blogCard": {
@@ -70,31 +71,30 @@ const BlogCard = styled("div")((theme) => ({
   },
 }));
 
-const EventCard = ({ count }) => {
+const EventCard = ({ data, index }) => {
   return (
-    <Grid item xs={11}>
-      <BlogCard>
-        <Button className="blogCard" waves="light">
-          <img
-            src="https://img.etimg.com/thumb/msid-77734860,width-650,imgsize-951020,,resizemode-4,quality-100/sports_istock.jpg"
-            alt=""
-          />
-          <div className="overlay"></div>
-          <div className="blogContent">
-            <Typography
-              variant="p"
-              gutterBottom
-              component="div"
-              className="blogTitle"
-            >
-              Sport’s Event 2021
-            </Typography>
-          </div>
-          <div className="eventPosition">
-            <div className="count">{count + 1}</div>
-          </div>
-        </Button>
-      </BlogCard>
+    <Grid item xs={11} className="blogScroll_item">
+      <Link to={`/event-detail/${data.id}`}>
+        <BlogCard>
+          <Button className="blogCard" waves="light">
+            <img src={data.image} alt={data.title} />
+            <div className="overlay"></div>
+            <div className="blogContent">
+              <Typography
+                variant="p"
+                gutterBottom
+                component="div"
+                className="blogTitle"
+              >
+                {data.title}
+              </Typography>
+            </div>
+            <div className="eventPosition">
+              <div className="count">{index + 1}</div>
+            </div>
+          </Button>
+        </BlogCard>
+      </Link>
     </Grid>
   );
 };

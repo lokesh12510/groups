@@ -81,7 +81,7 @@ const Register = () => {
     <Root>
       <Container>
         <HeaderSection>
-          <Link to="/start">
+          <Link to="/auth/start">
             <Button
               className="backBtn"
               variant="text"
@@ -200,7 +200,7 @@ const Register = () => {
             </Grid>
           </Grid>
           <div className="cta_btns">
-            <Link to="/thankyou">
+            <Link to="/auth/thankyou">
               <PrimaryBtn variant="contained" type="submit">
                 Let’s get stated
               </PrimaryBtn>

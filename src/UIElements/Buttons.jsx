@@ -37,8 +37,7 @@ export const SecondaryBtn = styled(Button)(({ theme }) => ({
 }));
 
 export const PrimaryOutlinedBtn = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText(DefaultTheme.palette.primary.main),
-
+  color: DefaultTheme.palette.primary.main,
   width: "100%",
   height: "50px",
   borderColor: DefaultTheme.palette.primary.main,

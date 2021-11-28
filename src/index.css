@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+.MuiTypography-root {
+  font-family: "DM Sans", sans-serif !important;
+}
+
 a {
   text-decoration: none;
 }

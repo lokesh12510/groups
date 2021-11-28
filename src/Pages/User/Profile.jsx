@@ -1,5 +1,12 @@
 import React from "react";
 // Styles
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { Container, Icon, IconButton, Stack, Typography } from "@mui/material";
 import {
@@ -8,18 +15,19 @@ import {
   PROFILE_BG,
 } from "../../UIElements/Images";
 import { GradientCard } from "../../UIElements/Card";
-import { WalletIcon } from "../../UIElements/Icons";
+import { VerifiedIcon, WalletIcon } from "../../UIElements/Icons";
 import EditIcon from "@mui/icons-material/Edit";
 import { DefaultTheme } from "../../Constant";
 import Chip from "@mui/material/Chip";
 import { Link } from "react-router-dom";
+import EventDetail from "../../Components/Events/EventDetail";
 
 const Root = styled("div")((theme) => ({
   width: "100%",
-  height: "100vh",
+  paddingBottom: "100px",
   "& .profileSection": {
     position: "relative",
-    top: "-40px",
+    top: "-30px",
   },
   "& .MuiContainer-root": {
     paddingTop: "10px",
@@ -31,10 +39,13 @@ const Root = styled("div")((theme) => ({
     width: "100%",
     backgroundSize: "cover",
     borderRadius: "0 0 20px 20px",
-    display: "grid",
-    placeItems: "center",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
   },
   "& .profileName": {
+    color: "#fff",
     fontWeight: "bold",
     "& svg": {
       verticalAlign: "middle",
@@ -48,7 +59,14 @@ const Root = styled("div")((theme) => ({
   "& .MuiTypography-root": {
     fontFamily: "DM Sans, sans-serif",
   },
-  "& .card": { marginBottom: "25px" },
+  "& .card": {
+    marginBottom: "25px",
+    boxShadow: "1px -1px 20px -6px rgb(138 133 138 / 95%)",
+    "& .memberRole": {
+      display: "flex",
+      alignItems: "center",
+    },
+  },
 }));
 
 const ProfileImageContainer = styled("div")((theme) => ({
@@ -71,7 +89,7 @@ const Contribution = styled("section")((theme) => ({
   background: "#EEEEFF",
   padding: "20px 0",
   "& .sectionTitle": {
-    marginBottom: "20px",
+    marginBottom: "10px",
     display: "block",
   },
 }));
@@ -86,6 +104,11 @@ const Profile = () => {
             {/* <ProfileImage src={DEFAULT_PROFILE} /> */}
           </ProfileImageContainer>
         </IconButton>
+        <>
+          <Typography variant="h6" className="profileName">
+            Adam
+          </Typography>
+        </>
       </div>
       <div className="profileSection">
         <Container>
@@ -96,26 +119,15 @@ const Profile = () => {
               justifyContent="space-between"
               style={{ minHeight: 150 }}
             >
-              <Typography variant="body1" gutterBottom>
-                Profile
+              <Typography variant="body1">Profile</Typography>
+
+              <Typography variant="h5" gutterBottom className="memberRole">
+                Member&nbsp;
+                <VerifiedIcon />
               </Typography>
-              <>
-                <Typography variant="h6" className="profileName">
-                  Adam
-                  {/* <span>
-                    <VerifiedIcon />
-                  </span> */}
-                  <Chip
-                    color="success"
-                    label="Member"
-                    size="small"
-                    className="roleChip"
-                  />
-                </Typography>
-              </>
               <div className="profileContainer">
                 <Typography variant="body1" gutterBottom>
-                  980283408
+                  26th JAN, 1999
                 </Typography>
                 <Typography variant="body1" gutterBottom>
                   adam234@gmail.com
@@ -139,7 +151,7 @@ const Profile = () => {
           <Container>
             <div className="sectionHeader">
               <Typography variant="p" className="sectionTitle">
-                Total Contribution
+                Your Contribution
               </Typography>
               <Stack
                 direction="row"

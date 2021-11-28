@@ -28,3 +28,34 @@ export const FormTextField = styled(TextField)(({ theme }) => ({
     "-webkit-appearance": "none",
   },
 }));
+
+export const SearchBar = styled(TextField)((theme) => ({
+  position: "sticky",
+  top: 0,
+  zIndex: 2,
+  width: "100%",
+  backgroundColor: "#fff",
+  borderRadius: "5px",
+  "& label.Mui-focused": {
+    color: DefaultTheme.palette.primary.main,
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: DefaultTheme.palette.primary.main,
+  },
+  "& .MuiOutlinedInput-root": {
+    "& .MuiOutlinedInput-input": {
+      padding: ".9rem",
+    },
+    "&:hover fieldset": {
+      borderColor: DefaultTheme.palette.primary.main,
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: `${DefaultTheme.palette.primary.main}70`,
+      borderWidth: ".7px",
+    },
+    "& fieldset": {
+      borderColor: "transparent",
+      transition: "all .5s ease",
+    },
+  },
+}));

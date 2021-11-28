@@ -15,23 +15,21 @@ const AuthLayouts = () => {
   const [user, setUser] = useState(true);
   return (
     <div>
-      <Router>
+      {/* <Router>
         <Routes>
-          <Route
-            path="/start"
-            element={user ? <Navigate to="/" /> : <Onboard />}
-          />
-          <Route
-            path="/login"
-            element={user ? <Navigate to="/" /> : <Login />}
-          />
-          <Route
-            path="/register"
-            element={user ? <Navigate to="/" /> : <Register />}
-          />
+          <Route path="/start" element={<Onboard />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/thankyou" element={<Thankyou />} />
         </Routes>
-      </Router>
+      </Router> */}
+
+      <Routes>
+        <Route path="/start" element={<Onboard />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/thankyou" element={<Thankyou />} />
+      </Routes>
     </div>
   );
 };

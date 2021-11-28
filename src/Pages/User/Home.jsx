@@ -2,8 +2,8 @@ import React from "react";
 // Styles
 import { styled } from "@mui/material/styles";
 import Header from "../../Components/Home/Header";
-import EventSection from "../../Components/Home/Events/EventSection";
-import TransactionSection from "../../Components/Home/Transactions/TransactionSection";
+import EventSection from "../../Components/Home/EventSection";
+import TransactionSection from "../../Components/Home/TransactionSection";
 
 const Root = styled("div")((theme) => ({
   width: "100%",

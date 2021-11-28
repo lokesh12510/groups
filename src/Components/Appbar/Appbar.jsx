@@ -2,6 +2,14 @@ import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  Link,
+} from "react-router-dom";
+
 // Styles
 import { styled } from "@mui/material/styles";
 import { Container } from "@mui/material";
@@ -23,6 +31,8 @@ const Root = styled("div")(({ theme }) => ({
     height: 60,
     maxWidth: 500,
     margin: "auto",
+    borderRadius: "50px",
+    filter: "drop-shadow(0px 13.9875px 29.1406px rgba(15, 51, 107, 0.25))",
   },
   "& .MuiTabs-scroller": {
     boxShadow: "-8px 2px 56px -6px rgba(138,133,138,0.95)",
@@ -60,8 +70,9 @@ let profileImageSrc = (
     loading="lazy"
   />
 );
-const Appbar = () => {
-  const [value, setValue] = React.useState(0);
+
+const Appbar = (props) => {
+  const [value, setValue] = React.useState("/");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -76,10 +87,33 @@ const Appbar = () => {
           className="appbar"
           TabIndicatorProps={{ style: { display: "none" } }}
         >
-          <Tab icon={<HomeIcon status={value} />} label="Home" />
-          <Tab icon={<MembersIcon status={value} />} label="Members" />
-          <Tab icon={<EventIcon status={value} />} label="Events" />
-          <Tab icon={profileImageSrc} />
+          <Tab
+            icon={<HomeIcon status={value} />}
+            label="Home"
+            value="/"
+            component={Link}
+            to={"/"}
+          />
+          <Tab
+            icon={<MembersIcon status={value} />}
+            label="Members"
+            value="/members"
+            component={Link}
+            to={"/members"}
+          />
+          <Tab
+            icon={<EventIcon status={value} />}
+            label="Events"
+            value="/events"
+            component={Link}
+            to={"/events"}
+          />
+          <Tab
+            icon={profileImageSrc}
+            value="/profile"
+            component={Link}
+            to={"/profile"}
+          ></Tab>
         </Tabs>
       </Container>
     </Root>
