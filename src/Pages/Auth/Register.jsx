@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 // Styles
 import { styled } from "@mui/material/styles";
-import { Button, Container, IconButton, InputAdornment } from "@mui/material";
+import {
+  Button,
+  Container,
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  TextField,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { APP_LOGO, BOTTOM_SVG } from "../../UIElements/Images";
 import Grid from "@mui/material/Grid";
@@ -13,22 +20,28 @@ import DateAdapter from "@mui/lab/AdapterMoment";
 
 // ICONS
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import WcIcon from "@mui/icons-material/Wc";
+
+// Func
+import { useDispatch } from "react-redux";
+import { register } from "../../redux/actions/Auth.actions";
+import { useNavigate } from "react-router";
+import moment from "moment";
 
 const Root = styled("div")((theme) => ({
   width: "100%",
   height: "100vh",
-  background: `url(${BOTTOM_SVG}) no-repeat bottom left fixed`,
+  // background: `url(${BOTTOM_SVG}) no-repeat bottom left fixed`,
   zIndex: -1,
 
   "& .MuiContainer-root": {
     paddingTop: "20px",
-    background: "#fff",
   },
   "& .backBtn": {
     color: "#000",
@@ -59,6 +72,33 @@ const Root = styled("div")((theme) => ({
   },
 }));
 
+export const MuiTextField = styled(TextField)(({ theme }) => ({
+  width: "100%",
+  "& label.Mui-focused": {
+    color: DefaultTheme.palette.primary.main,
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: DefaultTheme.palette.primary.main,
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: DefaultTheme.palette.primary.main,
+    },
+    "&:hover fieldset": {
+      borderColor: DefaultTheme.palette.primary.main,
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: DefaultTheme.palette.primary.main,
+    },
+  },
+  "& .MuiInputLabel-root": { color: DefaultTheme.palette.primary.main },
+  marginBottom: "30px",
+  "&::-webkit-calendar-picker-indicator": {
+    display: "none",
+    "-webkit-appearance": "none",
+  },
+}));
+
 const HeaderSection = styled("div")((theme) => ({
   display: "flex",
   alignItems: "center",
@@ -74,8 +114,40 @@ const Register = () => {
     setPassToggle((passToggle) => !passToggle);
   };
 
+  // Form data
+  // const [formData, setFormData] = useState({
+  //   username: "",
+  //   emailId: "",
+  //   password: "",
+  //   dob: "",
+  //   gender: "",
+  // });
+  // const handleFormData = (e) => {
+  //   setFormData({
+  //     ...formData,
+  //     [e.target.name]: [e.target.value],
+  //   });
+  // };
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [dob, setDob] = useState(null);
+  const [emailId, setEmailId] = useState("");
+  const [gender, setGender] = useState(null);
+
+  const handleChange = (event) => {
+    setGender(event.target.value);
+  };
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    dispatch(register(username, emailId, password, dob._d, gender));
+    console.log(username, emailId, password, dob._d, gender);
+  };
   //Date Field
-  const [value, setValue] = React.useState([]);
 
   return (
     <Root>
@@ -98,13 +170,15 @@ const Register = () => {
           <p className="secondaryTitle">Hi Welcome! </p>
         </div>
 
-        <form action="">
+        <form action="" onSubmit={handleRegister}>
           <Grid container direction="row" className="formFields">
             <Grid item xs={12}>
-              <FormTextField
+              <MuiTextField
                 label="Full Name"
                 id="name"
                 type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
                 InputProps={{
                   startAdornment: (
@@ -116,15 +190,18 @@ const Register = () => {
                   ),
                 }}
               />
-              <FormTextField
-                label="Phone Number"
-                id="phone"
-                type="number"
+              <MuiTextField
+                label="Email Id"
+                id="emailId"
+                type="email"
+                name="emailId"
+                value={emailId}
+                onChange={(e) => setEmailId(e.target.value)}
                 required
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <LocalPhoneIcon
+                      <AlternateEmailIcon
                         style={{ color: DefaultTheme.palette.primary.main }}
                       />
                     </InputAdornment>
@@ -134,16 +211,17 @@ const Register = () => {
 
               <LocalizationProvider dateAdapter={DateAdapter}>
                 <DatePicker
+                  error={false}
                   disableFuture
                   label="Date of Birth"
                   openTo="year"
                   views={["year", "month", "day"]}
-                  value={value}
+                  value={dob}
                   onChange={(newValue) => {
-                    setValue(newValue);
+                    setDob(newValue);
                   }}
                   renderInput={(params) => (
-                    <FormTextField
+                    <MuiTextField
                       required
                       {...params}
                       InputProps={{
@@ -162,11 +240,13 @@ const Register = () => {
                 />
               </LocalizationProvider>
 
-              <FormTextField
+              <MuiTextField
                 label="Password"
                 id="password"
                 type={passToggle === true ? "text" : "password"}
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -197,14 +277,33 @@ const Register = () => {
                   ),
                 }}
               />
+
+              <MuiTextField
+                id="gender"
+                select
+                value={gender}
+                label="Gender"
+                onChange={handleChange}
+                required
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <WcIcon
+                        style={{ color: DefaultTheme.palette.primary.main }}
+                      />
+                    </InputAdornment>
+                  ),
+                }}
+              >
+                <MenuItem value="Male">Male</MenuItem>
+                <MenuItem value="Female">Female</MenuItem>
+              </MuiTextField>
             </Grid>
           </Grid>
           <div className="cta_btns">
-            <Link to="/auth/thankyou">
-              <PrimaryBtn variant="contained" type="submit">
-                Let’s get stated
-              </PrimaryBtn>
-            </Link>
+            <PrimaryBtn variant="contained" type="submit">
+              Let’s get stated
+            </PrimaryBtn>
           </div>
         </form>
       </Container>

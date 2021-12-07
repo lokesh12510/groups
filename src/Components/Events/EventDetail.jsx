@@ -3,6 +3,7 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import { Button, Container, Icon, IconButton, Typography } from "@mui/material";
 import ArrowBack from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
 
 const Root = styled("div")((theme) => ({
   width: "100%",
@@ -39,9 +40,11 @@ const BackBtn = styled(IconButton)((theme) => ({
 }));
 
 const EventDetail = () => {
+  const navigate = useNavigate();
+
   return (
     <Root>
-      <BackBtn>
+      <BackBtn onClick={() => navigate(-1)}>
         <ArrowBack />
       </BackBtn>
       <div className="eventImage">

@@ -5,13 +5,13 @@ import { Button, Container, IconButton, Stack } from "@mui/material";
 import { THANKS_IMAGE } from "../../UIElements/Images";
 import { DefaultTheme } from "../../Constant";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Root = styled("div")((theme) => ({
   width: "100%",
   height: "100vh",
   background: DefaultTheme.palette.primary.main,
   color: "#fff",
-
   "& .MuiContainer-root": {
     paddingTop: "20px",
   },
@@ -19,16 +19,21 @@ const Root = styled("div")((theme) => ({
     textAlign: "center",
     marginBottom: "30px",
   },
+  "& .secondaryTitle": {
+    textTransform: "Capitalize",
+  },
 }));
 
 const ProfileImage = styled("img")((theme) => ({
-  width: 32,
-  height: 32,
+  width: 36,
+  height: 36,
   borderRadius: "50%",
   objectFit: "cover",
 }));
 
 const Thankyou = () => {
+  const user = useSelector((state) => state.user);
+
   return (
     <Root>
       <Container>
@@ -38,10 +43,10 @@ const Thankyou = () => {
             justifyContent="space-between"
             alignItems="center"
           >
-            <h4 className="secondaryTitle">Hi Adam!</h4>
+            <h4 className="secondaryTitle">Hi {user.username}!</h4>
             <Link to="/profile">
               <IconButton focusRipple>
-                <ProfileImage src="https://lh3.googleusercontent.com/ogw/ADea4I4uMKqSMw2XqG7DKA1gROd0gPOI9UoMZHe6Jnoa9w=s32-c-mo" />
+                <ProfileImage src={user.profile.avatar} />
               </IconButton>
             </Link>
           </Stack>
@@ -57,14 +62,6 @@ const Thankyou = () => {
             Please wait for group admin’s confirmation <br /> to continue.
           </p>
         </div>
-        <Link to="/">
-          <Button
-            variant="outlined"
-            style={{ color: "#fff", borderColor: "#fff" }}
-          >
-            Continue
-          </Button>
-        </Link>
       </Container>
     </Root>
   );

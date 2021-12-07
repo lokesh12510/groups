@@ -1,6 +1,7 @@
-import { TextField } from "@mui/material";
+import { TextField } from "formik-mui";
 import { styled } from "@mui/material/styles";
 import { DefaultTheme } from "../Constant";
+import { FormControl, Select } from "@mui/material";
 
 export const FormTextField = styled(TextField)(({ theme }) => ({
   width: "100%",
@@ -29,33 +30,26 @@ export const FormTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-export const SearchBar = styled(TextField)((theme) => ({
-  position: "sticky",
-  top: 0,
-  zIndex: 2,
+export const FormField = styled(FormControl)(({ theme }) => ({
   width: "100%",
-  backgroundColor: "#fff",
-  borderRadius: "5px",
-  "& label.Mui-focused": {
-    color: DefaultTheme.palette.primary.main,
-  },
-  "& .MuiInput-underline:after": {
-    borderBottomColor: DefaultTheme.palette.primary.main,
-  },
   "& .MuiOutlinedInput-root": {
-    "& .MuiOutlinedInput-input": {
-      padding: ".9rem",
+    "& fieldset": {
+      borderColor: DefaultTheme.palette.primary.main,
     },
     "&:hover fieldset": {
       borderColor: DefaultTheme.palette.primary.main,
     },
     "&.Mui-focused fieldset": {
-      borderColor: `${DefaultTheme.palette.primary.main}70`,
-      borderWidth: ".7px",
+      borderColor: DefaultTheme.palette.primary.main,
     },
-    "& fieldset": {
-      borderColor: "transparent",
-      transition: "all .5s ease",
-    },
+  },
+  "&:hover fieldset": {
+    borderColor: DefaultTheme.palette.primary.main,
+  },
+  "&.Mui-focused fieldset": {
+    borderColor: DefaultTheme.palette.primary.main,
+  },
+  "& .MuiInputLabel-root": {
+    color: DefaultTheme.palette.primary.main,
   },
 }));

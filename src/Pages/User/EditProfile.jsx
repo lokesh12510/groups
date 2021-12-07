@@ -1,13 +1,22 @@
 import React, { useState } from "react";
 // Styles
 import { styled } from "@mui/material/styles";
-import { Button, Container, IconButton, InputAdornment } from "@mui/material";
-import { Link } from "react-router-dom";
+import {
+  Button,
+  Container,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import { BOTTOM_SVG, DEFAULT_PROFILE } from "../../UIElements/Images";
 import Grid from "@mui/material/Grid";
-import { FormTextField } from "../../UIElements/Form";
 import { DefaultTheme } from "../../Constant";
-import { SecondaryBtn } from "../../UIElements/Buttons";
+import { SecondaryBtn, ViewOutlinedBtn } from "../../UIElements/Buttons";
 import DatePicker from "@mui/lab/DatePicker";
 import DateAdapter from "@mui/lab/AdapterMoment";
 
@@ -20,10 +29,20 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import CameraEnhanceIcon from "@mui/icons-material/CameraEnhance";
+import { useDispatch, useSelector } from "react-redux";
+import { FormField } from "../../UIElements/Form";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import WcIcon from "@mui/icons-material/Wc";
+
+// FUNC
+import { UserServices } from "../../Services/UserServices";
+import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
+import { SET_USER } from "../../redux/actionTypes";
+import { setUser, updateUser } from "../../redux/actions/User.actions";
+import { setMessage } from "../../redux/actions/Message.actions";
 
 const Root = styled("div")((theme) => ({
   width: "100%",
-  height: "100vh",
   background: `url(${BOTTOM_SVG}) no-repeat bottom left fixed`,
   zIndex: -1,
 
@@ -60,11 +79,38 @@ const Root = styled("div")((theme) => ({
   },
 }));
 
+export const MuiTextField = styled(TextField)(({ theme }) => ({
+  width: "100%",
+  "& label.Mui-focused": {
+    color: DefaultTheme.palette.primary.main,
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: DefaultTheme.palette.primary.main,
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: DefaultTheme.palette.primary.main,
+    },
+    "&:hover fieldset": {
+      borderColor: DefaultTheme.palette.primary.main,
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: DefaultTheme.palette.primary.main,
+    },
+  },
+  "& .MuiInputLabel-root": { color: DefaultTheme.palette.primary.main },
+  marginBottom: "30px",
+  "&::-webkit-calendar-picker-indicator": {
+    display: "none",
+    "-webkit-appearance": "none",
+  },
+}));
+
 const HeaderSection = styled("div")((theme) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  paddingBottom: "20px",
+  marginBottom: "40px",
 }));
 
 const ProfileImageContainer = styled("div")((theme) => ({
@@ -86,6 +132,8 @@ const EditIconBtn = styled("div")((theme) => ({
 }));
 
 const EditProfile = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   // Password Field
   const [passToggle, setPassToggle] = useState(false);
 
@@ -93,55 +141,81 @@ const EditProfile = () => {
     setPassToggle((passToggle) => !passToggle);
   };
 
+  // Data
+  const user = useSelector((state) => state.user);
+
+  const [username, setUsername] = useState(user.username);
+  const [password, setPassword] = useState("");
+  const [dob, setDob] = useState("");
+  const [emailId, setEmailId] = useState(user.profile.emailId);
+  const [gender, setGender] = useState(user.profile.gender);
+
   //Date Field
-  const [value, setValue] = React.useState([]);
+  const [value, setValue] = React.useState(user.profile.dob);
+
+  const handleChange = (event) => {
+    setGender(event.target.value);
+  };
+
+  const handleProfileUpdate = (e) => {
+    e.preventDefault();
+    console.log(username, value._i, emailId, gender);
+
+    const formData = {
+      username: username,
+      dob: value._i,
+      emailId: emailId,
+      gender: gender,
+    };
+
+    // SERVICE CALL
+
+    UserServices.userUpdate(
+      formData,
+      () => dispatch(startLoader()),
+      handleUpdateSuccess,
+      handleError,
+      () => dispatch(stopLoader())
+    );
+  };
+  const handleUpdateSuccess = (data) => {
+    console.log(data);
+    dispatch(
+      setMessage({ message: "Profile Updated Successfully!", type: "success" })
+    );
+    navigate("/profile");
+    // dispatch(updateUser());
+  };
+
+  const handleError = (error) => {
+    console.log(error);
+    dispatch(setMessage({ message: error.message, type: "error" }));
+  };
 
   return (
     <Root>
       <Container>
         <HeaderSection>
-          <Link to="/start">
-            <Button
-              className="backBtn"
-              variant="text"
-              startIcon={<ArrowBackIcon />}
-            >
-              Edit Profile
-            </Button>
-          </Link>
+          <Button
+            onClick={() => navigate(-1)}
+            className="backBtn"
+            variant="text"
+            startIcon={<ArrowBackIcon />}
+          >
+            Edit Profile
+          </Button>
         </HeaderSection>
 
-        <form action="">
+        <form action="" onSubmit={handleProfileUpdate}>
           <Grid container direction="row" className="formFields" spacing={4}>
-            <Grid
-              container
-              item
-              xs={12}
-              alignItems="center"
-              justifyContent="center"
-            >
-              <IconButton focusRipple>
-                <ProfileImageContainer>
-                  <DEFAULT_PROFILE />
-                  {/* <ProfileImage src={DEFAULT_PROFILE} /> */}
-                </ProfileImageContainer>
-                <EditIconBtn>
-                  <IconButton>
-                    <CameraEnhanceIcon
-                      style={{
-                        color: DefaultTheme.palette.secondary.main,
-                      }}
-                    />
-                  </IconButton>
-                </EditIconBtn>
-              </IconButton>
-            </Grid>
             <Grid item xs={12}>
-              <FormTextField
+              <MuiTextField
                 label="Full Name"
                 id="name"
                 type="text"
                 required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -152,15 +226,17 @@ const EditProfile = () => {
                   ),
                 }}
               />
-              <FormTextField
-                label="Phone Number"
-                id="phone"
-                type="number"
+              <MuiTextField
+                label="Email Id"
+                id="email"
+                type="emailId"
+                value={emailId}
+                onChange={(e) => setEmailId(e.target.value)}
                 required
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <LocalPhoneIcon
+                      <AlternateEmailIcon
                         style={{ color: DefaultTheme.palette.primary.main }}
                       />
                     </InputAdornment>
@@ -175,11 +251,12 @@ const EditProfile = () => {
                   openTo="year"
                   views={["year", "month", "day"]}
                   value={value}
+                  defaultValue={user.profile.dob}
                   onChange={(newValue) => {
                     setValue(newValue);
                   }}
                   renderInput={(params) => (
-                    <FormTextField
+                    <MuiTextField
                       required
                       {...params}
                       InputProps={{
@@ -198,48 +275,35 @@ const EditProfile = () => {
                 />
               </LocalizationProvider>
 
-              <FormTextField
-                label="Password"
-                id="password"
-                type={passToggle === true ? "text" : "password"}
+              <MuiTextField
+                id="gender"
+                select
+                value={gender}
+                label="Gender"
+                onChange={handleChange}
                 required
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 14 18"
-                        fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M6.79004 17.251C6.92285 17.251 7.13037 17.2012 7.33789 17.0933C12.061 14.6196 13.5801 13.3828 13.5801 10.4028V4.14404C13.5801 3.28906 13.2148 3.01514 12.5176 2.72461C11.5464 2.32617 8.44189 1.19727 7.479 0.865234C7.25488 0.790527 7.02246 0.749023 6.79004 0.749023C6.55762 0.749023 6.3252 0.798828 6.10938 0.865234C5.13818 1.18066 2.03369 2.33447 1.0625 2.72461C0.373535 3.00684 0 3.28906 0 4.14404V10.4028C0 13.3828 1.60205 14.4785 6.24219 17.0933C6.45801 17.2095 6.65723 17.251 6.79004 17.251ZM3.70215 11.9634V8.56006C3.70215 7.9541 3.95117 7.65527 4.44922 7.62207V6.61768C4.44922 5.04053 5.39551 3.97803 6.79004 3.97803C8.18457 3.97803 9.13086 5.04053 9.13086 6.61768V7.62207C9.62891 7.65527 9.87793 7.9541 9.87793 8.56006V11.9634C9.87793 12.6025 9.5957 12.9014 9.00635 12.9014H4.57373C3.98438 12.9014 3.70215 12.6025 3.70215 11.9634ZM5.3457 7.61377H8.23438V6.51807C8.23438 5.51367 7.65332 4.84131 6.79004 4.84131C5.92676 4.84131 5.3457 5.51367 5.3457 6.51807V7.61377Z"
-                          fill={DefaultTheme.palette.primary.main}
-                        />
-                      </svg>
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={handlePassToggle}>
-                        {passToggle ? (
-                          <VisibilityOutlinedIcon />
-                        ) : (
-                          <VisibilityOffOutlinedIcon />
-                        )}
-                      </IconButton>
+                      <WcIcon
+                        style={{ color: DefaultTheme.palette.primary.main }}
+                      />
                     </InputAdornment>
                   ),
                 }}
-              />
+              >
+                <MenuItem value="Male">Male</MenuItem>
+                <MenuItem value="Female">Female</MenuItem>
+              </MuiTextField>
             </Grid>
           </Grid>
           <div className="cta_btns">
-            <Link to="/thankyou"></Link>
             <SecondaryBtn variant="contained" type="submit">
               SAVE
             </SecondaryBtn>
+            <ViewOutlinedBtn variant="outlined" onClick={() => navigate(-1)}>
+              cancel
+            </ViewOutlinedBtn>
           </div>
         </form>
       </Container>

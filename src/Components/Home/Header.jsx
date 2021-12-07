@@ -11,11 +11,15 @@ import {
   SavingsIcon,
 } from "../../UIElements/Icons";
 import { DefaultTheme } from "../../Constant";
+import { useSelector } from "react-redux";
 
 const HeaderSection = styled("section")((theme) => ({
   paddingTop: "1px",
   background:
     "linear-gradient(180.65deg, #6CB9FF -60.63%, rgba(132, 135, 255, 0) 103.4%)",
+  "& .currentUser": {
+    textTransform: "Capitalize",
+  },
   "& .card": {
     display: "block",
     width: "100%",
@@ -43,11 +47,19 @@ const HeaderSection = styled("section")((theme) => ({
 }));
 
 const Header = () => {
+  const user = useSelector((state) => state.user);
+
   return (
     <HeaderSection>
       <Container>
-        <Typography variant="h5" mt={4} mb={4} component="div">
-          Hi, Loki
+        <Typography
+          variant="h5"
+          mt={4}
+          mb={4}
+          component="div"
+          className="currentUser"
+        >
+          Hi, {user.username}
         </Typography>
         <Button className="card" waves="light">
           <GradientCard bg={BG_VARIANT_2}>

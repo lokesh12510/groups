@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 // Styles
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
+  useNavigate,
   useLocation,
 } from "react-router-dom";
 import { styled } from "@mui/material/styles";
@@ -21,6 +21,14 @@ import { DefaultTheme } from "../../Constant";
 import Chip from "@mui/material/Chip";
 import { Link } from "react-router-dom";
 import EventDetail from "../../Components/Events/EventDetail";
+import { PrimaryBtn } from "../../UIElements/Buttons";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/actions/Auth.actions";
+import moment from "moment";
+import SettingsIcon from "@mui/icons-material/Settings";
+import { UserServices } from "../../Services/UserServices";
+import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
+import { setUser } from "../../redux/actions/User.actions";
 
 const Root = styled("div")((theme) => ({
   width: "100%",
@@ -75,9 +83,14 @@ const ProfileImageContainer = styled("div")((theme) => ({
   borderRadius: "50%",
   objectFit: "cover",
   overflow: "hidden",
+  "& img": {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
 }));
 
-const EditIconBtn = styled("div")((theme) => ({
+const SettingsBtnIcon = styled("div")((theme) => ({
   background: "#fff",
   borderRadius: "50%",
   position: "absolute",
@@ -95,18 +108,37 @@ const Contribution = styled("section")((theme) => ({
 }));
 
 const Profile = () => {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    UserServices.userInfo(
+      {},
+      () => dispatch(startLoader),
+      handleSuccess,
+      handleError,
+      () => dispatch(stopLoader)
+    );
+  }, []);
+
+  const handleSuccess = (data) => {
+    dispatch(setUser(data.data));
+  };
+  const handleError = (error) => {
+    console.log(error);
+  };
   return (
     <Root>
       <div className="ProfileImageSection">
         <IconButton focusRipple>
           <ProfileImageContainer>
-            <DEFAULT_PROFILE />
-            {/* <ProfileImage src={DEFAULT_PROFILE} /> */}
+            {/* <DEFAULT_PROFILE /> */}
+            <img alt="profile" src={user.profile.avatar} />
           </ProfileImageContainer>
         </IconButton>
         <>
           <Typography variant="h6" className="profileName">
-            Adam
+            {user.username}
           </Typography>
         </>
       </div>
@@ -127,23 +159,23 @@ const Profile = () => {
               </Typography>
               <div className="profileContainer">
                 <Typography variant="body1" gutterBottom>
-                  26th JAN, 1999
+                  {moment(user.profile.dob).format("Do MMM YYYY")}
                 </Typography>
                 <Typography variant="body1" gutterBottom>
-                  adam234@gmail.com
+                  {user.profile.emailId}
                 </Typography>
               </div>
             </Stack>
-            <Link to="/edit-profile/68">
-              <EditIconBtn>
+            <Link to="/settings">
+              <SettingsBtnIcon>
                 <IconButton>
-                  <EditIcon
+                  <SettingsIcon
                     style={{
                       color: DefaultTheme.palette.primary.main,
                     }}
                   />
                 </IconButton>
-              </EditIconBtn>
+              </SettingsBtnIcon>
             </Link>
           </GradientCard>
         </Container>
@@ -162,7 +194,7 @@ const Profile = () => {
                 <Icon>
                   <WalletIcon />
                 </Icon>
-                <Typography variant="h4">₹ 20,590.90</Typography>
+                <Typography variant="h4">₹00.00</Typography>
               </Stack>
             </div>
           </Container>

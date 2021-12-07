@@ -28,6 +28,7 @@ const Root = styled(Button)((theme) => ({
       "& .MuiCardHeader-title": {
         fontSize: "1rem",
         fontWeight: "500",
+        textTransform: "Capitalize",
       },
       "& .MuiCardHeader-subheader": {
         fontSize: "0.675rem",
@@ -39,7 +40,7 @@ const Root = styled(Button)((theme) => ({
     alignSelf: "center",
     textAlign: "left",
     "& .MuiChip-root": {
-      fontSize: "9px",
+      fontSize: "11px",
       textTransform: "capitalize",
     },
   },
@@ -47,7 +48,9 @@ const Root = styled(Button)((theme) => ({
 
 const MemberCard = ({ member }) => {
   return (
-    <Root component={Link} to={"/profile"}>
+    <Root
+    // component={Link} to={"/profile"}
+    >
       <CardHeader
         avatar={
           <Badge
@@ -65,13 +68,14 @@ const MemberCard = ({ member }) => {
               sx={{ bgcolor: DefaultTheme.palette.secondary.main }}
               aria-label="recipe"
             >
-              {member.name.slice(0, 1)}
+              {member.username.slice(0, 1)}
             </Avatar>
           </Badge>
         }
-        title={member.name.slice(0, 17)}
-        subheader={member.date}
+        title={member.username.slice(0, 17)}
+        subheader={member.emailId}
         action={
+          member.role &&
           member.role !== "member" && (
             <Chip
               label={member.role}

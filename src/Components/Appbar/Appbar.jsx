@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
@@ -8,6 +8,7 @@ import {
   Route,
   Navigate,
   Link,
+  useLocation,
 } from "react-router-dom";
 
 // Styles
@@ -16,6 +17,7 @@ import { Container } from "@mui/material";
 
 //ICONS
 import { EventIcon, HomeIcon, MembersIcon } from "../../UIElements/Icons";
+import { useSelector } from "react-redux";
 
 const Root = styled("div")(({ theme }) => ({
   width: "100%",
@@ -59,20 +61,24 @@ const ProfileImage = styled("img")(({ theme }) => ({
   width: 45,
   height: 45,
   borderRadius: "50%",
-  backgroundSize: "cover",
+  objectFit: "cover",
+  border: "1px solid #d3d3d3",
 }));
 
-let profileImageSrc = (
-  <ProfileImage
-    src="https://lh3.googleusercontent.com/ogw/ADea4I4uMKqSMw2XqG7DKA1gROd0gPOI9UoMZHe6Jnoa9w=s32-c-mo"
-    width="45"
-    height="45"
-    loading="lazy"
-  />
+const ProfileImageSrc = ({ src }) => (
+  <ProfileImage src={src} width="45" height="45" loading="lazy" />
 );
 
 const Appbar = (props) => {
-  const [value, setValue] = React.useState("/");
+  const [value, setValue] = useState("");
+
+  const location = useLocation();
+
+  useEffect(() => {
+    setValue(location.pathname);
+  }, [location.pathname]);
+
+  const user = useSelector((state) => state.user);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -109,7 +115,7 @@ const Appbar = (props) => {
             to={"/events"}
           />
           <Tab
-            icon={profileImageSrc}
+            icon={<ProfileImageSrc src={user.profile.avatar} />}
             value="/profile"
             component={Link}
             to={"/profile"}
