@@ -34,7 +34,7 @@ const PrivateRoute = ({ nav = true }) => {
       <Outlet /> {nav === true && <Appbar />}
     </>
   ) : (
-    <Navigate replace to="/auth/start" />
+    <Navigate replace to="/create/start" />
   );
 };
 

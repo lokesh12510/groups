@@ -28,7 +28,7 @@ import { object, string } from "yup";
 const Root = styled("div")((theme) => ({
   width: "100%",
   height: "100vh",
-  background: `url(${BOTTOM_SVG}) no-repeat bottom left fixed`,
+  // background: `url(${BOTTOM_SVG}) no-repeat bottom left fixed`,
   zIndex: -1,
 
   "& .MuiContainer-root": {
@@ -100,7 +100,7 @@ const Login = () => {
     <Root>
       <Container>
         <HeaderSection>
-          <Link to="/auth/start">
+          <Link to="/create/start">
             <Button
               className="backBtn"
               variant="text"

@@ -153,7 +153,7 @@ const Register = () => {
     <Root>
       <Container>
         <HeaderSection>
-          <Link to="/auth/start">
+          <Link to="/create/start">
             <Button
               className="backBtn"
               variant="text"
