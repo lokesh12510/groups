@@ -34,7 +34,7 @@ function App() {
       )}
 
       <Routes>
-        <Route path="/auth/*" element={<AuthLayouts />} />
+        <Route path="/create/*" element={<AuthLayouts />} />
         <Route path="/*" element={<PublicLayouts />} />
       </Routes>
     </div>

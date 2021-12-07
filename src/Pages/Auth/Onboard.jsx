@@ -79,10 +79,10 @@ const Onboard = () => {
         </div>
 
         <div className="cta_btns">
-          <Link to="/auth/register">
+          <Link to="/create/register">
             <PrimaryBtn variant="contained">Create an Account</PrimaryBtn>
           </Link>
-          <Link to="/auth/login">
+          <Link to="/create/login">
             <PrimaryOutlinedBtn variant="outlined">LOGIN</PrimaryOutlinedBtn>
           </Link>
         </div>
