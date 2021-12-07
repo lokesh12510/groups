@@ -1,4 +1,4 @@
-import Logo from "../Assets/Images/TVINM_LOGO.svg";
+import Logo from "../Assets/Images/logo.svg";
 import StarterBg from "../Assets/Images/Start.svg";
 import BottomSvg from "../Assets/Images/BottomSvg.svg";
 import ThanksImg from "../Assets/Images/thanksImg.svg";
