@@ -15,55 +15,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
 import { setMessage } from "../../redux/actions/Message.actions";
 
-const Root = styled("div")((theme) => ({
-  width: "100%",
-  height: "100vh",
-  backgroundColor: "#fff",
-  "& .MuiContainer-root": { backgroundColor: "#f0f2f7" },
-  "& .PageTitle": { padding: "20px 0 5px 0 " },
-  "& .memberCount": { color: "#a3a2a2", margin: "10px 0 0 0" },
-  "& .memberListSection": {
-    backgroundColor: "#fff",
-    padding: "15px 0",
-    borderRadius: "20px 20px 0 0",
-    "& .MuiContainer-root": {
-      padding: "0 10px",
-      backgroundColor: "#fff",
-    },
-  },
-}));
-
-export const SearchBar = styled(TextField)((theme) => ({
-  position: "sticky",
-  top: 0,
-  zIndex: 2,
-  width: "100%",
-  backgroundColor: "#fff",
-  borderRadius: "5px",
-  "& label.Mui-focused": {
-    color: DefaultTheme.palette.primary.main,
-  },
-  "& .MuiInput-underline:after": {
-    borderBottomColor: DefaultTheme.palette.primary.main,
-  },
-  "& .MuiOutlinedInput-root": {
-    "& .MuiOutlinedInput-input": {
-      padding: ".9rem",
-    },
-    "&:hover fieldset": {
-      borderColor: DefaultTheme.palette.primary.main,
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: `${DefaultTheme.palette.primary.main}70`,
-      borderWidth: ".7px",
-    },
-    "& fieldset": {
-      borderColor: "transparent",
-      transition: "all .5s ease",
-    },
-  },
-}));
-
 const Members = () => {
   const dispatch = useDispatch();
   const groups = useSelector((state) => state.groups);
@@ -90,7 +41,8 @@ const Members = () => {
   };
 
   const handleMembersList = (data) => {
-    setMembers(data.data.data);
+    setMembers(data.data.data.members);
+    console.log(data.data.data);
     dispatch(setMessage({ message: "", type: "success" }));
   };
 
@@ -130,7 +82,7 @@ const Members = () => {
           {members
             .filter((item) => {
               if (search === "") return item;
-              else if (item.username.toLowerCase().trim().includes(search))
+              else if (item.user.username.toLowerCase().trim().includes(search))
                 return item;
             })
             .map((member, index) => {
@@ -203,3 +155,52 @@ const user = [
     status: false,
   },
 ];
+
+const Root = styled("div")((theme) => ({
+  width: "100%",
+  height: "100vh",
+  backgroundColor: "#fff",
+  "& .MuiContainer-root": { backgroundColor: "#f0f2f7" },
+  "& .PageTitle": { padding: "20px 0 5px 0 " },
+  "& .memberCount": { color: "#a3a2a2", margin: "10px 0 0 0" },
+  "& .memberListSection": {
+    backgroundColor: "#fff",
+    padding: "15px 0",
+    borderRadius: "20px 20px 0 0",
+    "& .MuiContainer-root": {
+      padding: "0 10px",
+      backgroundColor: "#fff",
+    },
+  },
+}));
+
+export const SearchBar = styled(TextField)((theme) => ({
+  position: "sticky",
+  top: 0,
+  zIndex: 2,
+  width: "100%",
+  backgroundColor: "#fff",
+  borderRadius: "5px",
+  "& label.Mui-focused": {
+    color: DefaultTheme.palette.primary.main,
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: DefaultTheme.palette.primary.main,
+  },
+  "& .MuiOutlinedInput-root": {
+    "& .MuiOutlinedInput-input": {
+      padding: ".9rem",
+    },
+    "&:hover fieldset": {
+      borderColor: DefaultTheme.palette.primary.main,
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: `${DefaultTheme.palette.primary.main}70`,
+      borderWidth: ".7px",
+    },
+    "& fieldset": {
+      borderColor: "transparent",
+      transition: "all .5s ease",
+    },
+  },
+}));

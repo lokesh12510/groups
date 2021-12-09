@@ -17,6 +17,7 @@ export const STOP_LOADER = "STOP_LOADER";
 
 // GROUP INFO
 export const SET_GROUP = "SET_GROUP";
+export const UPDATE_GROUP = "UPDATE_GROUP";
 export const SWITCH_GROUP = "SWITCH_GROUP";
 export const CLEAR_GROUP = "CLEAR_GROUP";
 

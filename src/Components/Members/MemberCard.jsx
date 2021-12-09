@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 import { Avatar, Badge, Button, CardHeader, Chip } from "@mui/material";
 import { DefaultTheme } from "../../Constant";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 const Root = styled(Button)((theme) => ({
   width: "100%",
@@ -68,23 +69,23 @@ const MemberCard = ({ member }) => {
               sx={{ bgcolor: DefaultTheme.palette.secondary.main }}
               aria-label="recipe"
             >
-              {member.username.slice(0, 1)}
+              {member.user.username.slice(0, 1)}
             </Avatar>
           </Badge>
         }
-        title={member.username.slice(0, 17)}
-        subheader={member.emailId}
-        action={
-          member.role &&
-          member.role !== "member" && (
-            <Chip
-              label={member.role}
-              size="small"
-              variant="outlined"
-              color="primary"
-            />
-          )
-        }
+        title={member.user.username.slice(0, 17)}
+        subheader={moment(member.created_at).format("DD MMM YY")}
+        // action={
+        //   member.role &&
+        //   member.role !== "member" && (
+        //     <Chip
+        //       label={member.role}
+        //       size="small"
+        //       variant="outlined"
+        //       color="primary"
+        //     />
+        //   )
+        // }
       />
     </Root>
   );

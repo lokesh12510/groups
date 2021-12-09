@@ -11,6 +11,7 @@ export const HttpClient = axios.create({
   headers: {
     ...HEADERS,
   },
+  withCredentials: true,
 });
 
 HttpClient.interceptors.request.use((config) => {

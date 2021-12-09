@@ -1,4 +1,9 @@
-import { CLEAR_GROUP, SET_GROUP, SWITCH_GROUP } from "../actionTypes";
+import {
+  CLEAR_GROUP,
+  SET_GROUP,
+  SWITCH_GROUP,
+  UPDATE_GROUP,
+} from "../actionTypes";
 import { store } from "../Store";
 
 const initialState = {
@@ -23,6 +28,15 @@ export const groupReducer = (state = initialState, action) => {
           payload.data.group.admin === store?.user?.profile?.id
             ? true
             : false,
+      };
+
+    case UPDATE_GROUP:
+      return {
+        ...state,
+        group: payload,
+        currentGroupId: payload.id,
+        groupStatus: payload.id ? true : false,
+        isGroupAdmin: payload.admin,
       };
 
     case SWITCH_GROUP:

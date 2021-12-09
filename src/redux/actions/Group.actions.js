@@ -1,7 +1,16 @@
-import { CLEAR_GROUP, SET_GROUP, SWITCH_GROUP } from "../actionTypes";
+import {
+  CLEAR_GROUP,
+  SET_GROUP,
+  SWITCH_GROUP,
+  UPDATE_GROUP,
+} from "../actionTypes";
 
 export const setGroup = (group) => ({
   type: SET_GROUP,
+  payload: group,
+});
+export const updateGroup = (group) => ({
+  type: UPDATE_GROUP,
   payload: group,
 });
 
