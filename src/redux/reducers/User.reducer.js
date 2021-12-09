@@ -7,6 +7,7 @@ const initialState = {
   isAdmin: false,
   isActive: false,
   isVerified: false,
+  id: "",
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -18,6 +19,7 @@ export const userReducer = (state = initialState, action) => {
         profile: payload.data,
         username: payload.data.username,
         userId: payload.data.user_id,
+        id: payload.data.id,
       };
     case UPDATE_USER:
       return {

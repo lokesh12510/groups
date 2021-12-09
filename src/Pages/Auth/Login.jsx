@@ -123,7 +123,6 @@ const Login = () => {
             password: "",
           }}
           onSubmit={(values, formikHelpers) => {
-            console.log(values);
             dispatch(login(values.emailId, values.password));
             // navigate("/");
             formikHelpers.resetForm();

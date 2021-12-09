@@ -55,7 +55,7 @@ const MemberCard = ({ member }) => {
       <CardHeader
         avatar={
           <Badge
-            color={member.status === true ? "success" : "error"}
+            color={member.status === "active" ? "success" : "error"}
             overlap="circular"
             badgeContent=" "
             variant="dot"
@@ -68,6 +68,7 @@ const MemberCard = ({ member }) => {
             <Avatar
               sx={{ bgcolor: DefaultTheme.palette.secondary.main }}
               aria-label="recipe"
+              src={member.user.avatar}
             >
               {member.user.username.slice(0, 1)}
             </Avatar>

@@ -79,6 +79,7 @@ const Appbar = (props) => {
   }, [location.pathname]);
 
   const user = useSelector((state) => state.user);
+  const groupAdmin = useSelector((state) => state.groups.isGroupAdmin);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

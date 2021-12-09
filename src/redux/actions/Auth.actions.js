@@ -126,6 +126,8 @@ export const logout = () => (dispatch) => {
   });
   authService.logout();
 
+  localStorage.removeItem("persist:root");
+
   dispatch({
     type: LOG_OUT,
   });

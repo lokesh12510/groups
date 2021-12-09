@@ -27,7 +27,6 @@ const LandingPage = () => {
   };
 
   const handleHome = (data) => {
-    console.log(data.data.data);
     dispatch(updateGroup(data.data.data));
     dispatch(setMessage({ message: "", type: "success" }));
   };

@@ -36,7 +36,7 @@ export const groupReducer = (state = initialState, action) => {
         group: payload,
         currentGroupId: payload.id,
         groupStatus: payload.id ? true : false,
-        isGroupAdmin: payload.admin,
+        isGroupAdmin: payload.admin === store?.user?.id ? true : false,
       };
 
     case SWITCH_GROUP:

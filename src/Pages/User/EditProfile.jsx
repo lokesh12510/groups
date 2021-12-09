@@ -159,11 +159,10 @@ const EditProfile = () => {
 
   const handleProfileUpdate = (e) => {
     e.preventDefault();
-    console.log(username, value._i, emailId, gender);
 
     const formData = {
       username: username,
-      dob: value._i,
+      dob: value._d,
       emailId: emailId,
       gender: gender,
     };
@@ -179,7 +178,6 @@ const EditProfile = () => {
     );
   };
   const handleUpdateSuccess = (data) => {
-    console.log(data);
     dispatch(
       setMessage({ message: "Profile Updated Successfully!", type: "success" })
     );
@@ -251,7 +249,6 @@ const EditProfile = () => {
                   openTo="year"
                   views={["year", "month", "day"]}
                   value={value}
-                  defaultValue={user.profile.dob}
                   onChange={(newValue) => {
                     setValue(newValue);
                   }}

@@ -42,7 +42,6 @@ const Members = () => {
 
   const handleMembersList = (data) => {
     setMembers(data.data.data.members);
-    console.log(data.data.data);
     dispatch(setMessage({ message: "", type: "success" }));
   };
 
@@ -74,7 +73,7 @@ const Members = () => {
           />
         </div>
         <Typography variant="overline" display="block" className="memberCount">
-          Active : 32
+          Active : {members.length}
         </Typography>
       </Container>
       <div className="memberListSection">

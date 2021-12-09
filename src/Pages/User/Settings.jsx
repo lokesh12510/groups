@@ -135,13 +135,18 @@ const Settings = () => {
 
   const handleImageSelect = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      setPreview(URL.createObjectURL(e.target.files[0]));
-      setSelectedImage(e.target.files[0]);
+      if (/^image\//.test(e.target.files[0].type)) {
+        setPreview(URL.createObjectURL(e.target.files[0]));
+        setSelectedImage(e.target.files[0]);
+      } else {
+        dispatch(
+          setMessage({ message: "File type not supported!", type: "error" })
+        );
+      }
     }
   };
 
   useEffect(() => {
-    console.log(selectedImage, "selected");
     const formData = new FormData();
     if (selectedImage) {
       formData.append("avatar", selectedImage);
@@ -157,7 +162,6 @@ const Settings = () => {
 
   const handleUploadImage = (data) => {
     dispatch(startLoader());
-    console.log(data);
     // setPreview("");
     setCloudImg(data.data.data.image_path);
     UserServices.userUpdate(
@@ -178,7 +182,6 @@ const Settings = () => {
         type: "success",
       })
     );
-    console.log(data);
     navigate("/profile");
   };
 
@@ -207,8 +210,11 @@ const Settings = () => {
               <Input
                 accept="image/*"
                 id="contained-button-file"
-                multiple
                 type="file"
+                // onChange={e =>
+                //   getBase64(e.target.files[0]).then(file =>
+                //     handleImageSelect({ image: file })
+                //  )}
                 onChange={(e) => handleImageSelect(e)}
               />
               <Button

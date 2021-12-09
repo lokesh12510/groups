@@ -145,7 +145,6 @@ const Register = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     dispatch(register(username, emailId, password, dob._d, gender));
-    console.log(username, emailId, password, dob._d, gender);
   };
   //Date Field
 
