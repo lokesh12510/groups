@@ -11,13 +11,30 @@ import {
 import AuthLayouts from "./Layouts/AuthLayouts";
 import PublicLayouts from "./Layouts/PublicLayouts";
 import Toast from "./UIElements/Toast";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AdminLayouts from "./Layouts/AdminLayouts";
+import { isAdmin } from "./redux/actions/User.actions";
 
 function App() {
   const { message, type } = useSelector((state) => state.message);
   const { isGroupAdmin } = useSelector((state) => state.groups);
   const { loading } = useSelector((state) => state.loader);
+
+  const dispatch = useDispatch();
+
+  const { user, groups } = useSelector((state) => state);
+
+  console.log(user.userId, groups.group.admin);
+
+  useEffect(() => {
+    if (
+      user.userId &&
+      groups.group.admin &&
+      user.userId === groups.group.admin
+    ) {
+      dispatch(isAdmin());
+    }
+  }, []);
 
   return (
     <div className="App">
@@ -31,6 +48,7 @@ function App() {
             top: 0,
             bottom: 0,
             margin: "auto",
+            zIndex: "1051",
           }}
         />
       )}

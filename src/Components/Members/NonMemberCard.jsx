@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // Styles
 import { styled } from "@mui/material/styles";
 import { Avatar, Badge, Button, CardHeader, Chip } from "@mui/material";
@@ -15,7 +15,9 @@ const handleClick = () => {
   console.info("You clicked the Chip.");
 };
 
-const MemberCard = ({ member, addNew }) => {
+const NonMemberCard = ({ member }) => {
+  const [added, setAdded] = useState(false);
+
   const dispatch = useDispatch();
 
   const handleAddMembers = (id) => {
@@ -34,12 +36,18 @@ const MemberCard = ({ member, addNew }) => {
 
   const handleAddSuccess = (data) => {
     console.log(data);
-    setMessage({ message: data.message, type: "success" });
+    setAdded((added) => !added);
+    dispatch(
+      setMessage({ message: "Member Added Successfully!", type: "success" })
+    );
   };
 
   const handleError = (err) => {
     console.log(err);
-    setMessage({ message: err.message, type: "error" });
+    setAdded((added) => !added);
+    dispatch(
+      setMessage({ message: "Member already in Group!", type: "error" })
+    );
   };
 
   return (
@@ -48,48 +56,29 @@ const MemberCard = ({ member, addNew }) => {
     >
       <CardHeader
         avatar={
-          <Badge
-            color={member.status === "active" ? "success" : "error"}
-            overlap="circular"
-            badgeContent=" "
-            variant="dot"
-            className="statusDot"
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
+          <Avatar
+            sx={{ bgcolor: DefaultTheme.palette.secondary.main }}
+            aria-label="recipe"
+            src={member.avatar}
           >
-            <Avatar
-              sx={{ bgcolor: DefaultTheme.palette.secondary.main }}
-              aria-label="recipe"
-              src={member.user?.avatar}
-            >
-              {member.user?.username.slice(0, 1)}
-            </Avatar>
-          </Badge>
+            {member.username.slice(0, 1)}
+          </Avatar>
         }
-        title={member.user?.username.slice(0, 17)}
-        subheader={moment(
-          member.created_at.split("-").join("").slice(0, 8),
-          "YYYYMMDD"
-        ).fromNow()}
+        title={member.username.slice(0, 17)}
         action={
-          member.status === "new" && (
-            // <Chip label="ADD" size="small" variant="outlined" color="primary" />
-            <Chip
-              label="ADD"
-              onDelete={(e) => handleAddMembers(member.user.user_id)}
-              variant="contained"
-              deleteIcon={<AddCircleOutline style={{ color: "#696DF3" }} />}
-            />
-          )
+          <Chip
+            label="ADD"
+            onDelete={(e) => handleAddMembers(member.user_id)}
+            variant="contained"
+            deleteIcon={<AddCircleOutline style={{ color: "#696DF3" }} />}
+          />
         }
       />
     </Root>
   );
 };
 
-export default MemberCard;
+export default NonMemberCard;
 
 const Root = styled(Button)((theme) => ({
   width: "100%",

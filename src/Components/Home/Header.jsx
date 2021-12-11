@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // Styles
 import { styled } from "@mui/material/styles";
 import { Button, Container, Grid, IconButton, Typography } from "@mui/material";
@@ -13,6 +13,13 @@ import {
 import { DefaultTheme } from "../../Constant";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
+import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
+
+import { useDispatch } from "react-redux";
+import { setMessage } from "../../redux/actions/Message.actions";
+import { GroupServices } from "../../Services/GroupServices";
+import { useEffect } from "react";
 
 const HeaderSection = styled("section")((theme) => ({
   paddingTop: "1px",
@@ -56,6 +63,35 @@ const ProfileImage = styled("img")((theme) => ({
 const Header = () => {
   const user = useSelector((state) => state.user);
 
+  const [groupInfo, setGroupInfo] = useState("");
+
+  const dispatch = useDispatch();
+
+  const { currentGroupId } = useSelector((state) => state.groups);
+
+  useEffect(() => {
+    getGroupInfo();
+  }, []);
+
+  const getGroupInfo = () => {
+    GroupServices.getGroupInfo(
+      {},
+      () => dispatch(startLoader()),
+      handleGroupInfo,
+      handleError,
+      () => dispatch(stopLoader())
+    );
+  };
+
+  const handleGroupInfo = (data) => {
+    setGroupInfo(data.data.data);
+  };
+
+  const handleError = (error) => {
+    dispatch(setMessage({ message: "Something Went Wrong!", type: "error" }));
+    console.log(error);
+  };
+
   return (
     <HeaderSection>
       <Container>
@@ -72,7 +108,7 @@ const Header = () => {
             </Typography>
           </Grid>
           <Grid item>
-            <IconButton focusRipple component={Link} to={"/profile"}>
+            <IconButton focusRipple component={Link} to={"/settings"}>
               <ProfileImage src={user.profile.avatar} />
             </IconButton>
           </Grid>
@@ -86,7 +122,7 @@ const Header = () => {
               Total Balance
             </Typography>
             <Typography variant="h4" gutterBottom component="div">
-              ₹ 55,340.23
+              ₹ {groupInfo.balance}
             </Typography>
             <Typography variant="p" component="p">
               • • • • 0212

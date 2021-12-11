@@ -24,4 +24,5 @@ export const CLEAR_GROUP = "CLEAR_GROUP";
 // USER INFO
 export const SET_USER = "SET_USER";
 export const UPDATE_USER = "UPDATE_USER";
+export const IS_ADMIN = "IS_ADMIN";
 export const CLEAR_USER = "CLEAR_USER";

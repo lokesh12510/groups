@@ -16,12 +16,6 @@ import { styled } from "@mui/material/styles";
 import { Container } from "@mui/material";
 
 //ICONS
-import {
-  EventIcon,
-  // HomeIcon,
-  MembersIcon,
-  PaymentIcon,
-} from "../../UIElements/Icons";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
@@ -36,12 +30,12 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useSelector } from "react-redux";
 
 const Appbar = (props) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState("home");
 
   const location = useLocation();
 
   useEffect(() => {
-    setValue(location.pathname);
+    setValue(location.pathname.split("/")[1] || "home");
   }, [location.pathname]);
 
   const user = useSelector((state) => state.user);
@@ -61,19 +55,19 @@ const Appbar = (props) => {
           TabIndicatorProps={{ style: { display: "none" } }}
         >
           <Tab
+            value="home"
             icon={
               location.pathname === "/" ? (
                 <HomeIcon fontSize="medium" />
               ) : (
-                <HomeOutlinedIcon fontSize="medium" />
+                <HomeOutlinedIcon fontSize="medium" color="#7BE8D8" />
               )
             }
-            // label="Home"
-            value="/"
             component={Link}
             to={"/"}
           />
           <Tab
+            value="members"
             icon={
               location.pathname === "/members" ? (
                 <GroupIcon fontSize="medium" />
@@ -81,13 +75,12 @@ const Appbar = (props) => {
                 <GroupOutlinedIcon fontSize="medium" />
               )
             }
-            // label="Members"
-            value="/members"
             component={Link}
             to={"/members"}
           />
-          {user.userId === groupAdmin && (
+          {user.isAdmin && (
             <Tab
+              value="admin"
               icon={
                 location.pathname.split("/")[1] === "admin" ? (
                   <AddCircleIcon fontSize="medium" />
@@ -95,14 +88,13 @@ const Appbar = (props) => {
                   <AddCircleOutlineIcon fontSize="medium" />
                 )
               }
-              // label="Members"
-              value="/admin"
               component={Link}
               to={"/admin/dashboard"}
             />
           )}
 
           <Tab
+            value="events"
             icon={
               location.pathname === "/events" ? (
                 <TodayIcon fontSize="medium" />
@@ -110,12 +102,11 @@ const Appbar = (props) => {
                 <EventOutlinedIcon fontSize="medium" />
               )
             }
-            // label="Events"
-            value="/events"
             component={Link}
             to={"/events"}
           />
           <Tab
+            value="payments"
             icon={
               location.pathname === "/profile" ? (
                 <AccountBalanceIcon fontSize="medium" />
@@ -123,7 +114,6 @@ const Appbar = (props) => {
                 <AccountBalanceOutlinedIcon fontSize="medium" />
               )
             }
-            value="/profile"
             component={Link}
             to={"/profile"}
           ></Tab>

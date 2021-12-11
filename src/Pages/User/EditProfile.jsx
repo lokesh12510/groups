@@ -181,7 +181,7 @@ const EditProfile = () => {
     dispatch(
       setMessage({ message: "Profile Updated Successfully!", type: "success" })
     );
-    navigate("/profile");
+    navigate("/settings");
     // dispatch(updateUser());
   };
 

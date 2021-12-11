@@ -1,4 +1,4 @@
-import { CLEAR_USER, SET_USER, UPDATE_USER } from "../actionTypes";
+import { CLEAR_USER, SET_USER, UPDATE_USER, IS_ADMIN } from "../actionTypes";
 
 const initialState = {
   profile: {},
@@ -25,6 +25,12 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         profile: payload.data,
+        username: payload.data.username,
+      };
+    case IS_ADMIN:
+      return {
+        ...state,
+        isAdmin: true,
       };
     case CLEAR_USER:
       return initialState;

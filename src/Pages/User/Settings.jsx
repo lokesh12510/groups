@@ -32,6 +32,7 @@ import { UploadServices } from "../../Services/UploadServices";
 import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
 import { UserServices } from "../../Services/UserServices";
 import { setMessage } from "../../redux/actions/Message.actions";
+import { updateUser } from "../../redux/actions/User.actions";
 
 const Root = styled("div")((theme) => ({
   width: "100%",
@@ -158,6 +159,13 @@ const Settings = () => {
         () => dispatch(stopLoader())
       );
     }
+    UserServices.userInfo(
+      {},
+      () => dispatch(startLoader),
+      handleUserInfoSuccess,
+      handleError,
+      () => dispatch(stopLoader)
+    );
   }, [preview, selectedImage]);
 
   const handleUploadImage = (data) => {
@@ -176,13 +184,24 @@ const Settings = () => {
   };
 
   const handleUpdateSuccess = (data) => {
+    UserServices.userInfo(
+      {},
+      () => dispatch(startLoader),
+      handleUserInfoSuccess,
+      handleError,
+      () => dispatch(stopLoader)
+    );
     dispatch(
       setMessage({
         message: "Profile image updated successfully!",
         type: "success",
       })
     );
-    navigate("/profile");
+  };
+
+  const handleUserInfoSuccess = (data) => {
+    dispatch(updateUser(data.data));
+    console.log(data.data);
   };
 
   const handleError = (error) => {
