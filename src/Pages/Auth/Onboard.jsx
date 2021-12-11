@@ -22,13 +22,12 @@ const BackgroundImg = styled("div")(() => ({
 const Root = styled("div")((theme) => ({
   width: "100%",
   height: "100vh",
-  background: "#fff",
   "& .MuiContainer-root": {
     paddingTop: "40px",
   },
 
   "& .title": {
-    marginBottom: "100px",
+    marginBottom: "80px",
   },
 
   "& .sectionTitle": {

@@ -6,6 +6,7 @@ import {
   Route,
   Navigate,
   useNavigate,
+  Outlet,
 } from "react-router-dom";
 import Onboard from "../Pages/Auth/Onboard";
 import Login from "../Pages/Auth/Login";
@@ -14,21 +15,41 @@ import Thankyou from "../Pages/User/Thankyou";
 import { useSelector } from "react-redux";
 import Dashboard from "../Pages/Admin/Dashboard";
 import Appbar from "../Components/Appbar/Appbar";
+import ManagePayments from "../Pages/Admin/ManagePayments";
+
+const AdminRoute = ({ nav = true }) => {
+  const { isLoggedIn, accessToken } = useSelector((state) => state.auth); // determine if authorized, from context or however you're doing it
+
+  // If authorized, return an outlet that will render child elements
+  // If not, return element that will navigate to login page
+  return accessToken && isLoggedIn !== null ? (
+    <>
+      <Outlet /> {nav === true && <Appbar />}
+    </>
+  ) : (
+    <Navigate replace to="/" />
+  );
+};
 
 const AdminLayouts = () => {
-  const { accessToken, isLoggedIn } = useSelector((state) => state.auth);
+  const { isAdmin } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAdmin) {
+      navigate("/");
+    }
+  }, [isAdmin]);
 
   return (
     <div>
       <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/thankyou" element={<Thankyou />} />
+        <Route exact path="/dashboard" element={<AdminRoute />}>
+          <Route exact path="/dashboard" element={<Dashboard />} />
+        </Route>
+        <Route path="/manage-payments" element={<ManagePayments />} />
       </Routes>
-      <Appbar />
     </div>
   );
 };

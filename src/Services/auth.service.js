@@ -9,11 +9,6 @@ class AuthService {
     let payload = { emailId, password };
     return axios.post(API_URL + "login", payload).then((response) => {
       console.log(response.data);
-      // if (response.data.data.token) {
-      //   sessionStorage.setItem("isLoggedIn", true);
-      //   sessionStorage.setItem("AccToken", response.data.data.token);
-      // }
-      // sessionStorage.setItem("AccUser", JSON.stringify(response.data));
       return response.data;
     });
   }

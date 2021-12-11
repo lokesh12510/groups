@@ -39,10 +39,7 @@ const Root = styled("div")((theme) => ({
   "& .MuiContainer-root": {
     paddingTop: "20px",
   },
-  "& .backBtn": {
-    color: "#000",
-    fontSize: "18px",
-  },
+
   "& .profileText": {
     display: "flex",
     alignItems: "center",
@@ -65,6 +62,10 @@ const HeaderSection = styled("div")((theme) => ({
   alignItems: "center",
   justifyContent: "space-between",
   paddingBottom: "20px",
+  "& .backBtn": {
+    color: "#000",
+    fontSize: "18px",
+  },
 }));
 
 const ButtonLight = styled(Button)((theme) => ({
@@ -89,6 +90,7 @@ const ProfileImageContainer = styled("div")((theme) => ({
   "& img": {
     width: "100%",
     height: "100%",
+    objectFit: "cover",
   },
 }));
 

@@ -1,5 +1,4 @@
 import { AdminHttpClient } from "../utils/AdminhttpClient";
-import { HttpClient } from "../utils/httpClient";
 
 const PATH = {
   getMembersList: "group/groupMembers",
@@ -7,6 +6,7 @@ const PATH = {
   getNonMembers: "/group/nonMembersList",
   addMember: "group/addMember",
   removeMember: "group/removeMember",
+  pendingPayments: "group/pendingPayments",
 };
 
 const getMembersList = (params, start, callback, error, next) => {
@@ -48,10 +48,19 @@ const removeGroupMembers = (payload, start, callback, error, next) => {
     .finally(next);
 };
 
+const pendingPayments = (params, start, callback, error, next) => {
+  start();
+  return AdminHttpClient.get(`${PATH.pendingPayments}`, { params })
+    .then(callback)
+    .catch(error)
+    .finally(next);
+};
+
 export const GroupServices = {
   getMembersList,
   getGroupInfo,
   addGroupMembers,
   getNonMembers,
   removeGroupMembers,
+  pendingPayments,
 };
