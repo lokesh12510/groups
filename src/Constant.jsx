@@ -11,9 +11,9 @@ export let DefaultTheme = createTheme({
   },
 });
 
-const URLS = {
-  development: "https://finance-app-management.herokuapp.com/",
-  // development: "http://localhost:8000/",
-};
+// const URLS = {
+//   development: "https://finance-app-management.herokuapp.com/",
+//   // development: "http://localhost:8000/",
+// };
 
-export const BASE_URL = URLS[process.env.NODE_ENV];
+export const BASE_URL = "https://finance-app-management.herokuapp.com/";
