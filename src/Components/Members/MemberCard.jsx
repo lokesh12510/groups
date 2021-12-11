@@ -75,7 +75,10 @@ const MemberCard = ({ member }) => {
           </Badge>
         }
         title={member.user.username.slice(0, 17)}
-        subheader={moment(member.created_at).format("DD MMM YY")}
+        subheader={moment(
+          member.created_at.split("-").join("").slice(0, 7),
+          "DD MMM YY"
+        ).fromNow()}
         // action={
         //   member.role &&
         //   member.role !== "member" && (

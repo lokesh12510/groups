@@ -12,9 +12,11 @@ import AuthLayouts from "./Layouts/AuthLayouts";
 import PublicLayouts from "./Layouts/PublicLayouts";
 import Toast from "./UIElements/Toast";
 import { useSelector } from "react-redux";
+import AdminLayouts from "./Layouts/AdminLayouts";
 
 function App() {
   const { message, type } = useSelector((state) => state.message);
+  const { isGroupAdmin } = useSelector((state) => state.groups);
   const { loading } = useSelector((state) => state.loader);
 
   return (
@@ -36,6 +38,10 @@ function App() {
       <Routes>
         <Route path="/create/*" element={<AuthLayouts />} />
         <Route path="/*" element={<PublicLayouts />} />
+        <Route
+          path="/admin/*"
+          element={isGroupAdmin ? <AdminLayouts /> : <AuthLayouts />}
+        />
       </Routes>
     </div>
   );

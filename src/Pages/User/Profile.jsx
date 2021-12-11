@@ -28,7 +28,7 @@ import moment from "moment";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { UserServices } from "../../Services/UserServices";
 import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
-import { setUser } from "../../redux/actions/User.actions";
+import { setUser, updateUser } from "../../redux/actions/User.actions";
 
 const Root = styled("div")((theme) => ({
   width: "100%",
@@ -122,7 +122,7 @@ const Profile = () => {
   }, []);
 
   const handleSuccess = (data) => {
-    dispatch(setUser(data.data));
+    dispatch(updateUser(data.data));
   };
   const handleError = (error) => {
     console.log(error);

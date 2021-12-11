@@ -15,6 +15,7 @@ const initialState = {
 
 export const groupReducer = (state = initialState, action) => {
   const { type, payload } = action;
+
   switch (type) {
     case SET_GROUP:
       return {
@@ -23,11 +24,7 @@ export const groupReducer = (state = initialState, action) => {
         currentGroupId:
           payload.data.group !== null ? payload.data.group.id : "",
         groupStatus: payload.data.group !== null ? true : false,
-        isGroupAdmin:
-          payload.data.group !== null &&
-          payload.data.group.admin === store?.user?.profile?.id
-            ? true
-            : false,
+        isGroupAdmin: payload.data.group !== null && payload.data.group.admin,
       };
 
     case UPDATE_GROUP:
@@ -36,7 +33,7 @@ export const groupReducer = (state = initialState, action) => {
         group: payload,
         currentGroupId: payload.id,
         groupStatus: payload.id ? true : false,
-        isGroupAdmin: payload.admin === store?.user?.id ? true : false,
+        isGroupAdmin: payload.admin,
       };
 
     case SWITCH_GROUP:
