@@ -68,16 +68,16 @@ const MemberCard = ({ member }) => {
             <Avatar
               sx={{ bgcolor: DefaultTheme.palette.secondary.main }}
               aria-label="recipe"
-              src={member.user.avatar}
+              src={member.user?.avatar}
             >
-              {member.user.username.slice(0, 1)}
+              {member.user?.username.slice(0, 1)}
             </Avatar>
           </Badge>
         }
-        title={member.user.username.slice(0, 17)}
+        title={member.user?.username.slice(0, 17)}
         subheader={moment(
-          member.created_at.split("-").join("").slice(0, 7),
-          "DD MMM YY"
+          member.created_at.split("-").join("").slice(0, 8),
+          "YYYYMMDD"
         ).fromNow()}
         // action={
         //   member.role &&

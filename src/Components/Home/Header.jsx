@@ -1,7 +1,7 @@
 import React from "react";
 // Styles
 import { styled } from "@mui/material/styles";
-import { Button, Container, Grid, Typography } from "@mui/material";
+import { Button, Container, Grid, IconButton, Typography } from "@mui/material";
 import { GradientCard, MiniGradientCard } from "../../UIElements/Card";
 import { BG_MINI_1, BG_VARIANT_2 } from "../../UIElements/Images";
 import {
@@ -12,6 +12,7 @@ import {
 } from "../../UIElements/Icons";
 import { DefaultTheme } from "../../Constant";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const HeaderSection = styled("section")((theme) => ({
   paddingTop: "1px",
@@ -45,6 +46,12 @@ const HeaderSection = styled("section")((theme) => ({
     },
   },
 }));
+const ProfileImage = styled("img")((theme) => ({
+  width: 36,
+  height: 36,
+  borderRadius: "50%",
+  objectFit: "cover",
+}));
 
 const Header = () => {
   const user = useSelector((state) => state.user);
@@ -52,15 +59,24 @@ const Header = () => {
   return (
     <HeaderSection>
       <Container>
-        <Typography
-          variant="h5"
-          mt={4}
-          mb={4}
-          component="div"
-          className="currentUser"
-        >
-          Hi, {user.username}
-        </Typography>
+        <Grid container alignItems="center" justifyContent="space-between">
+          <Grid item>
+            <Typography
+              variant="h5"
+              mt={4}
+              mb={4}
+              component="div"
+              className="currentUser"
+            >
+              Hi, {user.username}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <IconButton focusRipple component={Link} to={"/profile"}>
+              <ProfileImage src={user.profile.avatar} />
+            </IconButton>
+          </Grid>
+        </Grid>
         <Button className="card" waves="light">
           <GradientCard bg={BG_VARIANT_2}>
             <div className="cardIcon">

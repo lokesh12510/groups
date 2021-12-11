@@ -18,6 +18,9 @@ import { setMessage } from "../../redux/actions/Message.actions";
 const Members = () => {
   const dispatch = useDispatch();
   const groups = useSelector((state) => state.groups);
+  const [progress, setProgress] = useState(false);
+
+  const { loading } = useSelector((state) => state.loader);
 
   // Members list state
   const [members, setMembers] = useState([]);
@@ -78,15 +81,19 @@ const Members = () => {
       </Container>
       <div className="memberListSection">
         <Container>
-          {members
-            .filter((item) => {
-              if (search === "") return item;
-              else if (item.user.username.toLowerCase().trim().includes(search))
-                return item;
-            })
-            .map((member, index) => {
-              return <MemberCard key={index} member={member} />;
-            })}
+          {!loading &&
+            members.length > 0 &&
+            members
+              .filter((item) => {
+                if (search === "") return item;
+                else if (
+                  item.user.username.toLowerCase().trim().includes(search)
+                )
+                  return item;
+              })
+              .map((member, index) => {
+                return <MemberCard key={index} member={member} />;
+              })}
         </Container>
       </div>
     </Root>
