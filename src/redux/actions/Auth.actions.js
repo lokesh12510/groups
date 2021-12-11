@@ -16,6 +16,7 @@ import {
   SET_USER,
   CLEAR_USER,
   SET_GROUP,
+  IS_ADMIN,
 } from "../actionTypes";
 
 export const register =
@@ -90,6 +91,8 @@ export const login = (emailId, username, password) => (dispatch) => {
         type: SET_GROUP,
         payload: data,
       });
+
+      dispatch({ type: IS_ADMIN });
 
       dispatch({
         type: SET_MESSAGE,
