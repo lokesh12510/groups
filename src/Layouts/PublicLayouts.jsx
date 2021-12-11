@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LandingPage from "../Pages/User/LandingPage";
 import Settings from "../Pages/User/Settings";
 import ChangePassword from "../Pages/User/ChangePassword";
+import Payments from "../Pages/User/Payments";
 
 const PrivateRoute = ({ nav = true }) => {
   const { isLoggedIn, accessToken } = useSelector((state) => state.auth); // determine if authorized, from context or however you're doing it
@@ -66,6 +67,9 @@ const PublicLayouts = () => {
         </Route>
         <Route path="/events" element={<PrivateRoute />}>
           <Route path="/events" element={<Events />} />
+        </Route>
+        <Route path="/payments" element={<PrivateRoute />}>
+          <Route path="/payments" element={<Payments />} />
         </Route>
         <Route path="/event-detail/:id" element={<PrivateRoute nav={false} />}>
           <Route path="/event-detail/:id" element={<EventDetail />} />

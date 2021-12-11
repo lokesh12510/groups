@@ -8,39 +8,13 @@ import moment from "moment";
 import { AddCircleOutline } from "@mui/icons-material";
 import { GroupServices } from "../../Services/GroupServices";
 import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setMessage } from "../../redux/actions/Message.actions";
 
-const handleClick = () => {
-  console.info("You clicked the Chip.");
-};
+const MemberCard = ({ member, handleRemoveMember }) => {
+  const { currentGroupId } = useSelector((state) => state.groups);
 
-const MemberCard = ({ member, addNew }) => {
-  const dispatch = useDispatch();
-
-  const handleAddMembers = (id) => {
-    console.info(id);
-
-    GroupServices.addGroupMembers(
-      {
-        user_id: id,
-      },
-      () => dispatch(startLoader()),
-      handleAddSuccess,
-      handleError,
-      () => dispatch(stopLoader())
-    );
-  };
-
-  const handleAddSuccess = (data) => {
-    console.log(data);
-    setMessage({ message: data.message, type: "success" });
-  };
-
-  const handleError = (err) => {
-    console.log(err);
-    setMessage({ message: err.message, type: "error" });
-  };
+  const { isAdmin } = useSelector((state) => state.user);
 
   return (
     <Root
@@ -74,11 +48,10 @@ const MemberCard = ({ member, addNew }) => {
           "YYYYMMDD"
         ).fromNow()}
         action={
-          member.status === "new" && (
-            // <Chip label="ADD" size="small" variant="outlined" color="primary" />
+          isAdmin && (
             <Chip
-              label="ADD"
-              onDelete={(e) => handleAddMembers(member.user.user_id)}
+              label="Remove"
+              onDelete={() => handleRemoveMember(member.user.user_id)}
               variant="contained"
               deleteIcon={<AddCircleOutline style={{ color: "#696DF3" }} />}
             />

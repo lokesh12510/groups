@@ -24,8 +24,6 @@ function App() {
 
   const { user, groups } = useSelector((state) => state);
 
-  console.log(user.userId, groups.group.admin);
-
   useEffect(() => {
     if (
       user.userId &&

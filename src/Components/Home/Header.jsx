@@ -62,19 +62,19 @@ const ProfileImage = styled("img")((theme) => ({
 
 const Header = () => {
   const user = useSelector((state) => state.user);
+  const { currentGroupId } = useSelector((state) => state.groups);
 
   const [groupInfo, setGroupInfo] = useState("");
 
   const dispatch = useDispatch();
 
-  const { currentGroupId } = useSelector((state) => state.groups);
-
   useEffect(() => {
-    getGroupInfo();
-  }, []);
+    getGroupInfo(currentGroupId);
+  }, [currentGroupId]);
 
-  const getGroupInfo = () => {
+  const getGroupInfo = (currentGroupId) => {
     GroupServices.getGroupInfo(
+      currentGroupId,
       {},
       () => dispatch(startLoader()),
       handleGroupInfo,

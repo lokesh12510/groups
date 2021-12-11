@@ -215,7 +215,8 @@ const Settings = () => {
       <Container>
         <HeaderSection>
           <Button
-            onClick={() => navigate(-1)}
+            component={Link}
+            to="/"
             className="backBtn"
             variant="text"
             startIcon={<ArrowBackIcon />}

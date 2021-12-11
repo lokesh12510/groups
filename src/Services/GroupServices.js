@@ -6,6 +6,7 @@ const PATH = {
   getGroupInfo: "group/groupInfo",
   getNonMembers: "/group/nonMembersList",
   addMember: "group/addMember",
+  removeMember: "group/removeMember",
 };
 
 const getMembersList = (params, start, callback, error, next) => {
@@ -16,9 +17,9 @@ const getMembersList = (params, start, callback, error, next) => {
     .finally(next);
 };
 
-const getGroupInfo = (params, start, callback, error, next) => {
+const getGroupInfo = (groupId, params, start, callback, error, next) => {
   start();
-  return AdminHttpClient.get(`${PATH.getGroupInfo}`, params)
+  return AdminHttpClient.get(`${PATH.getGroupInfo}/${groupId}`, params)
     .then(callback)
     .catch(error)
     .finally(next);
@@ -39,9 +40,18 @@ const addGroupMembers = (payload, start, callback, error, next) => {
     .finally(next);
 };
 
+const removeGroupMembers = (payload, start, callback, error, next) => {
+  start();
+  return AdminHttpClient.post(`${PATH.removeMember}`, payload)
+    .then(callback)
+    .catch(error)
+    .finally(next);
+};
+
 export const GroupServices = {
   getMembersList,
   getGroupInfo,
   addGroupMembers,
   getNonMembers,
+  removeGroupMembers,
 };

@@ -11,44 +11,10 @@ import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
 import { useDispatch } from "react-redux";
 import { setMessage } from "../../redux/actions/Message.actions";
 
-const handleClick = () => {
-  console.info("You clicked the Chip.");
-};
-
-const NonMemberCard = ({ member }) => {
-  const [added, setAdded] = useState(false);
+const NonMemberCard = ({ member, handleAddMember }) => {
+  const [added, setAdded] = useState([]);
 
   const dispatch = useDispatch();
-
-  const handleAddMembers = (id) => {
-    console.info(id);
-
-    GroupServices.addGroupMembers(
-      {
-        user_id: id,
-      },
-      () => dispatch(startLoader()),
-      handleAddSuccess,
-      handleError,
-      () => dispatch(stopLoader())
-    );
-  };
-
-  const handleAddSuccess = (data) => {
-    console.log(data);
-    setAdded((added) => !added);
-    dispatch(
-      setMessage({ message: "Member Added Successfully!", type: "success" })
-    );
-  };
-
-  const handleError = (err) => {
-    console.log(err);
-    setAdded((added) => !added);
-    dispatch(
-      setMessage({ message: "Member already in Group!", type: "error" })
-    );
-  };
 
   return (
     <Root
@@ -68,7 +34,7 @@ const NonMemberCard = ({ member }) => {
         action={
           <Chip
             label="ADD"
-            onDelete={(e) => handleAddMembers(member.user_id)}
+            onDelete={() => handleAddMember(member.user_id)}
             variant="contained"
             deleteIcon={<AddCircleOutline style={{ color: "#696DF3" }} />}
           />

@@ -108,14 +108,14 @@ const Appbar = (props) => {
           <Tab
             value="payments"
             icon={
-              location.pathname === "/profile" ? (
+              location.pathname === "/payments" ? (
                 <AccountBalanceIcon fontSize="medium" />
               ) : (
                 <AccountBalanceOutlinedIcon fontSize="medium" />
               )
             }
             component={Link}
-            to={"/profile"}
+            to={"/payments"}
           ></Tab>
         </Tabs>
       </Container>

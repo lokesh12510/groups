@@ -19,6 +19,8 @@ import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
 import { setMessage } from "../../redux/actions/Message.actions";
 import { SwitchBtn } from "../../UIElements/Buttons";
 import NonMemberCard from "../../Components/Members/NonMemberCard";
+import MembersList from "../../Components/Members/MembersList";
+import NonMembersList from "../../Components/Members/NonMembersList";
 
 const Members = () => {
   const dispatch = useDispatch();
@@ -36,23 +38,12 @@ const Members = () => {
 
   const group_id = groups.currentGroupId;
 
-  useEffect(() => {
-    if (addNew) {
-      getNonMembers(group_id);
-    } else {
-      getMembersList();
-    }
-  }, [group_id, addNew]);
+  // useEffect(() => {
+  //   if (addNew) {
+  //     getNonMembers(group_id);
+  //   }
+  // }, [group_id]);
 
-  const getMembersList = () => {
-    GroupServices.getMembersList(
-      {},
-      () => dispatch(startLoader()),
-      handleMembersList,
-      handleError,
-      () => dispatch(stopLoader())
-    );
-  };
   const getNonMembers = (group_id) => {
     GroupServices.getNonMembers(
       group_id,
@@ -62,11 +53,6 @@ const Members = () => {
       handleError,
       () => dispatch(stopLoader())
     );
-  };
-
-  const handleMembersList = (data) => {
-    setMembers(data.data.data.members);
-    dispatch(setMessage({ message: "", type: "success" }));
   };
 
   const handleNonMembers = (data) => {
@@ -132,30 +118,8 @@ const Members = () => {
               </Grid>
             </Grid>
           )}
-
-          {!loading &&
-            !addNew &&
-            members.length > 0 &&
-            members
-              .filter((item) => {
-                if (search === "") return item;
-                else if (
-                  item.user.username.toLowerCase().trim().includes(search)
-                )
-                  return item;
-              })
-              .map((member, index) => {
-                return (
-                  <MemberCard key={index} member={member} addNew={addNew} />
-                );
-              })}
-
-          {!loading &&
-            addNew &&
-            nonMembers.length > 0 &&
-            nonMembers.map((member, index) => {
-              return <NonMemberCard key={index} member={member} />;
-            })}
+          {addNew && <NonMembersList />}
+          {!addNew && <MembersList />}
         </Container>
       </div>
     </Root>
@@ -163,70 +127,6 @@ const Members = () => {
 };
 
 export default Members;
-
-const user = [
-  {
-    id: 7,
-    name: "Naresh",
-    created_at: "14 SEP 2019",
-    user: {
-      avatar:
-        "https://res.cloudinary.com/drxjql1j7/image/upload/v1639070926/avatars/ewovxmoyeo0uh52fvrkp.jpg",
-      user_id: "USR09tVn11cHeQl",
-      username: "Krish123",
-    },
-    status: "new",
-  },
-
-  {
-    id: 2,
-    name: "sdfsd",
-    created_at: "14 SEP 2019",
-    user: {
-      avatar:
-        "https://res.cloudinary.com/drxjql1j7/image/upload/v1639070926/avatars/ewovxmoyeo0uh52fvrkp.jpg",
-      user_id: "USR02",
-      username: "asfas",
-    },
-    status: "new",
-  },
-  {
-    id: 2,
-    name: "sdfasdfsd",
-    created_at: "14 SEP 2019",
-    user: {
-      avatar:
-        "https://res.cloudinary.com/drxjql1j7/image/upload/v1639070926/avatars/ewovxmoyeo0uh52fvrkp.jpg",
-      user_id: "USR03",
-      username: "asfas",
-    },
-    status: "new",
-  },
-  {
-    id: 2,
-    name: "sdfasdfasdsd",
-    created_at: "14 SEP 2019",
-    user: {
-      avatar:
-        "https://res.cloudinary.com/drxjql1j7/image/upload/v1639070926/avatars/ewovxmoyeo0uh52fvrkp.jpg",
-      user_id: "USR04",
-      username: "asfas",
-    },
-    status: "new",
-  },
-  {
-    id: 2,
-    name: "sdfasdfasdfsd",
-    created_at: "14 SEP 2019",
-    user: {
-      avatar:
-        "https://res.cloudinary.com/drxjql1j7/image/upload/v1639070926/avatars/ewovxmoyeo0uh52fvrkp.jpg",
-      user_id: "USR05",
-      username: "asfas",
-    },
-    status: "new",
-  },
-];
 
 const Root = styled("div")((theme) => ({
   width: "100%",
@@ -238,7 +138,7 @@ const Root = styled("div")((theme) => ({
   "& .memberCount": { color: "#a3a2a2" },
   "& .memberListSection": {
     backgroundColor: "#fff",
-    padding: "15px 0 120px 15px",
+    padding: "15px 0 120px 0px",
     borderRadius: "20px 20px 0 0",
     "& .MuiContainer-root": {
       padding: "0 10px",
