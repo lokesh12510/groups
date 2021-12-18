@@ -1,4 +1,6 @@
+import { Groups } from "@mui/icons-material";
 import { CLEAR_USER, SET_USER, UPDATE_USER, IS_ADMIN } from "../actionTypes";
+import { store } from "../Store";
 
 const initialState = {
   profile: {},
@@ -30,7 +32,7 @@ export const userReducer = (state = initialState, action) => {
     case IS_ADMIN:
       return {
         ...state,
-        isAdmin: true,
+        isAdmin: payload,
       };
     case CLEAR_USER:
       return initialState;

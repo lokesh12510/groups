@@ -24,6 +24,7 @@ import LandingPage from "../Pages/User/LandingPage";
 import Settings from "../Pages/User/Settings";
 import ChangePassword from "../Pages/User/ChangePassword";
 import Payments from "../Pages/User/Payments";
+import { isAdmin } from "../redux/actions/User.actions";
 
 const PrivateRoute = ({ nav = true }) => {
   const { isLoggedIn, accessToken } = useSelector((state) => state.auth); // determine if authorized, from context or however you're doing it
@@ -40,12 +41,8 @@ const PrivateRoute = ({ nav = true }) => {
 };
 
 const PublicLayouts = () => {
-  const group = useSelector((state) => state.groups.groupStatus);
-  const [groupStatus, setGroupStatus] = useState(false);
+  const { groupStatus } = useSelector((state) => state.groups);
 
-  useEffect(() => {
-    if (group) setGroupStatus(group);
-  }, [group, groupStatus]);
   return (
     <div>
       <Routes>

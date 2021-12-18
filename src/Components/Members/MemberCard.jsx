@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 // Styles
 import { styled } from "@mui/material/styles";
-import { Avatar, Badge, Button, CardHeader, Chip } from "@mui/material";
+import {
+  Avatar,
+  Badge,
+  Button,
+  CardHeader,
+  Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+} from "@mui/material";
 import { DefaultTheme } from "../../Constant";
 import { Link } from "react-router-dom";
 import moment from "moment";
@@ -10,11 +22,24 @@ import { GroupServices } from "../../Services/GroupServices";
 import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
 import { useDispatch, useSelector } from "react-redux";
 import { setMessage } from "../../redux/actions/Message.actions";
+import EditIcon from "@mui/icons-material/Edit";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 
 const MemberCard = ({ member, handleRemoveMember }) => {
   const { currentGroupId } = useSelector((state) => state.groups);
 
   const { isAdmin } = useSelector((state) => state.user);
+  const [open, setOpen] = useState(false);
+  const [currentId, setCurrentId] = useState("");
+
+  const handleClickOpen = (id) => {
+    setOpen(true);
+    setCurrentId(id);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Root
@@ -51,13 +76,49 @@ const MemberCard = ({ member, handleRemoveMember }) => {
           isAdmin && (
             <Chip
               label="Remove"
-              onDelete={() => handleRemoveMember(member.user.user_id)}
-              variant="contained"
-              deleteIcon={<AddCircleOutline style={{ color: "#696DF3" }} />}
+              onClick={() => handleClickOpen(member.user.user_id)}
+              variant="outlined"
+              color="error"
+              icon={<RemoveCircleOutlineIcon />}
             />
           )
         }
       />
+      {/* confirmation dialog */}
+      <Dialog open={open} onClose={handleClose} style={{ textAlign: "center" }}>
+        <DialogTitle>Remove Member</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <Grid container justifyContent={"center"} mb={2}>
+              <Avatar
+                sx={{ bgcolor: DefaultTheme.palette.secondary.main }}
+                aria-label="recipe"
+                src={member.user?.avatar}
+              ></Avatar>
+            </Grid>
+            Are you sure want to remove <br />{" "}
+            <strong>{member.user?.username}</strong> !
+          </DialogContentText>
+        </DialogContent>
+        <Actions className="actions">
+          <Button
+            variant="outlined"
+            color="info"
+            onClick={handleClose}
+            fullWidth
+          >
+            No
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => handleRemoveMember(currentId)}
+            fullWidth
+          >
+            Yes
+          </Button>
+        </Actions>
+      </Dialog>
     </Root>
   );
 };
@@ -104,3 +165,7 @@ const Root = styled(Button)((theme) => ({
     },
   },
 }));
+
+const Actions = styled(DialogActions)({
+  padding: "20px",
+});

@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux";
 import { setMessage } from "../../redux/actions/Message.actions";
 import { GroupServices } from "../../Services/GroupServices";
 import { useEffect } from "react";
+import { updateGroup } from "../../redux/actions/Group.actions";
 
 const HeaderSection = styled("section")((theme) => ({
   paddingTop: "1px",
@@ -62,35 +63,7 @@ const ProfileImage = styled("img")((theme) => ({
 
 const Header = () => {
   const user = useSelector((state) => state.user);
-  const { currentGroupId } = useSelector((state) => state.groups);
-
-  const [groupInfo, setGroupInfo] = useState("");
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    getGroupInfo(currentGroupId);
-  }, [currentGroupId]);
-
-  const getGroupInfo = (currentGroupId) => {
-    GroupServices.getGroupInfo(
-      currentGroupId,
-      {},
-      () => dispatch(startLoader()),
-      handleGroupInfo,
-      handleError,
-      () => dispatch(stopLoader())
-    );
-  };
-
-  const handleGroupInfo = (data) => {
-    setGroupInfo(data.data.data);
-  };
-
-  const handleError = (error) => {
-    dispatch(setMessage({ message: "Something Went Wrong!", type: "error" }));
-    console.log(error);
-  };
+  const { groupInfo } = useSelector((state) => state.groups);
 
   return (
     <HeaderSection>
@@ -122,7 +95,7 @@ const Header = () => {
               Total Balance
             </Typography>
             <Typography variant="h4" gutterBottom component="div">
-              ₹ {groupInfo.balance}
+              ₹ {groupInfo?.balance}
             </Typography>
             <Typography variant="p" component="p">
               • • • • 0212

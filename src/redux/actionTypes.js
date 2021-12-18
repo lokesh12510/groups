@@ -26,3 +26,14 @@ export const SET_USER = "SET_USER";
 export const UPDATE_USER = "UPDATE_USER";
 export const IS_ADMIN = "IS_ADMIN";
 export const CLEAR_USER = "CLEAR_USER";
+
+// PAYMENT
+export const ACCEPT_PAYMENT = "ACCEPT_PAYMENT";
+export const CREATE_PAYMENT = "CREATE_PAYMENT";
+export const PENDING_PAYMENTS = "PENDING_PAYMENTS";
+
+// MEMBERS
+export const SET_MEMBERS = "SET_MEMBERS";
+export const SET_NON_MEMBERS = "SET_NON_MEMBERS";
+export const ADD_MEMBER = "ADD_MEMBER";
+export const REMOVE_MEMBER = "REMOVE_MEMBER";

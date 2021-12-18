@@ -18,6 +18,9 @@ export const PrimaryBtn = styled(Button)(({ theme }) => ({
   marginBottom: "25px",
   fontWeight: "bold",
   textDecoration: "none",
+  "&.Mui-disabled": {
+    backgroundColor: "#c9c9c9",
+  },
 }));
 
 export const SecondaryBtn = styled(Button)(({ theme }) => ({

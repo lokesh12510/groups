@@ -4,7 +4,6 @@ import { styled } from "@mui/material/styles";
 import Header from "../../Components/Home/Header";
 import EventSection from "../../Components/Home/EventSection";
 import TransactionSection from "../../Components/Home/TransactionSection";
-import { useSelector } from "react-redux";
 
 const Root = styled("div")((theme) => ({
   width: "100%",

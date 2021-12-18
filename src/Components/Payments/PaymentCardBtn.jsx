@@ -20,8 +20,10 @@ import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
 import { useDispatch, useSelector } from "react-redux";
 import { setMessage } from "../../redux/actions/Message.actions";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import DateRangeIcon from "@mui/icons-material/DateRange";
+import PaidIcon from "@mui/icons-material/Paid";
 
-const PaymentCardBtn = ({ payment, handleAccept }) => {
+const PaymentCardBtn = ({ payment, handleAccept, handleClickOpen }) => {
   const { currentGroupId } = useSelector((state) => state.groups);
 
   const { isAdmin } = useSelector((state) => state.user);
@@ -49,7 +51,7 @@ const PaymentCardBtn = ({ payment, handleAccept }) => {
           isAdmin && (
             <Chip
               label="Accept"
-              onDelete={() => handleAccept(payment.payment_id)}
+              onDelete={() => handleClickOpen(true, payment.payment_id)}
               variant="contained"
               deleteIcon={
                 <CheckCircleOutlineIcon style={{ color: "#696DF3" }} />
@@ -58,9 +60,15 @@ const PaymentCardBtn = ({ payment, handleAccept }) => {
           )
         }
       />
-      {/* <CardContent>
-        <p>{payment.amount}</p>
-      </CardContent> */}
+      <CardContent>
+        <div className="ItemContent">
+          <DateRangeIcon />
+          <h3>{moment(payment.createdAt).format("MMMM")}</h3>
+        </div>
+        <div className="ItemContent">
+          <h3>₹ {payment.amount}</h3>
+        </div>
+      </CardContent>
     </Root>
   );
 };
@@ -104,6 +112,18 @@ const Root = styled(CardActionArea)((theme) => ({
     "& .MuiChip-root": {
       fontSize: "11px",
       textTransform: "capitalize",
+    },
+  },
+  "& .MuiCardContent-root": {
+    padding: "11.2px 0 0 0",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    color: "666666",
+    "& .ItemContent": {
+      display: "flex",
+      alignItems: "center",
+      gap: "7px",
     },
   },
 }));

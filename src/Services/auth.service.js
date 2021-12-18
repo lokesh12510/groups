@@ -8,7 +8,6 @@ class AuthService {
   login(emailId, password) {
     let payload = { emailId, password };
     return axios.post(API_URL + "login", payload).then((response) => {
-      console.log(response.data);
       return response.data;
     });
   }
@@ -29,7 +28,6 @@ class AuthService {
         gender,
       })
       .then((response) => {
-        console.log(response.data);
         return response.data;
       });
   }

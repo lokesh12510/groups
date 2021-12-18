@@ -1,33 +1,23 @@
 import React, { useEffect } from "react";
 // Styles
 import { styled } from "@mui/material/styles";
-import {
-  Container,
-  FormControlLabel,
-  Grid,
-  InputAdornment,
-  Switch,
-  TextField,
-  Typography,
-} from "@mui/material";
-import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-import MemberCard from "../../Components/Members/MemberCard";
-import { DefaultTheme } from "../../Constant";
+import { Skeleton } from "@mui/material";
+
 import { GroupServices } from "../../Services/GroupServices";
 import { useDispatch, useSelector } from "react-redux";
 import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
 import { setMessage } from "../../redux/actions/Message.actions";
-import { SwitchBtn } from "../../UIElements/Buttons";
+
 import NonMemberCard from "../../Components/Members/NonMemberCard";
 import { useState } from "react";
+import { addMember } from "../../redux/actions/Members.actions";
+import NotFound from "../Elements/NotFound";
 
-const NonMembersList = () => {
+const NonMembersList = ({ search }) => {
   const dispatch = useDispatch();
   const { currentGroupId } = useSelector((state) => state.groups);
-  const [progress, setProgress] = useState(false);
 
   const { loading } = useSelector((state) => state.loader);
-  const { isAdmin } = useSelector((state) => state.user);
 
   // Members list state
   const [nonMembers, setNonMembers] = useState([]);
@@ -49,13 +39,10 @@ const NonMembersList = () => {
 
   const handleNonMembersList = (data) => {
     setNonMembers(data.data.data);
-    console.log(data);
     dispatch(setMessage({ message: "", type: "success" }));
   };
 
   const handleAddMember = (id) => {
-    console.log(id, "USER ID");
-
     GroupServices.addGroupMembers(
       { user_id: id },
       () => dispatch(startLoader()),
@@ -66,7 +53,7 @@ const NonMembersList = () => {
   };
 
   const handleAddSuccess = (data) => {
-    console.log(data);
+    dispatch(addMember());
     getNonMembers(currentGroupId);
     dispatch(
       setMessage({ message: "Member Removed Successfully!", type: "success" })
@@ -82,17 +69,59 @@ const NonMembersList = () => {
     <div>
       {!loading &&
         nonMembers.length > 0 &&
-        nonMembers.map((member, index) => {
+        nonMembers
+          .filter((item) => {
+            if (search === "") {
+              return item;
+            } else {
+              return item.username.toLowerCase().includes(search.toLowerCase());
+            }
+          })
+          .map((member, index) => {
+            return (
+              <NonMemberCard
+                key={index}
+                member={member}
+                handleAddMember={handleAddMember}
+              />
+            );
+          })}
+      {loading &&
+        [...new Array(10)].map((item) => {
           return (
-            <NonMemberCard
-              key={index}
-              member={member}
-              handleAddMember={handleAddMember}
-            />
+            <MemberSkeleton>
+              <div>
+                <Skeleton variant="circular" width={45} height={45} />
+              </div>
+              <div className="skeletonContent">
+                <Skeleton variant="rectangular" width={"100%"} height={20} />
+                <Skeleton
+                  variant="rectangular"
+                  width={"100%"}
+                  height={5}
+                  className="secondText"
+                />
+              </div>
+            </MemberSkeleton>
           );
         })}
+      {!loading && nonMembers.length === 0 && <NotFound />}
     </div>
   );
 };
 
 export default NonMembersList;
+
+const MemberSkeleton = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  gap: "10px",
+  marginBottom: "10px",
+  "& .skeletonContent": {
+    width: "100%",
+  },
+  "& .secondText": {
+    width: "100%",
+    marginBlock: "5px",
+  },
+});

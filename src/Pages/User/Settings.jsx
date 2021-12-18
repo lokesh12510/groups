@@ -203,7 +203,6 @@ const Settings = () => {
 
   const handleUserInfoSuccess = (data) => {
     dispatch(updateUser(data.data));
-    console.log(data.data);
   };
 
   const handleError = (error) => {

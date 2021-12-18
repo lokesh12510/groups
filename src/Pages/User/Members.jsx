@@ -24,58 +24,20 @@ import NonMembersList from "../../Components/Members/NonMembersList";
 
 const Members = () => {
   const dispatch = useDispatch();
-  const groups = useSelector((state) => state.groups);
-  const [progress, setProgress] = useState(false);
-
-  const { loading } = useSelector((state) => state.loader);
+  const { membersCount } = useSelector((state) => state.members);
   const { isAdmin } = useSelector((state) => state.user);
-
-  // Members list state
-  const [members, setMembers] = useState([]);
-  const [nonMembers, setNonMembers] = useState([]);
 
   const [addNew, setAddNew] = useState(false);
 
-  const group_id = groups.currentGroupId;
-
-  // useEffect(() => {
-  //   if (addNew) {
-  //     getNonMembers(group_id);
-  //   }
-  // }, [group_id]);
-
-  const getNonMembers = (group_id) => {
-    GroupServices.getNonMembers(
-      group_id,
-      {},
-      () => dispatch(startLoader()),
-      handleNonMembers,
-      handleError,
-      () => dispatch(stopLoader())
-    );
-  };
-
-  const handleNonMembers = (data) => {
-    setNonMembers(data.data.data);
-    dispatch(setMessage({ message: "", type: "success" }));
-  };
-
-  const handleError = (error) => {
-    dispatch(setMessage({ message: "Error Occurred!", type: "error" }));
-    console.log(error);
-  };
   const [search, setSearch] = useState("");
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
   };
 
-  console.log(addNew);
   const handleAddNew = () => {
     setAddNew((addNew) => !addNew);
   };
-
-  console.log(nonMembers);
 
   return (
     <Root>
@@ -96,7 +58,7 @@ const Members = () => {
         </div>
 
         <Typography variant="overline" display="block" className="memberCount">
-          Active : {members.length}
+          Active : {membersCount}
         </Typography>
       </Container>
       <div className="memberListSection">
@@ -107,6 +69,7 @@ const Members = () => {
               alignItems={"center"}
               justifyContent={"end"}
               spacing={1}
+              mb={2}
             >
               <Grid item>
                 <FormControlLabel
@@ -118,8 +81,8 @@ const Members = () => {
               </Grid>
             </Grid>
           )}
-          {addNew && <NonMembersList />}
-          {!addNew && <MembersList />}
+          {addNew && <NonMembersList search={search} />}
+          {!addNew && <MembersList search={search} />}
         </Container>
       </div>
     </Root>

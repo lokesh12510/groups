@@ -1,21 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-  Outlet,
-} from "react-router-dom";
-import Onboard from "../Pages/Auth/Onboard";
-import Login from "../Pages/Auth/Login";
-import Register from "../Pages/Auth/Register";
-import Thankyou from "../Pages/User/Thankyou";
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Dashboard from "../Pages/Admin/Dashboard";
 import Appbar from "../Components/Appbar/Appbar";
 import ManagePayments from "../Pages/Admin/ManagePayments";
+import ManageMembers from "../Pages/Admin/ManageMembers";
 
 const AdminRoute = ({ nav = true }) => {
   const { isLoggedIn, accessToken } = useSelector((state) => state.auth); // determine if authorized, from context or however you're doing it
@@ -32,23 +22,26 @@ const AdminRoute = ({ nav = true }) => {
 };
 
 const AdminLayouts = () => {
-  const { isAdmin } = useSelector((state) => state.user);
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isAdmin) {
-      navigate("/");
-    }
-  }, [isAdmin]);
-
   return (
     <div>
       <Routes>
         <Route exact path="/dashboard" element={<AdminRoute />}>
           <Route exact path="/dashboard" element={<Dashboard />} />
         </Route>
-        <Route path="/manage-payments" element={<ManagePayments />} />
+        <Route
+          exact
+          path="/manage-payments"
+          element={<AdminRoute nav={false} />}
+        >
+          <Route exact path="/manage-payments" element={<ManagePayments />} />
+        </Route>
+        <Route
+          exact
+          path="/manage-members"
+          element={<AdminRoute nav={false} />}
+        >
+          <Route exact path="/manage-members" element={<ManageMembers />} />
+        </Route>
       </Routes>
     </div>
   );

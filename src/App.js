@@ -1,43 +1,36 @@
 import React from "react";
-import { Alert, CircularProgress, Snackbar } from "@mui/material";
-import { useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  useNavigate,
-} from "react-router-dom";
+import { CircularProgress } from "@mui/material";
+import { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import AuthLayouts from "./Layouts/AuthLayouts";
 import PublicLayouts from "./Layouts/PublicLayouts";
 import Toast from "./UIElements/Toast";
 import { useDispatch, useSelector } from "react-redux";
 import AdminLayouts from "./Layouts/AdminLayouts";
 import { isAdmin } from "./redux/actions/User.actions";
+import { updateGroup } from "./redux/actions/Group.actions";
 
 function App() {
   const { message, type } = useSelector((state) => state.message);
-  const { isGroupAdmin } = useSelector((state) => state.groups);
   const { loading } = useSelector((state) => state.loader);
 
   const dispatch = useDispatch();
 
-  const { user, groups } = useSelector((state) => state);
+  const { currentGroupId } = useSelector((state) => state.groups);
+
+  const location = useLocation();
 
   useEffect(() => {
-    if (
-      user.userId &&
-      groups.group.admin &&
-      user.userId === groups.group.admin
-    ) {
-      dispatch(isAdmin());
+    dispatch(isAdmin());
+    if (currentGroupId) {
+      dispatch(updateGroup(currentGroupId));
     }
-  }, []);
+  }, [currentGroupId]);
 
   return (
     <div className="App">
       {!loading && message && <Toast message={message} type={type} />}
-      {loading && (
+      {loading && !location.pathname === "/members" && (
         <CircularProgress
           style={{
             position: "absolute",
@@ -56,7 +49,7 @@ function App() {
         <Route path="/*" element={<PublicLayouts />} />
         <Route
           path="/admin/*"
-          element={isGroupAdmin ? <AdminLayouts /> : <AuthLayouts />}
+          element={isAdmin ? <AdminLayouts /> : <AuthLayouts />}
         />
       </Routes>
     </div>

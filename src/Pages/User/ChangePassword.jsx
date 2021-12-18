@@ -149,7 +149,6 @@ const ChangePassword = () => {
   };
 
   const handleUpdateSuccess = (data) => {
-    console.log(data);
     dispatch(
       setMessage({ message: "Password Changed Successfully!", type: "success" })
     );

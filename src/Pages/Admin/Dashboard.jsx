@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 // Styles
 import { styled } from "@mui/material/styles";
 import { Container, Grid } from "@mui/material";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getPendingPayments } from "../../redux/actions/Payments.actions";
 
 const Root = styled("div")((theme) => ({
   width: "100%",
@@ -14,12 +16,14 @@ const Root = styled("div")((theme) => ({
 }));
 
 const CardBtn = styled(Button)(({ theme, h, bg }) => ({
+  flexDirection: "column",
   padding: "20px",
   borderRadius: "20px",
   fontSize: "16px",
   minHeight: `${h}px`,
   marginBottom: "10px",
   backgroundColor: `${bg}`,
+  textAlign: "center",
   "&:hover": {
     backgroundColor: `${bg}`,
   },
@@ -29,6 +33,9 @@ const CardBtn = styled(Button)(({ theme, h, bg }) => ({
 }));
 
 const Dashboard = () => {
+  const { pendingCount } = useSelector((state) => state.payment);
+  const { membersCount } = useSelector((state) => state.members);
+
   return (
     <Root>
       <Container>
@@ -45,6 +52,7 @@ const Dashboard = () => {
               component={Link}
               to="/admin/manage-payments"
             >
+              <h1>{pendingCount}</h1>
               Manage Payments
             </CardBtn>
             <CardBtn
@@ -75,7 +83,10 @@ const Dashboard = () => {
               h="130"
               bg="#ff7043"
               gutterBottom
+              component={Link}
+              to="/admin/manage-members"
             >
+              <h1>{membersCount}</h1>
               Manage Members
             </CardBtn>
             <CardBtn

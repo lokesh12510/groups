@@ -50,7 +50,6 @@ export const authReducer = (prevState = initialState, action) => {
       return {
         ...prevState,
         accessToken: null,
-        user: null,
         isLoggedIn: false,
       };
 

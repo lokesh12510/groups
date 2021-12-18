@@ -7,10 +7,12 @@ import {
 import { store } from "../Store";
 
 const initialState = {
-  group: null,
+  groupName: "",
   currentGroupId: "",
   groupStatus: false,
-  isGroupAdmin: false,
+  groupAdmin: null,
+  groupInfo: null,
+  isFetched: false,
 };
 
 export const groupReducer = (state = initialState, action) => {
@@ -20,20 +22,18 @@ export const groupReducer = (state = initialState, action) => {
     case SET_GROUP:
       return {
         ...state,
-        group: payload.data.group,
-        currentGroupId:
-          payload.data.group !== null ? payload.data.group.id : "",
-        groupStatus: payload.data.group !== null ? true : false,
-        isGroupAdmin: payload.data.group !== null && payload.data.group.admin,
+        groupName: payload.name,
+        currentGroupId: payload.id,
+        groupStatus: payload !== null ? true : false,
+        groupAdmin: payload.admin,
+        isFetched: true,
       };
 
     case UPDATE_GROUP:
       return {
         ...state,
-        group: payload,
-        currentGroupId: payload.id,
-        groupStatus: payload.id ? true : false,
-        isGroupAdmin: payload.admin,
+        groupInfo: payload,
+        isFetched: true,
       };
 
     case SWITCH_GROUP:

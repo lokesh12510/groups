@@ -64,7 +64,7 @@ const HeaderSection = styled("div")((theme) => ({
   paddingBottom: "20px",
 }));
 
-const Login = () => {
+const FormTemplate = () => {
   // Password Field
   const [passToggle, setPassToggle] = useState(false);
   const handlePassToggle = () => {
@@ -111,10 +111,7 @@ const Login = () => {
             <img src={APP_LOGO} alt="" />
           </div>
         </HeaderSection>
-        <div className="title">
-          <h4 className="secondaryTitle">Welcome Back!</h4>
-          <p className="secondaryTitle">Please login to continue</p>
-        </div>
+
         <Formik
           initialValues={{
             emailId: "",
@@ -213,4 +210,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default FormTemplate;
