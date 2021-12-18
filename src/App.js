@@ -30,7 +30,7 @@ function App() {
   return (
     <div className="App">
       {!loading && message && <Toast message={message} type={type} />}
-      {loading && !location.pathname === "/members" && (
+      {loading && location.pathname !== "/members" && (
         <CircularProgress
           style={{
             position: "absolute",
