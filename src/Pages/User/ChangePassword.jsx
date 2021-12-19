@@ -1,37 +1,22 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // Styles
 import { styled } from "@mui/material/styles";
 import {
   Button,
   Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   Grid,
-  IconButton,
-  Typography,
   TextField,
   InputAdornment,
 } from "@mui/material";
 import { DefaultTheme } from "../../Constant";
-import { DEFAULT_PROFILE } from "../../UIElements/Images";
 // ICON
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import CameraEnhanceIcon from "@mui/icons-material/CameraEnhance";
-import EditIcon from "@mui/icons-material/Edit";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import BadgeIcon from "@mui/icons-material/Badge";
-import LogoutIcon from "@mui/icons-material/Logout";
-import PasswordIcon from "@mui/icons-material/Password";
-import { logout } from "../../redux/actions/Auth.actions";
 import { useDispatch } from "react-redux";
 import { PrimaryBtn } from "../../UIElements/Buttons";
 import { UserServices } from "../../Services/UserServices";
 import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
-import { updateUser } from "../../redux/actions/User.actions";
+
 import { setMessage } from "../../redux/actions/Message.actions";
 
 const Root = styled("div")((theme) => ({
@@ -65,39 +50,6 @@ const HeaderSection = styled("div")((theme) => ({
   alignItems: "center",
   justifyContent: "space-between",
   marginBottom: "50px",
-}));
-
-const ButtonLight = styled(Button)((theme) => ({
-  width: "100%",
-  padding: ".7rem",
-  color: "#2f2f2f",
-  borderRadius: "5px",
-  boxShadow: "none",
-  margin: "1px 0",
-  justifyContent: "space-between",
-}));
-
-const ProfileImageContainer = styled("div")((theme) => ({
-  width: 80,
-  height: 80,
-  borderRadius: "50%",
-  objectFit: "cover",
-  overflow: "hidden",
-  border: `1px solid ${DefaultTheme.palette.primary.main}`,
-  position: "relative",
-  marginBottom: "15px",
-}));
-
-const EditIconBtn = styled(IconButton)((theme) => ({
-  background: "#ffffff9e",
-  borderRadius: "50%",
-  position: "absolute",
-  border: `1px solid ${DefaultTheme.palette.secondary.main}`,
-  padding: "6px",
-  inset: 0,
-  width: 42,
-  height: 42,
-  margin: "auto",
 }));
 
 export const MuiTextField = styled(TextField)(({ theme }) => ({
@@ -152,16 +104,12 @@ const ChangePassword = () => {
     dispatch(
       setMessage({ message: "Password Changed Successfully!", type: "success" })
     );
-    navigate("/profile");
+    navigate("/settings");
   };
 
   const handleError = (error) => {
     console.log(error);
     dispatch(setMessage({ message: error.message, type: "error" }));
-  };
-
-  const handleLogout = () => {
-    dispatch(logout());
   };
   return (
     <Root>

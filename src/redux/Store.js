@@ -13,12 +13,14 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { paymentsReducer } from "./reducers/Payments.reducer";
 import { membersReducer } from "./reducers/Members.reducer";
+import { userPaymentReducer } from "./reducers/UserPayments.reducer";
+import { groupPaymentHistoryReducer } from "./reducers/GroupPaymentHistory.reducer";
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["members", "payment"],
+  blacklist: ["members", "payment", "groupHistory", "userPayments"],
 };
 
 const rootReducer = combineReducers({
@@ -29,6 +31,8 @@ const rootReducer = combineReducers({
   user: userReducer,
   payment: paymentsReducer,
   members: membersReducer,
+  userPayments: userPaymentReducer,
+  groupHistory: groupPaymentHistoryReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -122,8 +122,9 @@ const Login = () => {
           }}
           onSubmit={(values, formikHelpers) => {
             dispatch(login(values.emailId, values.password));
-            // navigate("/");
-            formikHelpers.resetForm();
+            // // navigate("/");
+            // formikHelpers.resetForm();
+            formikHelpers.resetForm({ values: { ...values, password: "" } });
           }}
           validationSchema={object({
             emailId: string()

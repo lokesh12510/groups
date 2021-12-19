@@ -5,6 +5,10 @@ import EventCard from "./EventCard";
 import { Button, Grid, Typography } from "@mui/material";
 import { DefaultTheme } from "../../Constant";
 
+import Event4 from "../../Assets/Images/event4.jpg";
+import Event3 from "../../Assets/Images/event3.jpg";
+import Event2 from "../../Assets/Images/event2.jpg";
+
 const Root = styled("div")((theme) => ({
   width: "100%",
   "& .timeline_year": {
@@ -91,35 +95,33 @@ export default Timeline;
 const timelines = [
   {
     id: 1,
-    year: 2021,
-    title: "Sports event 2021",
-    date: "1st Nov",
+    year: 2020,
+    title: "=FOOTBALL LEAGUE- 4",
+    date: "27th Dec",
     image:
       "https://img.etimg.com/thumb/msid-77734860,width-650,imgsize-951020,,resizemode-4,quality-100/sports_istock.jpg",
   },
   {
     id: 2,
-    year: 2021,
-    title: "Go Green 2021",
-    date: "14st Jan",
-    image:
-      "https://img.etimg.com/thumb/msid-77734860,width-650,imgsize-951020,,resizemode-4,quality-100/sports_istock.jpg",
+    year: 2020,
+    title: "Plastic Free Thambatty",
+    date: "27th May",
+    image: { Event4 },
   },
   {
     id: 3,
-    year: 2020,
-    title: "Sports event 2020",
-    date: "1st Nov",
-    image:
-      "https://img.etimg.com/thumb/msid-77734860,width-650,imgsize-951020,,resizemode-4,quality-100/sports_istock.jpg",
+    year: 2021,
+    title: "Kids Motivational",
+    date: "24th Jan",
+    image: { Event3 },
   },
   {
     id: 4,
-    year: 2020,
-    title: "Go Green 2020",
-    date: "1st Jun",
+    year: 2019,
+    title: "Society club Event",
+    date: "29th Dec",
     image:
-      "https://img.etimg.com/thumb/msid-77734860,width-650,imgsize-951020,,resizemode-4,quality-100/sports_istock.jpg",
+      "https://lh3.googleusercontent.com/chat_attachment/ADMKSce7fcVVov6GChyPq1EEdZWWpY9KMh1t67xyx8PnIAq0KWOrK0uRDuUPWj2vQlE7h-MDxeKAH3LlDwp-j4x4Fhs-ZbL39zmRE9zfzi0LZQtaGllTvgVNw_BwF8KVOKyDcF4siOUrqDHiwYc9roJIKLj7xdSHC-VudKgJwf87PyASy3wTJcal3F-xNnLPomuwIvSbMlCOszuOzqDKpEOVGvkjmlA=w512",
   },
 ];
 
@@ -134,4 +136,3 @@ function groupTimeline(list, key) {
 let [...groupedData] = new Map(
   Object.entries(groupTimeline(timelines, "year")).reverse()
 );
-  

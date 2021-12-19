@@ -7,6 +7,7 @@ const PATH = {
   home: "user/home",
   acceptPayment: "user/acceptPayment",
   createPayment: "user/createPayment",
+  userPayments: "user/payments",
 };
 
 const userUpdate = (payload, start, callback, error, next) => {
@@ -47,10 +48,20 @@ const createPayment = (payload, start, callback, error, next) => {
     .finally(next);
 };
 
+const userPayments = (params, start, callback, error, next) => {
+  console.log(params);
+  start();
+  return AdminHttpClient.get(`${PATH.userPayments}`, params)
+    .then(callback)
+    .catch(error)
+    .finally(next);
+};
+
 export const UserServices = {
   userUpdate,
   userInfo,
   home,
   acceptPayment,
   createPayment,
+  userPayments,
 };

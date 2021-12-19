@@ -3,6 +3,7 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import { Typography } from "@mui/material";
 import { PAYMENT_BG, PAYMENT_BG_FINE } from "../../UIElements/Images";
+import moment from "moment";
 
 const Root = styled("div")((theme) => ({
   display: "flex",
@@ -22,6 +23,7 @@ const Root = styled("div")((theme) => ({
       marginRight: "10px",
       maxWidth: "40px",
       maxHeight: "40px",
+      objectFit: "cover",
     },
     "& .paymentDetails .userName": {
       fontSize: "16px",
@@ -54,13 +56,13 @@ const Root = styled("div")((theme) => ({
   "& .card-end[data-fine=false]": { backgroundImage: `url("${PAYMENT_BG}")` },
 }));
 
-const PaymentCard = () => {
+const PaymentCard = ({ payment }) => {
   return (
     <Root>
       <div className="card-start">
         <div className="profileImage">
           <img
-            src="https://lh3.googleusercontent.com/ogw/ADea4I4uMKqSMw2XqG7DKA1gROd0gPOI9UoMZHe6Jnoa9w=s32-c-mo"
+            src="https://res.cloudinary.com/drxjql1j7/image/upload/v1639070926/avatars/ewovxmoyeo0uh52fvrkp.jpg"
             width="40"
             height="40"
             loading="lazy"
@@ -77,13 +79,14 @@ const PaymentCard = () => {
             Adam
           </Typography>
           <Typography variant="p" gutterBottom component="div" className="date">
-            04:55 PM
+            {moment(payment?.createdAt).format("MMM DD")}
           </Typography>
         </div>
       </div>
-      <div className="card-end" data-fine="true">
+      <div className="card-end" data-fine={payment?.fine ? true : false}>
         <Typography variant="p" gutterBottom component="div" className="amount">
-          ₹ 50<span>.00</span>
+          ₹ {payment?.amount} 50
+          <span>.00</span>
         </Typography>
       </div>
     </Root>

@@ -11,7 +11,7 @@ import {
 import { store } from "../Store";
 
 export const getPendingPayments = (id, status) => (dispatch) => {
-  return GroupServices.pendingPayments(
+  return GroupServices.payments(
     {
       group_id: id,
       status: status,
@@ -30,7 +30,7 @@ export const getPendingPayments = (id, status) => (dispatch) => {
     (error) => {
       dispatch({
         type: SET_MESSAGE,
-        payload: { message: "Something went wrong!Try again!", type: "error" },
+        payload: { message: "", type: "error" },
       });
     },
     () => {

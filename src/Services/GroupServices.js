@@ -6,7 +6,7 @@ const PATH = {
   getNonMembers: "/group/nonMembersList",
   addMember: "group/addMember",
   removeMember: "group/removeMember",
-  pendingPayments: "group/pendingPayments",
+  payments: "group/payments",
 };
 
 const getMembersList = (params, start, callback, error, next) => {
@@ -48,9 +48,9 @@ const removeGroupMembers = (payload, start, callback, error, next) => {
     .finally(next);
 };
 
-const pendingPayments = (params, start, callback, error, next) => {
+const payments = (params, start, callback, error, next) => {
   start();
-  return AdminHttpClient.get(`${PATH.pendingPayments}`, { params })
+  return AdminHttpClient.get(`${PATH.payments}`, { params })
     .then(callback)
     .catch(error)
     .finally(next);
@@ -62,5 +62,5 @@ export const GroupServices = {
   addGroupMembers,
   getNonMembers,
   removeGroupMembers,
-  pendingPayments,
+  payments,
 };

@@ -22,6 +22,10 @@ import { GroupServices } from "../../Services/GroupServices";
 import { useEffect } from "react";
 import { updateGroup } from "../../redux/actions/Group.actions";
 
+import { bounce } from "react-animations";
+
+const bounceAnimation = `keyframes ${bounce}`;
+
 const HeaderSection = styled("section")((theme) => ({
   paddingTop: "1px",
   background:
@@ -30,6 +34,7 @@ const HeaderSection = styled("section")((theme) => ({
     textTransform: "Capitalize",
   },
   "& .card": {
+    animation: `1s ${bounceAnimation}`,
     display: "block",
     width: "100%",
     padding: 0,
@@ -82,7 +87,12 @@ const Header = () => {
           </Grid>
           <Grid item>
             <IconButton focusRipple component={Link} to={"/settings"}>
-              <ProfileImage src={user.profile.avatar} />
+              <ProfileImage
+                alt="avatar"
+                src={user.profile.avatar}
+                width="36"
+                height="36"
+              />
             </IconButton>
           </Grid>
         </Grid>
@@ -104,7 +114,12 @@ const Header = () => {
         </Button>
         <Grid container direction="row" spacing={1}>
           <Grid item xs={4}>
-            <Button className="miniCard" waves="light">
+            <Button
+              className="miniCard"
+              waves="light"
+              component={Link}
+              to="/savings"
+            >
               <MiniGradientCard bg={BG_MINI_1}>
                 <SavingsIcon width="48" height="44" />
                 <Typography
@@ -118,7 +133,12 @@ const Header = () => {
             </Button>
           </Grid>
           <Grid item xs={4}>
-            <Button className="miniCard" waves="light">
+            <Button
+              className="miniCard"
+              waves="light"
+              component={Link}
+              to="/expenses"
+            >
               <MiniGradientCard bg={BG_MINI_1}>
                 <ExpenseIcon width="48" height="46" />
                 <Typography
@@ -132,7 +152,12 @@ const Header = () => {
             </Button>
           </Grid>
           <Grid item xs={4}>
-            <Button className="miniCard" waves="light">
+            <Button
+              className="miniCard"
+              waves="light"
+              component={Link}
+              to="/donation"
+            >
               <MiniGradientCard bg={BG_MINI_1}>
                 <DonationIcon width="48" height="45" />
                 <Typography

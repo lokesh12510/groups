@@ -47,25 +47,13 @@ const MemberCard = ({ member, handleRemoveMember }) => {
     >
       <CardHeader
         avatar={
-          <Badge
-            color={member.status === "active" ? "success" : "error"}
-            overlap="circular"
-            badgeContent=" "
-            variant="dot"
-            className="statusDot"
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
+          <Avatar
+            sx={{ bgcolor: DefaultTheme.palette.secondary.main }}
+            aria-label="recipe"
+            src={member.user?.avatar}
           >
-            <Avatar
-              sx={{ bgcolor: DefaultTheme.palette.secondary.main }}
-              aria-label="recipe"
-              src={member.user?.avatar}
-            >
-              {member.user?.username.slice(0, 1)}
-            </Avatar>
-          </Badge>
+            {member.user?.username.slice(0, 1)}
+          </Avatar>
         }
         title={member.user?.username.slice(0, 17)}
         subheader={moment(

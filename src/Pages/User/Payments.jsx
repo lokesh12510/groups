@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // Styles
 import { styled } from "@mui/material/styles";
 import {
@@ -17,71 +17,23 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { RecentTransaction } from "../../UIElements/Icons";
 import PaymentCard from "../../Components/Payments/PaymentCard";
 import Select from "@mui/material/Select";
-
-const Root = styled("div")((theme) => ({
-  width: "100%",
-  "& .MuiContainer-root": {
-    paddingTop: "20px",
-  },
-}));
-
-const PaymentHeader = styled("div")({
-  padding: "16px",
-  minHeight: "150px",
-  background: `url("${PAYMENT_HEAD}")`,
-  backgroundSize: "cover",
-  backgroundPosition: "center center",
-  display: "flex",
-  alignItems: "start",
-  justifyContent: "space-between",
-  flexDirection: "column",
-  "& .backBtn": {
-    color: "#fff",
-    fontSize: "16px",
-    paddingInline: 0,
-  },
-  "& .headerTitle": {
-    color: "#fff",
-    fontSize: "14px",
-    textTransform: "uppercase",
-  },
-  "& .totalAmount": {
-    color: "#fff",
-    fontSize: "25px",
-    fontWeight: "500",
-  },
-});
-
-const PaymentContainer = styled(Container)({
-  paddingBlock: "10px",
-  "& .sectionTitle": {
-    fontSize: "18px",
-    display: "flex",
-    gap: "15px",
-  },
-});
-
-const FilterSection = styled(Grid)({
-  marginBlock: "20px",
-  "& .MuiSelect-select": {
-    padding: "9.5px 13px",
-  },
-  "& .MuiInputLabel-root.Mui-focused": {
-    top: "0px",
-  },
-  "& .MuiInputLabel-root": {
-    top: "0px",
-  },
-});
+import { useDispatch, useSelector } from "react-redux";
+import { getUserPayments } from "../../redux/actions/UserPayments.action";
+import { getGroupPaymentHistory } from "../../redux/actions/GroupPaymentHistory.actions";
 
 const Payments = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  // STATE
   const [year, setYear] = React.useState("All");
   const [type, setType] = React.useState("All");
   const [open, setOpen] = React.useState(false);
   const [typeOpen, setTypeOpen] = React.useState(false);
 
+  // SELECTORS
+  const { paymentList, isFetched } = useSelector((state) => state.userPayments);
+  const { currentGroupId } = useSelector((state) => state.groups);
   // YEAR
   const handleChange = (event) => {
     setYear(event.target.value);
@@ -103,6 +55,14 @@ const Payments = () => {
   const handleTypeOpen = () => {
     setTypeOpen(true);
   };
+
+  // SERVICE CALL-> (USER PAYMENT LIST)
+  useEffect(() => {
+    if (!isFetched) {
+      dispatch(getGroupPaymentHistory(currentGroupId, "Paid"));
+    }
+  }, []);
+  // SERVICE CALL-> (USER PAYMENT LIST)
 
   return (
     <Root>
@@ -205,3 +165,59 @@ const Payments = () => {
 };
 
 export default Payments;
+
+const Root = styled("div")((theme) => ({
+  width: "100%",
+  "& .MuiContainer-root": {
+    paddingTop: "20px",
+  },
+}));
+
+const PaymentHeader = styled("div")({
+  padding: "16px",
+  minHeight: "150px",
+  background: `url("${PAYMENT_HEAD}")`,
+  backgroundSize: "cover",
+  backgroundPosition: "center center",
+  display: "flex",
+  alignItems: "start",
+  justifyContent: "space-between",
+  flexDirection: "column",
+  "& .backBtn": {
+    color: "#fff",
+    fontSize: "16px",
+    paddingInline: 0,
+  },
+  "& .headerTitle": {
+    color: "#fff",
+    fontSize: "14px",
+    textTransform: "uppercase",
+  },
+  "& .totalAmount": {
+    color: "#fff",
+    fontSize: "25px",
+    fontWeight: "500",
+  },
+});
+
+const PaymentContainer = styled(Container)({
+  paddingBlock: "10px",
+  "& .sectionTitle": {
+    fontSize: "18px",
+    display: "flex",
+    gap: "15px",
+  },
+});
+
+const FilterSection = styled(Grid)({
+  marginBlock: "20px",
+  "& .MuiSelect-select": {
+    padding: "9.5px 13px",
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
+    top: "0px",
+  },
+  "& .MuiInputLabel-root": {
+    top: "0px",
+  },
+});

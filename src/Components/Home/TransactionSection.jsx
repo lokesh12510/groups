@@ -6,6 +6,7 @@ import { Container, Typography } from "@mui/material";
 import { RecentTransaction } from "../../UIElements/Icons";
 import PaymentCard from "../Payments/PaymentCard";
 import { ViewOutlinedBtn } from "../../UIElements/Buttons";
+import { Link } from "react-router-dom";
 
 const Root = styled("section")((theme) => ({
   "& .sectionTitle": {
@@ -42,7 +43,9 @@ const TransactionSection = () => {
         {[...new Array(3)].map((item, index) => {
           return <PaymentCard key={index} />;
         })}
-        <ViewOutlinedBtn variant="outlined">View More</ViewOutlinedBtn>
+        <ViewOutlinedBtn variant="outlined" component={Link} to="/savings">
+          View More
+        </ViewOutlinedBtn>
       </Container>
     </Root>
   );

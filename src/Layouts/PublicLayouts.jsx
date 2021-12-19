@@ -25,6 +25,9 @@ import Settings from "../Pages/User/Settings";
 import ChangePassword from "../Pages/User/ChangePassword";
 import Payments from "../Pages/User/Payments";
 import { isAdmin } from "../redux/actions/User.actions";
+import Savings from "../Pages/User/Savings";
+import Expenses from "../Pages/User/Expenses";
+import Donation from "../Pages/User/Donation";
 
 const PrivateRoute = ({ nav = true }) => {
   const { isLoggedIn, accessToken } = useSelector((state) => state.auth); // determine if authorized, from context or however you're doing it
@@ -67,6 +70,15 @@ const PublicLayouts = () => {
         </Route>
         <Route path="/payments" element={<PrivateRoute />}>
           <Route path="/payments" element={<Payments />} />
+        </Route>
+        <Route path="/savings" element={<PrivateRoute nav={false} />}>
+          <Route path="/savings" element={<Savings />} />
+        </Route>
+        <Route path="/expenses" element={<PrivateRoute nav={false} />}>
+          <Route path="/expenses" element={<Expenses />} />
+        </Route>
+        <Route path="/donation" element={<PrivateRoute nav={false} />}>
+          <Route path="/donation" element={<Donation />} />
         </Route>
         <Route path="/event-detail/:id" element={<PrivateRoute nav={false} />}>
           <Route path="/event-detail/:id" element={<EventDetail />} />
