@@ -6,31 +6,33 @@ import {
 
 const initialState = {
   paymentHistory: [],
-  filterType: "",
+  filterType: false,
   filterDate: "",
-  isFetched: false,
+  isFetched: [],
 };
 
 export const groupPaymentHistoryReducer = (state = initialState, action) => {
   const { type, payload } = action;
-
+  console.log(payload);
   switch (type) {
     case SET_GROUP_PAYMENT_HISTORY:
+      let [year, list] = payload;
       return {
         ...state,
-        paymentHistory: payload,
-        isFetched: true,
+        paymentHistory: { ...state.paymentHistory, [year]: list },
+        isFetched: [...new Set([...state.isFetched, year])],
+        filterType: true,
       };
     case CLEAR_GROUP_PAYMENT_HISTORY:
       return {
         ...state,
-        paymentHistory: [],
+        paymentHistory: {},
         isFetched: false,
       };
     case FILTER_CHANGE:
       return {
         ...state,
-        isFetched: false,
+        filterType: false,
       };
 
     default:

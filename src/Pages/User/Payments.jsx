@@ -20,6 +20,7 @@ import Select from "@mui/material/Select";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserPayments } from "../../redux/actions/UserPayments.action";
 import { getGroupPaymentHistory } from "../../redux/actions/GroupPaymentHistory.actions";
+import { getUserContribution } from "../../redux/actions/UserContribution.actions";
 
 const Payments = () => {
   const navigate = useNavigate();
@@ -32,7 +33,12 @@ const Payments = () => {
   const [typeOpen, setTypeOpen] = React.useState(false);
 
   // SELECTORS
-  const { paymentList, isFetched } = useSelector((state) => state.userPayments);
+  const { totalAmount, totalFine, isFetched } = useSelector(
+    (state) => state.userContribution
+  );
+  const { payments, pendingPayment } = useSelector(
+    (state) => state.userPayments
+  );
   const { currentGroupId } = useSelector((state) => state.groups);
   // YEAR
   const handleChange = (event) => {
@@ -59,7 +65,13 @@ const Payments = () => {
   // SERVICE CALL-> (USER PAYMENT LIST)
   useEffect(() => {
     if (!isFetched) {
-      dispatch(getGroupPaymentHistory(currentGroupId, "Paid"));
+      dispatch(getUserContribution());
+    }
+    if (payments.length === 0) {
+      dispatch(getUserPayments(currentGroupId, "Paid", "desc", "2021"));
+    }
+    if (pendingPayment.length === 0) {
+      dispatch(getUserPayments(currentGroupId, "Unpaid", "desc", "2021"));
     }
   }, []);
   // SERVICE CALL-> (USER PAYMENT LIST)
@@ -90,7 +102,8 @@ const Payments = () => {
             gutterBottom
             className="totalAmount"
           >
-            ₹ 16,590.90
+            ₹ {totalAmount}
+            <span>({totalFine})</span>
           </Typography>
         </div>
       </PaymentHeader>

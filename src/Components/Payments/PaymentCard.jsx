@@ -79,13 +79,17 @@ const PaymentCard = ({ payment }) => {
             Adam
           </Typography>
           <Typography variant="p" gutterBottom component="div" className="date">
-            {moment(payment?.createdAt).format("MMM DD")}
+            {console.log(payment?.createdAt.slice(0, 10).replaceAll("-", ""))}
+            {moment(
+              payment?.createdAt.slice(0, 10).replaceAll("-", ""),
+              "YYYYMMDD"
+            ).fromNow()}
           </Typography>
         </div>
       </div>
       <div className="card-end" data-fine={payment?.fine ? true : false}>
         <Typography variant="p" gutterBottom component="div" className="amount">
-          ₹ {payment?.amount} 50
+          ₹ {payment?.amount}
           <span>.00</span>
         </Typography>
       </div>

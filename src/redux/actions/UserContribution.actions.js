@@ -1,23 +1,14 @@
-import { GroupServices } from "../../Services/GroupServices";
 import { UserServices } from "../../Services/UserServices";
 import {
   SET_MESSAGE,
-  SET_USER_PAYMENTS,
+  SET_USER_CONTRIBUTION,
   START_LOADER,
   STOP_LOADER,
 } from "../actionTypes";
 
-import { store } from "../Store";
-
-export const getUserPayments = (groupId, status, sort, year) => (dispatch) => {
-  console.log("payments", status, sort);
-  return UserServices.userPayments(
-    {
-      group_id: groupId,
-      status: status,
-      sort: sort,
-      year: year,
-    },
+export const getUserContribution = () => (dispatch) => {
+  return UserServices.userContribution(
+    {},
     () => {
       dispatch({
         type: START_LOADER,
@@ -25,14 +16,14 @@ export const getUserPayments = (groupId, status, sort, year) => (dispatch) => {
     },
     (data) => {
       dispatch({
-        type: SET_USER_PAYMENTS,
+        type: SET_USER_CONTRIBUTION,
         payload: data.data.data,
       });
     },
     (error) => {
       dispatch({
         type: SET_MESSAGE,
-        payload: { message: "", type: "error" },
+        payload: { message: "Something went Wrong!", type: "error" },
       });
     },
     () => {

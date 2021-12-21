@@ -75,37 +75,23 @@ const Savings = () => {
   const dispatch = useDispatch();
 
   // STATE
-  const [year, setYear] = React.useState("All");
-  const [type, setType] = React.useState("All");
-  const [open, setOpen] = React.useState(false);
   const [typeOpen, setTypeOpen] = React.useState(false);
-  const [modal, setModal] = useState(false);
   const [month, setMonth] = useState("All");
 
+  const years = ["2019", "2020", "2021"];
+
   // SELECTORS
-  const { paymentHistory, isFetched } = useSelector(
+  const { paymentHistory, isFetched, filterType } = useSelector(
     (state) => state.groupHistory
   );
   const { currentGroupId } = useSelector((state) => state.groups);
   const { loading } = useSelector((state) => state.loader);
 
-  // YEAR
-  const handleChange = (event) => {
-    setYear(event.target.value);
-    dispatch(filterChange());
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  const theme = useTheme();
+  const [value, setValue] = React.useState(2);
 
   // TYPE
-  const handleTypeChange = (event) => {
-    setType(event.target.value);
-    dispatch(filterChange());
-  };
+
   const handleTypeClose = () => {
     setTypeOpen(false);
   };
@@ -116,39 +102,57 @@ const Savings = () => {
   // MONTH
   const handleMonthChange = (event) => {
     setMonth(event.target.value);
-    dispatch(filterChange());
+    dispatch(
+      getGroupPaymentHistory(
+        currentGroupId,
+        "Paid",
+        years[value],
+        event.target.value
+      )
+    );
   };
-
-  //   MODAL
-  const handleModalOpen = () => {
-    setModal(true);
-  };
-
-  const handleModalClose = (event, reason) => {
-    if (reason !== "backdropClick") {
-      setModal(false);
-    }
-  };
-
   // SERVICE CALL-> (USER PAYMENT LIST)
   useEffect(() => {
-    console.log(year, type);
-    if (!isFetched) {
-      dispatch(getGroupPaymentHistory(currentGroupId, "Paid"));
+    // Object.entries(paymentHistory).map((item) => {
+    //   if (item[0] == years[value] && item[1].length > 0) {
+    //     console.log(item);
+    //   }
+    // });
+
+    if (!isFetched.includes(years[value])) {
+      dispatch(
+        getGroupPaymentHistory(currentGroupId, "Paid", years[value], month)
+      );
     }
-  }, [year, type]);
+
+    // if (item === years[value]) {
+    //   return null;
+    // } else {
+    // }
+  }, [currentGroupId, value, month, isFetched]);
   // SERVICE CALL-> (USER PAYMENT LIST)
 
-  const theme = useTheme();
-  const [value, setValue] = React.useState(2);
+  // useEffect(() => {
+  //   if (!filterType) {
+  //     dispatch(
+  //       getGroupPaymentHistory(currentGroupId, "Paid", years[value], month)
+  //     );
+  //   }
+  // }, [filterType]);
 
   const handleTabChange = (event, newValue) => {
+    console.log(newValue, event.target.value);
+    dispatch(filterChange());
     setValue(newValue);
   };
 
   const handleChangeIndex = (index) => {
+    console.log(index);
+    dispatch(filterChange());
     setValue(index);
   };
+
+  console.log(paymentHistory[2021]?.map((item) => console.log(item)));
 
   return (
     <Root>
@@ -189,9 +193,9 @@ const Savings = () => {
             variant="fullWidth"
             aria-label="full width tabs example"
           >
-            <Tab label="2019" {...a11yProps(0)} />
-            <Tab label="2020" {...a11yProps(1)} />
-            <Tab label="2021" {...a11yProps(2)} />
+            {years.map((item, index) => {
+              return <Tab label={item} {...a11yProps(index)} />;
+            })}
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -199,12 +203,20 @@ const Savings = () => {
           index={value}
           onChangeIndex={handleChangeIndex}
         >
-          {[...new Array(3)].map((item, index) => {
+          {years.map((item, index) => {
             return (
               <TabPanel value={value} index={index} dir={theme.direction}>
-                {/* <FilterSection container justifyContent={"end"}>
+                <FilterSection container justifyContent={"space-between"}>
+                  <Grid item pl={2}>
+                    <Typography variant="p" component={"div"}>
+                      Yearly - {item}
+                    </Typography>
+                    <Typography variant="h6" component={"div"} gutterBottom>
+                      ₹ 6,590.90
+                    </Typography>
+                  </Grid>
                   <Grid item>
-                    <FormControl sx={{ m: 1, minWidth: 130, maxHeight: 250 }}>
+                    <FormControl sx={{ m: 1, minWidth: 100, maxHeight: 250 }}>
                       <InputLabel id="demo-controlled-open-select-label">
                         Month
                       </InputLabel>
@@ -214,9 +226,9 @@ const Savings = () => {
                         open={typeOpen}
                         onClose={handleTypeClose}
                         onOpen={handleTypeOpen}
-                        value={type}
+                        value={month}
                         label="Type"
-                        onChange={handleTypeChange}
+                        onChange={handleMonthChange}
                         className="monthSelect"
                         MenuProps={{ PaperProps: { sx: { maxHeight: 250 } } }}
                       >
@@ -238,7 +250,7 @@ const Savings = () => {
                       </Select>
                     </FormControl>
                   </Grid>
-                </FilterSection> */}
+                </FilterSection>
 
                 <PaymentContainer>
                   <Typography
@@ -248,9 +260,9 @@ const Savings = () => {
                     className="sectionTitle"
                   >
                     <RecentTransaction width="24" height="24" />
-                    Your Transaction
+                    Transactions
                   </Typography>
-                  <Typography
+                  {/* <Typography
                     variant="caption"
                     display="block"
                     gutterBottom
@@ -258,12 +270,13 @@ const Savings = () => {
                     className="transactionDate"
                   >
                     Today, November 4th
-                  </Typography>
+                  </Typography> */}
+                  {/* {console.log(paymentHistory.find((i) => console.log(i)))} */}
 
                   {!loading &&
-                    paymentHistory.length > 0 &&
-                    paymentHistory.map((item, index) => {
-                      return <PaymentCard key={index} payment={item} />;
+                    paymentHistory &&
+                    paymentHistory[years[value]]?.map((item, i) => {
+                      return <PaymentCard key={i} payment={item} />;
                     })}
                 </PaymentContainer>
               </TabPanel>
@@ -271,53 +284,6 @@ const Savings = () => {
           })}
         </SwipeableViews>
       </Box>
-
-      <Dialog
-        open={modal}
-        onClose={handleModalClose}
-        onBackdropClick={handleModalClose}
-      >
-        <DialogTitle>Fill the form</DialogTitle>
-        <DialogContent>
-          <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
-            <FormControl sx={{ m: 1, minWidth: 100 }}>
-              <InputLabel htmlFor="demo-dialog-native">Age</InputLabel>
-              <Select
-                native
-                value={year}
-                onChange={handleChange}
-                input={<OutlinedInput label="Age" id="demo-dialog-native" />}
-              >
-                <option aria-label="None" value="" />
-                <option value={10}>Ten</option>
-                <option value={20}>Twenty</option>
-                <option value={30}>Thirty</option>
-              </Select>
-            </FormControl>
-            <FormControl sx={{ m: 1, minWidth: 100 }}>
-              <InputLabel id="demo-dialog-select-label">Age</InputLabel>
-              <Select
-                labelId="demo-dialog-select-label"
-                id="demo-dialog-select"
-                value={month}
-                onChange={handleMonthChange}
-                input={<OutlinedInput label="Age" />}
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleModalClose}>Cancel</Button>
-          <Button onClick={handleModalClose}>Ok</Button>
-        </DialogActions>
-      </Dialog>
     </Root>
   );
 };
@@ -378,7 +344,7 @@ const PaymentContainer = styled(Container)({
 });
 
 const FilterSection = styled(Grid)({
-  marginBlock: "20px",
+  marginTop: "20px",
   "& .MuiSelect-select": {
     padding: "9.5px 13px",
   },

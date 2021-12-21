@@ -15,12 +15,19 @@ import { paymentsReducer } from "./reducers/Payments.reducer";
 import { membersReducer } from "./reducers/Members.reducer";
 import { userPaymentReducer } from "./reducers/UserPayments.reducer";
 import { groupPaymentHistoryReducer } from "./reducers/GroupPaymentHistory.reducer";
+import { userContributions } from "./reducers/UserContribution.reducer";
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["members", "payment", "groupHistory", "userPayments"],
+  blacklist: [
+    "members",
+    "payment",
+    "groupHistory",
+    "userPayments",
+    "userContribution",
+  ],
 };
 
 const rootReducer = combineReducers({
@@ -33,6 +40,7 @@ const rootReducer = combineReducers({
   members: membersReducer,
   userPayments: userPaymentReducer,
   groupHistory: groupPaymentHistoryReducer,
+  userContribution: userContributions,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
