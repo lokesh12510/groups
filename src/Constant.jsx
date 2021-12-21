@@ -16,4 +16,5 @@ export let DefaultTheme = createTheme({
 //   // development: "http://localhost:8000/",
 // };
 
-export const BASE_URL = "https://finance-app-management.herokuapp.com/";
+// export const BASE_URL = "https://finance-app-management.herokuapp.com/";
+export const BASE_URL = "http://15.206.147.84/api/";

@@ -19,14 +19,14 @@ const getMembersList = (params, start, callback, error, next) => {
 
 const getGroupInfo = (groupId, params, start, callback, error, next) => {
   start();
-  return AdminHttpClient.get(`${PATH.getGroupInfo}/${groupId}`, params)
+  return AdminHttpClient.get(`${PATH.getGroupInfo}/${groupId}`, { params })
     .then(callback)
     .catch(error)
     .finally(next);
 };
 const getNonMembers = (groupId, params, start, callback, error, next) => {
   start();
-  return AdminHttpClient.get(`${PATH.getNonMembers}/${groupId}`, params)
+  return AdminHttpClient.get(`${PATH.getNonMembers}/${groupId}`, { params })
     .then(callback)
     .catch(error)
     .finally(next);
