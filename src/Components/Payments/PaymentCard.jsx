@@ -79,7 +79,6 @@ const PaymentCard = ({ payment }) => {
             Adam
           </Typography>
           <Typography variant="p" gutterBottom component="div" className="date">
-            {console.log(payment?.createdAt.slice(0, 10).replaceAll("-", ""))}
             {moment(
               payment?.createdAt.slice(0, 10).replaceAll("-", ""),
               "YYYYMMDD"

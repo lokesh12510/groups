@@ -2,12 +2,11 @@ import React from "react";
 // Styles
 import { styled } from "@mui/material/styles";
 import EventCard from "./EventCard";
-import { Button, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { DefaultTheme } from "../../Constant";
 
 import Event4 from "../../Assets/Images/event4.jpg";
 import Event3 from "../../Assets/Images/event3.jpg";
-import Event2 from "../../Assets/Images/event2.jpg";
 
 const Root = styled("div")((theme) => ({
   width: "100%",

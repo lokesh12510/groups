@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Avatar,
-  Badge,
   Button,
   CardHeader,
   Chip,
@@ -15,18 +14,11 @@ import {
   Grid,
 } from "@mui/material";
 import { DefaultTheme } from "../../Constant";
-import { Link } from "react-router-dom";
 import moment from "moment";
-import { AddCircleOutline } from "@mui/icons-material";
-import { GroupServices } from "../../Services/GroupServices";
-import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
-import { useDispatch, useSelector } from "react-redux";
-import { setMessage } from "../../redux/actions/Message.actions";
-import EditIcon from "@mui/icons-material/Edit";
+import {useSelector } from "react-redux";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 
 const MemberCard = ({ member, handleRemoveMember }) => {
-  const { currentGroupId } = useSelector((state) => state.groups);
 
   const { isAdmin } = useSelector((state) => state.user);
   const [open, setOpen] = useState(false);

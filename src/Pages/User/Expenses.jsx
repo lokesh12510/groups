@@ -132,7 +132,6 @@ const Expenses = () => {
 
   // SERVICE CALL-> (USER PAYMENT LIST)
   useEffect(() => {
-    console.log(year, type);
     if (!isFetched) {
       dispatch(getGroupPaymentHistory(currentGroupId, "Paid"));
     }

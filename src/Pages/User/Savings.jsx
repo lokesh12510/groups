@@ -115,7 +115,6 @@ const Savings = () => {
   useEffect(() => {
     // Object.entries(paymentHistory).map((item) => {
     //   if (item[0] == years[value] && item[1].length > 0) {
-    //     console.log(item);
     //   }
     // });
 
@@ -141,18 +140,14 @@ const Savings = () => {
   // }, [filterType]);
 
   const handleTabChange = (event, newValue) => {
-    console.log(newValue, event.target.value);
     dispatch(filterChange());
     setValue(newValue);
   };
 
   const handleChangeIndex = (index) => {
-    console.log(index);
     dispatch(filterChange());
     setValue(index);
   };
-
-  console.log(paymentHistory[2021]?.map((item) => console.log(item)));
 
   return (
     <Root>
@@ -271,7 +266,6 @@ const Savings = () => {
                   >
                     Today, November 4th
                   </Typography> */}
-                  {/* {console.log(paymentHistory.find((i) => console.log(i)))} */}
 
                   {!loading &&
                     paymentHistory &&

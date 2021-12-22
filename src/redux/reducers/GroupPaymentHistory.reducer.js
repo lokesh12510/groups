@@ -13,7 +13,6 @@ const initialState = {
 
 export const groupPaymentHistoryReducer = (state = initialState, action) => {
   const { type, payload } = action;
-  console.log(payload);
   switch (type) {
     case SET_GROUP_PAYMENT_HISTORY:
       let [year, list] = payload;

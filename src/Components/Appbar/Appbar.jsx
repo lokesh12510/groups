@@ -3,10 +3,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
   Link,
   useLocation,
 } from "react-router-dom";
@@ -39,7 +35,6 @@ const Appbar = (props) => {
   }, [location.pathname]);
 
   const user = useSelector((state) => state.user);
-  const groupAdmin = useSelector((state) => state.groups.isGroupAdmin);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

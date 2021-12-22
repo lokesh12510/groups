@@ -3,18 +3,9 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import { Avatar, Badge, Button, CardHeader, Chip } from "@mui/material";
 import { DefaultTheme } from "../../Constant";
-import { Link } from "react-router-dom";
-import moment from "moment";
 import { AddCircleOutline } from "@mui/icons-material";
-import { GroupServices } from "../../Services/GroupServices";
-import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
-import { useDispatch } from "react-redux";
-import { setMessage } from "../../redux/actions/Message.actions";
 
 const NonMemberCard = ({ member, handleAddMember }) => {
-  const [added, setAdded] = useState([]);
-
-  const dispatch = useDispatch();
 
   return (
     <Root

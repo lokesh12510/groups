@@ -10,7 +10,6 @@ import {
 import { store } from "../Store";
 
 export const getUserPayments = (groupId, status, sort, year) => (dispatch) => {
-  console.log("payments", status, sort);
   return UserServices.userPayments(
     {
       group_id: groupId,

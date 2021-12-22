@@ -1,7 +1,7 @@
 import React from "react";
 // Styles
 import { styled } from "@mui/material/styles";
-import { Button, Container, Icon, IconButton, Typography } from "@mui/material";
+import { Container, IconButton, Typography } from "@mui/material";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 

@@ -1,30 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Appbar from "../Components/Appbar/Appbar";
-import Home from "../Pages/User/Home";
 import Profile from "../Pages/User/Profile";
 import EditProfile from "../Pages/User/EditProfile";
 import Members from "../Pages/User/Members";
 
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
-  useNavigate,
-  useLocation,
-  Link,
-  useHistroy,
   Outlet,
 } from "react-router-dom";
 import Events from "../Pages/User/Events";
 import EventDetail from "../Components/Events/EventDetail";
-import NotFound from "../Pages/Auth/NotFound";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import LandingPage from "../Pages/User/LandingPage";
 import Settings from "../Pages/User/Settings";
 import ChangePassword from "../Pages/User/ChangePassword";
 import Payments from "../Pages/User/Payments";
-import { isAdmin } from "../redux/actions/User.actions";
 import Savings from "../Pages/User/Savings";
 import Expenses from "../Pages/User/Expenses";
 import Donation from "../Pages/User/Donation";
