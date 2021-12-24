@@ -11,7 +11,7 @@ import Event3 from "../../Assets/Images/event3.jpg";
 const Root = styled("div")((theme) => ({
   width: "100%",
   "& .timeline_year": {
-    marginBottom: "12px",
+    marginBottom: "0px",
     "& .MuiTypography-overline": {
       fontSize: "16px",
     },
@@ -95,7 +95,7 @@ const timelines = [
   {
     id: 1,
     year: 2020,
-    title: "=FOOTBALL LEAGUE- 4",
+    title: "FOOTBALL LEAGUE- 4",
     date: "27th Dec",
     image:
       "https://img.etimg.com/thumb/msid-77734860,width-650,imgsize-951020,,resizemode-4,quality-100/sports_istock.jpg",
@@ -105,14 +105,16 @@ const timelines = [
     year: 2020,
     title: "Plastic Free Thambatty",
     date: "27th May",
-    image: { Event4 },
+    image:
+      "https://www.readingrockets.org/sites/default/files/atoz_motivation2.jpg",
   },
   {
     id: 3,
     year: 2021,
     title: "Kids Motivational",
     date: "24th Jan",
-    image: { Event3 },
+    image:
+      "https://www.readingrockets.org/sites/default/files/atoz_motivation2.jpg",
   },
   {
     id: 4,

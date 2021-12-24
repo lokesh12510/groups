@@ -79,17 +79,18 @@ const PaymentCard = ({ payment }) => {
             Adam
           </Typography>
           <Typography variant="p" gutterBottom component="div" className="date">
-            {moment(
+            {/* {moment(
               payment?.createdAt.slice(0, 10).replaceAll("-", ""),
               "YYYYMMDD"
-            ).fromNow()}
+            ).fromNow()} */}
+            23 Dec, 2021
           </Typography>
         </div>
       </div>
       <div className="card-end" data-fine={payment?.fine ? true : false}>
         <Typography variant="p" gutterBottom component="div" className="amount">
           ₹ {payment?.amount}
-          <span>.00</span>
+          <span>50.00</span>
         </Typography>
       </div>
     </Root>

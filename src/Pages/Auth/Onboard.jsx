@@ -21,9 +21,10 @@ const BackgroundImg = styled("div")(() => ({
 
 const Root = styled("div")((theme) => ({
   width: "100%",
-  height: "100vh",
+  backgroundColor: "#fff",
   "& .MuiContainer-root": {
     paddingTop: "40px",
+    paddingBottom: "40px",
   },
 
   "& .title": {
@@ -89,8 +90,10 @@ const Onboard = () => {
         <div className="page_footer">
           <p>
             By joining as member, you agree to our <br />
-            <span>Terms and Conditions</span> and agree to
-            <span> Privacy Policy</span>.
+            <span>
+              <Link to="/privacy-policy">Privacy Policy</Link>{" "}
+            </span>
+            .
           </p>
         </div>
       </Container>

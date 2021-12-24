@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 // Styles
 import { styled } from "@mui/material/styles";
-import { Avatar, Badge, Button, CardHeader, Chip } from "@mui/material";
+import { Avatar, Button, CardHeader, Chip } from "@mui/material";
 import { DefaultTheme } from "../../Constant";
 import { AddCircleOutline } from "@mui/icons-material";
 

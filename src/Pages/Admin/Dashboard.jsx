@@ -52,7 +52,7 @@ const Dashboard = () => {
               component={Link}
               to="/admin/manage-payments"
             >
-              <h1>{pendingCount}</h1>
+              <h1>7</h1>
               Manage Payments
             </CardBtn>
             <CardBtn
@@ -76,6 +76,17 @@ const Dashboard = () => {
             </CardBtn>
           </Grid>
           <Grid item xs={6}>
+            
+            <CardBtn
+              fullWidth
+              variant="contained"
+              color="primary"
+              h="180"
+              bg="#673ab7"
+              gutterBottom
+            >
+              Manage Blog
+            </CardBtn>
             <CardBtn
               fullWidth
               variant="contained"
@@ -86,18 +97,8 @@ const Dashboard = () => {
               component={Link}
               to="/admin/manage-members"
             >
-              <h1>{membersCount}</h1>
+              <h1>52</h1>
               Manage Members
-            </CardBtn>
-            <CardBtn
-              fullWidth
-              variant="contained"
-              color="primary"
-              h="180"
-              bg="#673ab7"
-              gutterBottom
-            >
-              Manage Blog
             </CardBtn>
             <CardBtn
               fullWidth

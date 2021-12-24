@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AdminLayouts from "./Layouts/AdminLayouts";
 import { isAdmin } from "./redux/actions/User.actions";
 import { updateGroup } from "./redux/actions/Group.actions";
+import Privacy from "./Pages/User/Privacy";
 
 function App() {
   const { message, type } = useSelector((state) => state.message);
@@ -51,6 +52,7 @@ function App() {
           path="/admin/*"
           element={isAdmin ? <AdminLayouts /> : <AuthLayouts />}
         />
+        <Route path="/privacy-policy" element={<Privacy />} />
       </Routes>
     </div>
   );
