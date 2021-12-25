@@ -47,7 +47,6 @@ const TimelineCard = styled("div")((theme) => ({
     "& .blogScroll_item": {
       flex: 1,
       maxWidth: "100%",
-      marginBottom: "14px",
       filter: "drop-shadow(0px 2.94964px 5.66187px rgba(0, 0, 0, 0.2))",
     },
   },

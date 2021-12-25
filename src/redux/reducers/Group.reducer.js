@@ -3,6 +3,7 @@ import {
   SET_GROUP,
   SWITCH_GROUP,
   UPDATE_GROUP,
+  SET_FETCH,
 } from "../actionTypes";
 import { store } from "../Store";
 
@@ -34,6 +35,12 @@ export const groupReducer = (state = initialState, action) => {
         ...state,
         groupInfo: payload,
         isFetched: true,
+      };
+
+    case SET_FETCH:
+      return {
+        ...state,
+        isFetched: false,
       };
 
     case SWITCH_GROUP:

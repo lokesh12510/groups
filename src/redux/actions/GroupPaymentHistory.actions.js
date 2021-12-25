@@ -4,7 +4,6 @@ import {
   FILTER_CHANGE,
   SET_GROUP_PAYMENT_HISTORY,
   SET_MESSAGE,
-  SET_USER_PAYMENTS,
   START_LOADER,
   STOP_LOADER,
 } from "../actionTypes";

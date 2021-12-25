@@ -37,16 +37,13 @@ const PaymentCardBtn = ({ payment, handleAccept, handleClickOpen }) => {
           <Avatar
             sx={{ bgcolor: DefaultTheme.palette.secondary.main }}
             aria-label="recipe"
-            src={payment.user?.avatar}
+            src={payment.user_avatar}
           >
-            {payment.user?.username.slice(0, 1)}
+            {payment.username.slice(0, 1)}
           </Avatar>
         }
-        title={`Adam`}
-        subheader={moment(
-          payment.createdAt.split("-").join("").slice(0, 8),
-          "YYYYMMDD"
-        ).fromNow()}
+        title={payment.username}
+        subheader={moment(payment.createdAt).utcOffset(0).calendar()}
         action={
           isAdmin && (
             <Chip
@@ -66,7 +63,10 @@ const PaymentCardBtn = ({ payment, handleAccept, handleClickOpen }) => {
           <h3>{moment(payment.createdAt).format("MMMM")}</h3>
         </div>
         <div className="ItemContent">
-          <h3>₹ {payment.amount}</h3>
+          <h3>
+            ₹ {payment.amount}
+            {payment?.fine && <span> + ₹ {payment?.fine}</span>}
+          </h3>
         </div>
       </CardContent>
     </Root>

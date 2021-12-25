@@ -21,7 +21,6 @@ const BackgroundImg = styled("div")(() => ({
 
 const Root = styled("div")((theme) => ({
   width: "100%",
-  backgroundColor: "#fff",
   "& .MuiContainer-root": {
     paddingTop: "40px",
     paddingBottom: "40px",

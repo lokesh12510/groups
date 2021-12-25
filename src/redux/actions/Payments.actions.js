@@ -4,6 +4,7 @@ import {
   ACCEPT_PAYMENT,
   CREATE_PAYMENT,
   PENDING_PAYMENTS,
+  SET_FETCH,
   SET_MESSAGE,
   START_LOADER,
   STOP_LOADER,
@@ -52,6 +53,9 @@ export const acceptPayment = (id) => (dispatch) => {
     (data) => {
       dispatch({
         type: ACCEPT_PAYMENT,
+      });
+      dispatch({
+        type: SET_FETCH,
       });
       dispatch({
         type: SET_MESSAGE,

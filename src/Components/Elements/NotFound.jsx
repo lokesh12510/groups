@@ -7,13 +7,7 @@ const NotFound = () => {
   return (
     <ImgDiv container alignItems={"center"}>
       <Grid item xs={12} container justifyContent={"center"}>
-        <img
-          width="300px"
-          height="250px"
-          className="notFound"
-          src={image}
-          alt="not found"
-        />
+        <img width="300px" className="notFound" src={image} alt="not found" />
       </Grid>
     </ImgDiv>
   );

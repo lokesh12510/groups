@@ -113,31 +113,13 @@ const Savings = () => {
   };
   // SERVICE CALL-> (USER PAYMENT LIST)
   useEffect(() => {
-    // Object.entries(paymentHistory).map((item) => {
-    //   if (item[0] == years[value] && item[1].length > 0) {
-    //   }
-    // });
-
     if (!isFetched.includes(years[value])) {
       dispatch(
         getGroupPaymentHistory(currentGroupId, "Paid", years[value], month)
       );
     }
-
-    // if (item === years[value]) {
-    //   return null;
-    // } else {
-    // }
   }, [currentGroupId, value, month, isFetched]);
   // SERVICE CALL-> (USER PAYMENT LIST)
-
-  // useEffect(() => {
-  //   if (!filterType) {
-  //     dispatch(
-  //       getGroupPaymentHistory(currentGroupId, "Paid", years[value], month)
-  //     );
-  //   }
-  // }, [filterType]);
 
   const handleTabChange = (event, newValue) => {
     dispatch(filterChange());

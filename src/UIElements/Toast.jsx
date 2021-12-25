@@ -30,11 +30,17 @@ const Toast = ({ message, type }) => {
       autoHideDuration={6000}
       onClose={handleClose}
       anchorOrigin={{
-        vertical: "top",
+        vertical: "bottom",
         horizontal: "right",
       }}
+      sx={{ bottom: { xs: 80, sm: 0 } }}
     >
-      <Alert onClose={handleClose} severity={type} sx={{ width: "100%" }}>
+      <Alert
+        onClose={handleClose}
+        severity={type}
+        variant="filled"
+        sx={{ width: "100%" }}
+      >
         {message}
       </Alert>
     </Snackbar>

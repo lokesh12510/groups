@@ -116,9 +116,7 @@ const ManagePayments = () => {
   };
 
   useEffect(() => {
-    if (!isFetched) {
-      dispatch(getPendingPayments(currentGroupId, "Unpaid"));
-    }
+    dispatch(getPendingPayments(currentGroupId, "Unpaid"));
   }, []);
 
   const handleModalClose = () => {
@@ -149,7 +147,7 @@ const ManagePayments = () => {
       <PaymentContainer>
         <Typography variant="p" mb={2} component="div" className="sectionTitle">
           <RecentTransaction width="24" height="24" />
-          Recent Payments
+          Pending Payments
         </Typography>
         {!loading && pendingList.length > 0 && (
           <Typography

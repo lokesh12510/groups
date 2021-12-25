@@ -9,7 +9,10 @@ const initialState = {
   pendingPayment: [],
   filterType: "",
   filterDate: "",
-  isFetched: false,
+  isFetched: {
+    payments: false,
+    pendingPayment: false,
+  },
 };
 
 export const userPaymentReducer = (state = initialState, action) => {
@@ -20,20 +23,26 @@ export const userPaymentReducer = (state = initialState, action) => {
       return {
         ...state,
         payments: payload,
-        isFetched: true,
+        isFetched: { ...state.isFetched, payments: true },
       };
 
     case SET_USER_PENDING_LIST:
       return {
         ...state,
         pendingPayment: payload,
-        isFetched: true,
+        isFetched: {
+          ...state.isFetched,
+          pendingPayment: true,
+        },
       };
     case CLEAR_USER_PENDING_LIST:
       return {
         ...state,
         pendingPayment: [],
-        isFetched: false,
+        isFetched: {
+          payments: false,
+          pendingPayment: false,
+        },
       };
     default:
       return state;

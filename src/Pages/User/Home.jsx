@@ -7,7 +7,7 @@ import TransactionSection from "../../Components/Home/TransactionSection";
 
 const Root = styled("div")((theme) => ({
   width: "100%",
-  height: "100vh",
+  paddingBottom: "50px",
 }));
 
 const Home = () => {
@@ -20,7 +20,7 @@ const Home = () => {
       <EventSection />
       {/* BLOG SECTION END */}
       {/* TRANSACTION SECTION START */}
-      <TransactionSection />
+      {/* <TransactionSection /> */}
       {/* TRANSACTION SECTION END */}
     </Root>
   );

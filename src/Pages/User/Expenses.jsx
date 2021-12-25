@@ -201,9 +201,17 @@ const Expenses = () => {
           {[...new Array(3)].map((item, index) => {
             return (
               <TabPanel value={value} index={index} dir={theme.direction}>
-                {/* <FilterSection container justifyContent={"end"}>
+                <FilterSection container justifyContent={"space-between"}>
+                  <Grid item pl={2}>
+                    <Typography variant="p" component={"div"}>
+                      Yearly - {item}
+                    </Typography>
+                    <Typography variant="h6" component={"div"} gutterBottom>
+                      ₹ 6,590.90
+                    </Typography>
+                  </Grid>
                   <Grid item>
-                    <FormControl sx={{ m: 1, minWidth: 130, maxHeight: 250 }}>
+                    <FormControl sx={{ m: 1, minWidth: 100, maxHeight: 250 }}>
                       <InputLabel id="demo-controlled-open-select-label">
                         Month
                       </InputLabel>
@@ -213,9 +221,9 @@ const Expenses = () => {
                         open={typeOpen}
                         onClose={handleTypeClose}
                         onOpen={handleTypeOpen}
-                        value={type}
+                        value={month}
                         label="Type"
-                        onChange={handleTypeChange}
+                        onChange={handleMonthChange}
                         className="monthSelect"
                         MenuProps={{ PaperProps: { sx: { maxHeight: 250 } } }}
                       >
@@ -237,18 +245,9 @@ const Expenses = () => {
                       </Select>
                     </FormControl>
                   </Grid>
-                </FilterSection> */}
+                </FilterSection>
 
                 <PaymentContainer>
-                  <Typography
-                    variant="p"
-                    mb={2}
-                    component="div"
-                    className="sectionTitle"
-                  >
-                    <RecentTransaction width="24" height="24" />
-                    Your Transaction
-                  </Typography>
                   <Typography
                     variant="caption"
                     display="block"
@@ -377,7 +376,7 @@ const PaymentContainer = styled(Container)({
 });
 
 const FilterSection = styled(Grid)({
-  marginBlock: "20px",
+  marginTop: "20px",
   "& .MuiSelect-select": {
     padding: "9.5px 13px",
   },

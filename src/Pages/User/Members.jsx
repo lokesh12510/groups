@@ -104,7 +104,7 @@ const Root = styled("div")((theme) => ({
     padding: "15px 0 120px 0px",
     borderRadius: "20px 20px 0 0",
     "& .MuiContainer-root": {
-      padding: "0 10px",
+      padding: "0 16px",
       backgroundColor: "#fff",
     },
     "& .MuiTypography-root": {

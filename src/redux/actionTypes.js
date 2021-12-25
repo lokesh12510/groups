@@ -20,6 +20,7 @@ export const SET_GROUP = "SET_GROUP";
 export const UPDATE_GROUP = "UPDATE_GROUP";
 export const SWITCH_GROUP = "SWITCH_GROUP";
 export const CLEAR_GROUP = "CLEAR_GROUP";
+export const SET_FETCH = "SET_FETCH";
 
 // USER INFO
 export const SET_USER = "SET_USER";

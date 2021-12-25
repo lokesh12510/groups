@@ -5,6 +5,7 @@ import {
   SET_USER_PAYMENTS,
   START_LOADER,
   STOP_LOADER,
+  SET_USER_PENDING_LIST
 } from "../actionTypes";
 
 import { store } from "../Store";
@@ -23,10 +24,18 @@ export const getUserPayments = (groupId, status, sort, year) => (dispatch) => {
       });
     },
     (data) => {
-      dispatch({
-        type: SET_USER_PAYMENTS,
-        payload: data.data.data,
-      });
+      if(status==="Paid"){
+        dispatch({
+          type: SET_USER_PAYMENTS,
+          payload: data.data.data,
+        });
+      }
+      if(status==="Unpaid"){
+        dispatch({
+          type: SET_USER_PENDING_LIST,
+          payload: data.data.data,
+        });
+      }
     },
     (error) => {
       dispatch({

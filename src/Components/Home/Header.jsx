@@ -15,52 +15,23 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { bounce } from "react-animations";
-
-const bounceAnimation = `keyframes ${bounce}`;
-
-const HeaderSection = styled("section")((theme) => ({
-  paddingTop: "1px",
-  background:
-    "linear-gradient(180.65deg, #6CB9FF -60.63%, rgba(132, 135, 255, 0) 103.4%)",
-  "& .currentUser": {
-    textTransform: "Capitalize",
-  },
-  "& .card": {
-    animation: `1s ${bounceAnimation}`,
-    display: "block",
-    width: "100%",
-    padding: 0,
-    borderRadius: "20px",
-    color: "#fff",
-    textAlign: "start",
-    "& .cardIcon": { marginBottom: "14px" },
-    filter: "drop-shadow(0px 13.9875px 29.1406px rgba(15, 51, 107, 0.25))",
-    marginBottom: "20px",
-  },
-  "& .miniCard": {
-    display: "block",
-    width: "100%",
-    padding: 0,
-    borderRadius: "20px",
-    "& .cardIcon": { marginBottom: "14px" },
-    filter: " drop-shadow(0px 5.55px 12.6px rgba(15, 51, 107, 0.25))",
-    marginBottom: "30px",
-    "& .card_title": {
-      color: DefaultTheme.palette.primary.main,
-      lineHeight: "1",
-    },
-  },
-}));
-const ProfileImage = styled("img")((theme) => ({
-  width: 36,
-  height: 36,
-  borderRadius: "50%",
-  objectFit: "cover",
-}));
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { updateGroup } from "../../redux/actions/Group.actions";
 
 const Header = () => {
   const user = useSelector((state) => state.user);
-  const { groupInfo } = useSelector((state) => state.groups);
+  const { groupInfo, isFetched, currentGroupId } = useSelector(
+    (state) => state.groups
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!isFetched) {
+      dispatch(updateGroup(currentGroupId));
+    }
+  }, []);
 
   return (
     <HeaderSection>
@@ -169,3 +140,45 @@ const Header = () => {
 };
 
 export default Header;
+
+const bounceAnimation = `keyframes ${bounce}`;
+
+const HeaderSection = styled("section")((theme) => ({
+  paddingTop: "1px",
+  background:
+    "linear-gradient(180.65deg, #6CB9FF -60.63%, rgba(132, 135, 255, 0) 103.4%)",
+  "& .currentUser": {
+    textTransform: "Capitalize",
+  },
+  "& .card": {
+    animation: `1s ${bounceAnimation}`,
+    display: "block",
+    width: "100%",
+    padding: 0,
+    borderRadius: "20px",
+    color: "#fff",
+    textAlign: "start",
+    "& .cardIcon": { marginBottom: "14px" },
+    filter: "drop-shadow(0px 13.9875px 29.1406px rgba(15, 51, 107, 0.25))",
+    marginBottom: "20px",
+  },
+  "& .miniCard": {
+    display: "block",
+    width: "100%",
+    padding: 0,
+    borderRadius: "20px",
+    "& .cardIcon": { marginBottom: "14px" },
+    filter: " drop-shadow(0px 5.55px 12.6px rgba(15, 51, 107, 0.25))",
+    marginBottom: "30px",
+    "& .card_title": {
+      color: DefaultTheme.palette.primary.main,
+      lineHeight: "1",
+    },
+  },
+}));
+const ProfileImage = styled("img")((theme) => ({
+  width: 36,
+  height: 36,
+  borderRadius: "50%",
+  objectFit: "cover",
+}));

@@ -20,6 +20,7 @@ const MembersList = ({ search }) => {
   const { membersList, isFetched } = useSelector((state) => state.members);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (!isFetched) {
       dispatch(getMembersList());
     }

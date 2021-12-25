@@ -21,7 +21,6 @@ export const paymentsReducer = (state = initialState, action) => {
         ...state,
         pendingList: payload,
         pendingCount: payload.length,
-        isFetched: true,
       };
 
     case ACCEPT_PAYMENT:

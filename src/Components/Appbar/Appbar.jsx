@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
-import {
-  Link,
-  useLocation,
-} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // Styles
 import { styled } from "@mui/material/styles";
@@ -50,6 +47,7 @@ const Appbar = (props) => {
           TabIndicatorProps={{ style: { display: "none" } }}
         >
           <Tab
+            aria-title="home"
             value="home"
             icon={
               location.pathname === "/" ? (
@@ -62,6 +60,7 @@ const Appbar = (props) => {
             to={"/"}
           />
           <Tab
+            aria-title="members"
             value="members"
             icon={
               location.pathname === "/members" ? (
@@ -75,6 +74,7 @@ const Appbar = (props) => {
           />
           {user.isAdmin && (
             <Tab
+              aria-title="admin"
               value="admin"
               icon={
                 location.pathname.split("/")[1] === "admin" ? (
@@ -89,6 +89,7 @@ const Appbar = (props) => {
           )}
 
           <Tab
+            aria-title="events"
             value="events"
             icon={
               location.pathname === "/events" ? (
@@ -101,6 +102,7 @@ const Appbar = (props) => {
             to={"/events"}
           />
           <Tab
+            aria-title="payments"
             value="payments"
             icon={
               location.pathname === "/payments" ? (

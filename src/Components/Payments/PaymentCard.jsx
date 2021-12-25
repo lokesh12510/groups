@@ -13,6 +13,7 @@ const Root = styled("div")((theme) => ({
   marginBottom: "10px",
   borderRadius: "5px",
   overflow: "hidden",
+  border: "1px solid #e8e8e8",
   "& .card-start": {
     display: "flex",
     padding: "10px",
@@ -27,6 +28,8 @@ const Root = styled("div")((theme) => ({
     },
     "& .paymentDetails .userName": {
       fontSize: "16px",
+      textTransform: "capitalize",
+      marginBottom: "0px",
     },
     "& .paymentDetails .date": {
       fontSize: "13px",
@@ -37,7 +40,7 @@ const Root = styled("div")((theme) => ({
   "& .card-end": {
     display: "grid",
     placeItems: "center",
-    padding: "10px 15px 10px 20px",
+    padding: "10px 15px 10px 35px",
     height: "50px",
     "& .amount": {
       fontSize: "18px",
@@ -62,7 +65,7 @@ const PaymentCard = ({ payment }) => {
       <div className="card-start">
         <div className="profileImage">
           <img
-            src="https://res.cloudinary.com/drxjql1j7/image/upload/v1639070926/avatars/ewovxmoyeo0uh52fvrkp.jpg"
+            src={payment.user_avatar}
             width="40"
             height="40"
             loading="lazy"
@@ -74,23 +77,18 @@ const PaymentCard = ({ payment }) => {
             variant="p"
             gutterBottom
             component="div"
-            className="UserName"
+            className="userName"
           >
-            Adam
+            {payment.username}
           </Typography>
           <Typography variant="p" gutterBottom component="div" className="date">
-            {/* {moment(
-              payment?.createdAt.slice(0, 10).replaceAll("-", ""),
-              "YYYYMMDD"
-            ).fromNow()} */}
-            23 Dec, 2021
+            {moment(payment?.createdAt).utcOffset(0).calendar()}
           </Typography>
         </div>
       </div>
       <div className="card-end" data-fine={payment?.fine ? true : false}>
         <Typography variant="p" gutterBottom component="div" className="amount">
           ₹ {payment?.amount}
-          <span>50.00</span>
         </Typography>
       </div>
     </Root>
