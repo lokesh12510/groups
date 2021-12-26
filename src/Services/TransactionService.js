@@ -15,7 +15,7 @@ const getReport = (params, start, callback, error, next) => {
 
 const createTransaction = (payload, start, callback, error, next) => {
   start();
-  return AdminHttpClient.post(`${PATH.getReport}`, payload)
+  return AdminHttpClient.post(`${PATH.createTransaction}`, payload)
     .then(callback)
     .catch(error)
     .finally(next);
