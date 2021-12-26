@@ -76,12 +76,12 @@ export const acceptPayment = (id) => (dispatch) => {
   );
 };
 
-export const createPayment = (user_id, amount) => (dispatch) => {
+export const createPayment = (user_id, amount, date) => (dispatch) => {
   const state = store.getState();
   let group_id = state.groups.currentGroupId;
 
   return UserServices.createPayment(
-    { user_id: user_id, group_id: group_id, amount: amount },
+    { user_id: user_id, group_id: group_id, amount: amount, createdAt: date },
     () => {
       dispatch({
         type: START_LOADER,

@@ -7,6 +7,7 @@ const PATH = {
   addMember: "group/addMember",
   removeMember: "group/removeMember",
   payments: "group/payments",
+  getDashboardDetails: "tool/dashboardDetails",
 };
 
 const getMembersList = (params, start, callback, error, next) => {
@@ -56,6 +57,14 @@ const payments = (params, start, callback, error, next) => {
     .finally(next);
 };
 
+const getDashboardDetails = (params, start, callback, error, next) => {
+  start();
+  return AdminHttpClient.get(`${PATH.getDashboardDetails}`, { params })
+    .then(callback)
+    .catch(error)
+    .finally(next);
+};
+
 export const GroupServices = {
   getMembersList,
   getGroupInfo,
@@ -63,4 +72,5 @@ export const GroupServices = {
   getNonMembers,
   removeGroupMembers,
   payments,
+  getDashboardDetails,
 };

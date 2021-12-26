@@ -6,6 +6,8 @@ import Dashboard from "../Pages/Admin/Dashboard";
 import Appbar from "../Components/Appbar/Appbar";
 import ManagePayments from "../Pages/Admin/ManagePayments";
 import ManageMembers from "../Pages/Admin/ManageMembers";
+import ManageExpenses from "../Pages/Admin/ManageExpenses";
+import ManageDonation from "../Pages/Admin/ManageDonation";
 
 const AdminRoute = ({ nav = true }) => {
   const { isLoggedIn, accessToken } = useSelector((state) => state.auth); // determine if authorized, from context or however you're doing it
@@ -41,6 +43,20 @@ const AdminLayouts = () => {
           element={<AdminRoute nav={false} />}
         >
           <Route exact path="/manage-members" element={<ManageMembers />} />
+        </Route>
+        <Route
+          exact
+          path="/manage-expenses"
+          element={<AdminRoute nav={false} />}
+        >
+          <Route exact path="/manage-expenses" element={<ManageExpenses />} />
+        </Route>
+        <Route
+          exact
+          path="/manage-donation"
+          element={<AdminRoute nav={false} />}
+        >
+          <Route exact path="/manage-donation" element={<ManageDonation />} />
         </Route>
       </Routes>
     </div>

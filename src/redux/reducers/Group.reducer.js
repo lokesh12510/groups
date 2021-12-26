@@ -4,6 +4,7 @@ import {
   SWITCH_GROUP,
   UPDATE_GROUP,
   SET_FETCH,
+  SET_DASHBOARD,
 } from "../actionTypes";
 import { store } from "../Store";
 
@@ -14,6 +15,7 @@ const initialState = {
   groupAdmin: null,
   groupInfo: null,
   isFetched: false,
+  dashboard: {},
 };
 
 export const groupReducer = (state = initialState, action) => {
@@ -49,6 +51,18 @@ export const groupReducer = (state = initialState, action) => {
     case CLEAR_GROUP:
       return initialState;
 
+    default:
+      return state;
+  }
+};
+
+export const dashboardReducer = (state = initialState, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case SET_DASHBOARD:
+      return {
+        dashboard: { ...payload },
+      };
     default:
       return state;
   }

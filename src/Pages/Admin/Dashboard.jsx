@@ -6,12 +6,13 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPendingPayments } from "../../redux/actions/Payments.actions";
+import { setDashboard } from "../../redux/actions/Group.actions";
 
 const Root = styled("div")((theme) => ({
   width: "100%",
-  height: "100vh",
   "& .MuiContainer-root": {
     paddingTop: "20px",
+    paddingBottom: "100px",
   },
 }));
 
@@ -33,8 +34,16 @@ const CardBtn = styled(Button)(({ theme, h, bg }) => ({
 }));
 
 const Dashboard = () => {
-  const { pendingCount } = useSelector((state) => state.payment);
-  const { membersCount } = useSelector((state) => state.members);
+  const { dashboard } = useSelector((state) => state.dashboard);
+  const { isFetched } = useSelector((state) => state.groups);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!isFetched) {
+      dispatch(setDashboard());
+    }
+  }, []);
 
   return (
     <Root>
@@ -52,7 +61,7 @@ const Dashboard = () => {
               component={Link}
               to="/admin/manage-payments"
             >
-              <h1>7</h1>
+              <h1>{dashboard.pendingPayments}</h1>
               Manage Payments
             </CardBtn>
             <CardBtn
@@ -71,12 +80,13 @@ const Dashboard = () => {
               h="180"
               bg="#00b0ff"
               gutterBottom
+              component={Link}
+              to="/admin/manage-expenses"
             >
               Manage Expenses
             </CardBtn>
           </Grid>
           <Grid item xs={6}>
-            
             <CardBtn
               fullWidth
               variant="contained"
@@ -84,8 +94,9 @@ const Dashboard = () => {
               h="180"
               bg="#673ab7"
               gutterBottom
+              disabled
             >
-              Manage Blog
+              Manage Events
             </CardBtn>
             <CardBtn
               fullWidth
@@ -97,7 +108,7 @@ const Dashboard = () => {
               component={Link}
               to="/admin/manage-members"
             >
-              <h1>52</h1>
+              <h1>{dashboard.groupMembers}</h1>
               Manage Members
             </CardBtn>
             <CardBtn
@@ -107,6 +118,8 @@ const Dashboard = () => {
               h="130"
               bg="#1de9b6"
               gutterBottom
+              component={Link}
+              to="/admin/manage-donation"
             >
               Manage Donation
             </CardBtn>

@@ -27,13 +27,13 @@ export const paymentsReducer = (state = initialState, action) => {
       return {
         ...state,
         pendingCount: state.pendingCount > 0 && state.pendingCount--,
-        isFetched: false,
+        isFetched: !state.isFetched,
       };
 
     case CREATE_PAYMENT:
       return {
         ...state,
-        isFetched: false,
+        isFetched: !state.isFetched,
       };
 
     default:

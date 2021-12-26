@@ -2,6 +2,7 @@ import { GroupServices } from "../../Services/GroupServices";
 import { UserServices } from "../../Services/UserServices";
 import {
   CLEAR_GROUP,
+  SET_DASHBOARD,
   SET_GROUP,
   SET_MESSAGE,
   START_LOADER,
@@ -84,6 +85,35 @@ export const switchGroup = (currentGroup) => ({
   type: SWITCH_GROUP,
   payload: currentGroup,
 });
+
+export const setDashboard = () => (dispatch) => {
+  return GroupServices.getDashboardDetails(
+    {},
+    () => {
+      dispatch({
+        type: START_LOADER,
+      });
+    },
+    (data) => {
+      dispatch({
+        type: SET_DASHBOARD,
+        payload: data.data.data,
+      });
+    },
+    (error) => {
+      console.log(error);
+      dispatch({
+        type: SET_MESSAGE,
+        payload: { message: "Something went wrong!Try again!", type: "error" },
+      });
+    },
+    () => {
+      dispatch({
+        type: STOP_LOADER,
+      });
+    }
+  );
+};
 
 export const clearGroup = () => ({
   type: CLEAR_GROUP,

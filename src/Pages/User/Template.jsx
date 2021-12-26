@@ -5,9 +5,9 @@ import { Container } from "@mui/material";
 
 const Root = styled("div")((theme) => ({
   width: "100%",
-  height: "100vh",
   "& .MuiContainer-root": {
     paddingTop: "40px",
+    paddingBottom: "100px",
   },
 }));
 

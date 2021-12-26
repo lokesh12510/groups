@@ -18,8 +18,14 @@ import {
   Grid,
   CircularProgress,
   Skeleton,
+  MenuItem,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+
+import DatePicker from "@mui/lab/DatePicker";
+import DateAdapter from "@mui/lab/AdapterMoment";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DateRangeIcon from "@mui/icons-material/DateRange";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AddIcon from "@mui/icons-material/Add";
@@ -117,7 +123,7 @@ const ManagePayments = () => {
 
   useEffect(() => {
     dispatch(getPendingPayments(currentGroupId, "Unpaid"));
-  }, []);
+  }, [isFetched, currentGroupId, dispatch]);
 
   const handleModalClose = () => {
     setOpenDrawer(false);
@@ -149,17 +155,6 @@ const ManagePayments = () => {
           <RecentTransaction width="24" height="24" />
           Pending Payments
         </Typography>
-        {!loading && pendingList.length > 0 && (
-          <Typography
-            variant="caption"
-            display="block"
-            gutterBottom
-            mb={2}
-            className="transactionDate"
-          >
-            Today, November 4th
-          </Typography>
-        )}
 
         {!loading &&
           pendingList.length > 0 &&
@@ -240,14 +235,18 @@ const DrawerContent = ({ handleModalClose }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const { loading } = useSelector((state) => state.loader);
   const [price, setPrice] = useState("");
+  const [type, setType] = useState("New");
+  const [date, setDate] = useState(new Date());
+
+  const handleType = (e) => {
+    setType(e.target.value);
+  };
+
   const dispatch = useDispatch();
-
-  const { currentGroupId } = useSelector((state) => state.groups);
-
   const { membersList } = useSelector((state) => state.members);
 
   const handleSubmitPayment = () => {
-    dispatch(createPayment(selectedUser, price));
+    dispatch(createPayment(selectedUser, price, date));
     // dispatch(getPendingPayments(currentGroupId, "Unpaid"));
     handleModalClose();
   };
@@ -257,6 +256,20 @@ const DrawerContent = ({ handleModalClose }) => {
       <DrawerHeader className="header">Create Payment</DrawerHeader>
 
       <Grid container rowSpacing={4}>
+        <Grid item xs={12}>
+          <MuiTextField
+            id="type"
+            select
+            value={type}
+            label="Type"
+            onChange={handleType}
+            mb={1}
+            className="typeSelect"
+          >
+            <MenuItem value="New">New</MenuItem>
+            <MenuItem value="Old">Old</MenuItem>
+          </MuiTextField>
+        </Grid>
         <Grid item xs={12}>
           <Autocomplete
             id="combo-box-demo"
@@ -307,6 +320,41 @@ const DrawerContent = ({ handleModalClose }) => {
             }}
           />
         </Grid>
+        {type === "Old" && (
+          <Grid item xs={12}>
+            <LocalizationProvider dateAdapter={DateAdapter}>
+              <DatePicker
+                error={false}
+                disableFuture
+                label="Date"
+                openTo="year"
+                views={["year", "month", "day"]}
+                value={date}
+                onChange={(newValue) => {
+                  setDate(newValue);
+                }}
+                renderInput={(params) => (
+                  <MuiTextField
+                    required
+                    {...params}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <DateRangeIcon
+                            style={{
+                              color: DefaultTheme.palette.primary.main,
+                            }}
+                          />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                )}
+              />
+            </LocalizationProvider>
+          </Grid>
+        )}
+
         <Grid item xs={12}>
           <PrimaryBtn
             disabled={selectedUser && price ? false : true}
@@ -384,7 +432,6 @@ export const MuiTextField = styled(TextField)(({ theme }) => ({
     },
   },
   "& .MuiInputLabel-root": { color: DefaultTheme.palette.primary.main },
-  marginBottom: "30px",
   "&::-webkit-calendar-picker-indicator": {
     display: "none",
     "-webkit-appearance": "none",

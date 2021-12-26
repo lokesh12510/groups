@@ -21,6 +21,7 @@ export const UPDATE_GROUP = "UPDATE_GROUP";
 export const SWITCH_GROUP = "SWITCH_GROUP";
 export const CLEAR_GROUP = "CLEAR_GROUP";
 export const SET_FETCH = "SET_FETCH";
+export const SET_DASHBOARD = "SET_DASHBOARD";
 
 // USER INFO
 export const SET_USER = "SET_USER";
@@ -52,3 +53,7 @@ export const SET_MEMBERS = "SET_MEMBERS";
 export const SET_NON_MEMBERS = "SET_NON_MEMBERS";
 export const ADD_MEMBER = "ADD_MEMBER";
 export const REMOVE_MEMBER = "REMOVE_MEMBER";
+
+// TRANSACTIONS
+export const ADD_EXPENSE = "ADD_EXPENSE";
+export const ADD_DONATION = "ADD_DONATION";

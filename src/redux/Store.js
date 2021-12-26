@@ -6,7 +6,7 @@ import thunk from "redux-thunk";
 import { authReducer } from "./reducers/Auth.reducer";
 import { messageReducer } from "./reducers/Message.reducer";
 import { loaderReducer } from "./reducers/Loader.reducer";
-import { groupReducer } from "./reducers/Group.reducer";
+import { dashboardReducer, groupReducer } from "./reducers/Group.reducer";
 import { userReducer } from "./reducers/User.reducer";
 
 import { persistStore, persistReducer } from "redux-persist";
@@ -16,6 +16,7 @@ import { membersReducer } from "./reducers/Members.reducer";
 import { userPaymentReducer } from "./reducers/UserPayments.reducer";
 import { groupPaymentHistoryReducer } from "./reducers/GroupPaymentHistory.reducer";
 import { userContributions } from "./reducers/UserContribution.reducer";
+import { transactionReducer } from "./reducers/Transaction.reducer";
 
 const persistConfig = {
   key: "root",
@@ -27,6 +28,8 @@ const persistConfig = {
     "groupHistory",
     "userPayments",
     "userContribution",
+    "transactions",
+    "dashboard",
   ],
 };
 
@@ -41,6 +44,8 @@ const rootReducer = combineReducers({
   userPayments: userPaymentReducer,
   groupHistory: groupPaymentHistoryReducer,
   userContribution: userContributions,
+  transactions: transactionReducer,
+  dashboard: dashboardReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
