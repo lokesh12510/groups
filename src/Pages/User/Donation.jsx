@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Button,
+  CircularProgress,
   Container,
   Dialog,
   DialogActions,
@@ -13,10 +14,17 @@ import {
   InputLabel,
   MenuItem,
   OutlinedInput,
+  Skeleton,
+  Stack,
   Typography,
 } from "@mui/material";
-import { PAYMENT_HEAD } from "../../UIElements/Images";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  DONATION_BG,
+  EXPENSE_BG,
+  PAYMENT_HEAD,
+  PENDING_BG,
+} from "../../UIElements/Images";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -26,8 +34,10 @@ import Select from "@mui/material/Select";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserPayments } from "../../redux/actions/UserPayments.action";
 import {
+  clearPaymentHistory,
   filterChange,
   getGroupPaymentHistory,
+  getReportPayments,
 } from "../../redux/actions/GroupPaymentHistory.actions";
 import { Box, maxHeight } from "@mui/system";
 import PropTypes from "prop-types";
@@ -36,6 +46,15 @@ import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import InfiniteScroll from "react-infinite-scroll-component";
+import {
+  clearTransaction,
+  getHistoryTransaction,
+  getReportTransaction,
+  historyChange,
+} from "../../redux/actions/Transaction.actions";
+import ExpenseCard from "../../Components/Payments/ExpenseCard";
+import DonationCard from "../../Components/Payments/DonationCard";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -75,37 +94,29 @@ const Donation = () => {
   const dispatch = useDispatch();
 
   // STATE
-  const [year, setYear] = React.useState("All");
-  const [type, setType] = React.useState("All");
-  const [open, setOpen] = React.useState(false);
   const [typeOpen, setTypeOpen] = React.useState(false);
-  const [modal, setModal] = useState(false);
   const [month, setMonth] = useState("All");
 
-  // SELECTORS
-  const { paymentHistory, isFetched } = useSelector(
-    (state) => state.groupHistory
-  );
-  const { currentGroupId } = useSelector((state) => state.groups);
-  const { loading } = useSelector((state) => state.loader);
+  const [skip, setSkip] = useState(0);
+  const [limit, setLimit] = useState(10);
 
-  // YEAR
-  const handleChange = (event) => {
-    setYear(event.target.value);
-    dispatch(filterChange());
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  // SELECTORS
+  const { currentGroupId, groupInfo } = useSelector((state) => state.groups);
+  const { loading } = useSelector((state) => state.loader);
+  const { historyList, filterChange, reportTransaction } = useSelector(
+    (state) => state.transactions
+  );
+
+  const location = useLocation();
+
+  const theme = useTheme();
+  const [value, setValue] = React.useState(0);
+
+  // const years = ["2021", "2020", "2019"];
+  const years = [...reportTransaction.map((item) => item.annualYear)];
 
   // TYPE
-  const handleTypeChange = (event) => {
-    setType(event.target.value);
-    dispatch(filterChange());
-  };
+
   const handleTypeClose = () => {
     setTypeOpen(false);
   };
@@ -115,45 +126,50 @@ const Donation = () => {
 
   // MONTH
   const handleMonthChange = (event) => {
+    setSkip(0);
+    setLimit(10);
     setMonth(event.target.value);
-    dispatch(filterChange());
+    dispatch(historyChange());
   };
 
-  //   MODAL
-  const handleModalOpen = () => {
-    setModal(true);
-  };
-
-  const handleModalClose = (event, reason) => {
-    if (reason !== "backdropClick") {
-      setModal(false);
-    }
-  };
+  useEffect(() => {
+    dispatch(clearTransaction());
+  }, []);
 
   // SERVICE CALL-> (USER PAYMENT LIST)
   useEffect(() => {
-    if (!isFetched) {
-      dispatch(getGroupPaymentHistory(currentGroupId, "Paid"));
-    }
-  }, [year, type]);
+    dispatch(getReportTransaction("Donation"));
+    dispatch(
+      getHistoryTransaction("Donation", years[value], month, skip, limit)
+    );
+  }, [value, month, skip, limit]);
   // SERVICE CALL-> (USER PAYMENT LIST)
-
-  const theme = useTheme();
-  const [value, setValue] = React.useState(2);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
+    setSkip(0);
+    setLimit(10);
+    dispatch(historyChange());
   };
 
   const handleChangeIndex = (index) => {
     setValue(index);
+    setSkip(0);
+    setLimit(10);
+    dispatch(historyChange());
+  };
+
+  const fetchData = () => {
+    console.log("fetched data");
+    setSkip(skip + 10);
   };
 
   return (
     <Root>
       <PaymentHeader>
         <Button
-          onClick={() => navigate(-1)}
+          component={Link}
+          to="/"
           className="backBtn"
           variant="text"
           startIcon={<ArrowBackIcon />}
@@ -167,7 +183,7 @@ const Donation = () => {
             gutterBottom
             className="headerTitle"
           >
-            Total Donation
+            Total Balance
           </Typography>
           <Typography
             variant="h5"
@@ -175,7 +191,7 @@ const Donation = () => {
             gutterBottom
             className="totalAmount"
           >
-            ₹ 10,590.90
+            ₹ {groupInfo?.balance}
           </Typography>
         </div>
       </PaymentHeader>
@@ -188,9 +204,9 @@ const Donation = () => {
             variant="fullWidth"
             aria-label="full width tabs example"
           >
-            <Tab label="2019" {...a11yProps(0)} />
-            <Tab label="2020" {...a11yProps(1)} />
-            <Tab label="2021" {...a11yProps(2)} />
+            {years.map((item, index) => {
+              return item && <Tab label={item} {...a11yProps(index)} />;
+            })}
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -198,58 +214,68 @@ const Donation = () => {
           index={value}
           onChangeIndex={handleChangeIndex}
         >
-          {[...new Array(3)].map((item, index) => {
-            return (
-              <TabPanel value={value} index={index} dir={theme.direction}>
-                {/* <FilterSection container justifyContent={"end"}>
-                  <Grid item>
-                    <FormControl sx={{ m: 1, minWidth: 130, maxHeight: 250 }}>
-                      <InputLabel id="demo-controlled-open-select-label">
-                        Month
-                      </InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        open={typeOpen}
-                        onClose={handleTypeClose}
-                        onOpen={handleTypeOpen}
-                        value={type}
-                        label="Type"
-                        onChange={handleTypeChange}
-                        className="monthSelect"
-                        MenuProps={{ PaperProps: { sx: { maxHeight: 250 } } }}
-                      >
-                        <MenuItem value={"All"}>
-                          <em>All</em>
-                        </MenuItem>
-                        <MenuItem value={1}>JAN</MenuItem>
-                        <MenuItem value={2}>FEB</MenuItem>
-                        <MenuItem value={3}>MAR</MenuItem>
-                        <MenuItem value={4}>APR</MenuItem>
-                        <MenuItem value={5}>MAY</MenuItem>
-                        <MenuItem value={6}>JUN</MenuItem>
-                        <MenuItem value={7}>JUY</MenuItem>
-                        <MenuItem value={8}>AUG</MenuItem>
-                        <MenuItem value={9}>SEP</MenuItem>
-                        <MenuItem value={10}>OCT</MenuItem>
-                        <MenuItem value={11}>NOV</MenuItem>
-                        <MenuItem value={12}>DEC</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                </FilterSection> */}
+          {years
+            .filter((item) => item !== null && item)
+            .map((item, index) => {
+              return (
+                <TabPanel value={value} index={index} dir={theme.direction}>
+                  <FilterSection container justifyContent={"space-between"}>
+                    <Grid item pl={2}>
+                      <Typography variant="p" component={"div"}>
+                        Yearly - {item}
+                      </Typography>
+                      <Typography variant="h6" component={"div"} gutterBottom>
+                        ₹ {reportTransaction[value].totalAmount}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <FormControl sx={{ m: 1, minWidth: 100, maxHeight: 250 }}>
+                        <InputLabel id="demo-controlled-open-select-label">
+                          Month
+                        </InputLabel>
+                        <Select
+                          labelId="demo-controlled-open-select-label"
+                          id="demo-controlled-open-select"
+                          open={typeOpen}
+                          onClose={handleTypeClose}
+                          onOpen={handleTypeOpen}
+                          value={month}
+                          label="Type"
+                          onChange={handleMonthChange}
+                          className="monthSelect"
+                          MenuProps={{ PaperProps: { sx: { maxHeight: 250 } } }}
+                        >
+                          <MenuItem value={"All"}>
+                            <em>All</em>
+                          </MenuItem>
+                          <MenuItem value={1}>JAN</MenuItem>
+                          <MenuItem value={2}>FEB</MenuItem>
+                          <MenuItem value={3}>MAR</MenuItem>
+                          <MenuItem value={4}>APR</MenuItem>
+                          <MenuItem value={5}>MAY</MenuItem>
+                          <MenuItem value={6}>JUN</MenuItem>
+                          <MenuItem value={7}>JUY</MenuItem>
+                          <MenuItem value={8}>AUG</MenuItem>
+                          <MenuItem value={9}>SEP</MenuItem>
+                          <MenuItem value={10}>OCT</MenuItem>
+                          <MenuItem value={11}>NOV</MenuItem>
+                          <MenuItem value={12}>DEC</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </FilterSection>
 
-                <PaymentContainer>
-                  <Typography
-                    variant="p"
-                    mb={2}
-                    component="div"
-                    className="sectionTitle"
-                  >
-                    <RecentTransaction width="24" height="24" />
-                    Your Transaction
-                  </Typography>
-                  <Typography
+                  <PaymentContainer>
+                    <Typography
+                      variant="p"
+                      mb={2}
+                      component="div"
+                      className="sectionTitle"
+                    >
+                      <RecentTransaction width="24" height="24" />
+                      Transactions
+                    </Typography>
+                    {/* <Typography
                     variant="caption"
                     display="block"
                     gutterBottom
@@ -257,66 +283,82 @@ const Donation = () => {
                     className="transactionDate"
                   >
                     Today, November 4th
-                  </Typography>
+                  </Typography> */}
 
-                  {!loading &&
-                    paymentHistory.length > 0 &&
-                    paymentHistory.map((item, index) => {
-                      return <PaymentCard key={index} payment={item} />;
-                    })}
-                </PaymentContainer>
-              </TabPanel>
-            );
-          })}
+                    {historyList?.length > 0 && (
+                      <InfiniteScroll
+                        dataLength={historyList.length} //This is important field to render the next data
+                        next={fetchData}
+                        hasMore={filterChange}
+                        loader={
+                          <MemberSkeleton>
+                            <div>
+                              <Skeleton
+                                variant="circular"
+                                width={45}
+                                height={45}
+                              />
+                            </div>
+                            <div className="skeletonContent">
+                              <Skeleton
+                                variant="rectangular"
+                                width={"100%"}
+                                height={30}
+                              />
+                              <Skeleton
+                                variant="rectangular"
+                                width={"100%"}
+                                height={10}
+                                className="secondText"
+                              />
+                            </div>
+                          </MemberSkeleton>
+                        }
+                        endMessage={
+                          <p style={{ textAlign: "center" }}>
+                            <b>Yay! You have seen it all</b>
+                          </p>
+                        }
+                      >
+                        {historyList?.map((item, i) => {
+                          console.log(item);
+                          return <DonationCard key={i} donation={item} />;
+                        })}
+                      </InfiniteScroll>
+                    )}
+                    {historyList.length === 0 &&
+                      [...new Array(8)].map((item) => {
+                        return (
+                          <MemberSkeleton>
+                            <div>
+                              <Skeleton
+                                variant="circular"
+                                width={45}
+                                height={45}
+                              />
+                            </div>
+                            <div className="skeletonContent">
+                              <Skeleton
+                                variant="rectangular"
+                                width={"100%"}
+                                height={30}
+                              />
+                              <Skeleton
+                                variant="rectangular"
+                                width={"100%"}
+                                height={10}
+                                className="secondText"
+                              />
+                            </div>
+                          </MemberSkeleton>
+                        );
+                      })}
+                  </PaymentContainer>
+                </TabPanel>
+              );
+            })}
         </SwipeableViews>
       </Box>
-
-      <Dialog
-        open={modal}
-        onClose={handleModalClose}
-        onBackdropClick={handleModalClose}
-      >
-        <DialogTitle>Fill the form</DialogTitle>
-        <DialogContent>
-          <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
-            <FormControl sx={{ m: 1, minWidth: 100 }}>
-              <InputLabel htmlFor="demo-dialog-native">Age</InputLabel>
-              <Select
-                native
-                value={year}
-                onChange={handleChange}
-                input={<OutlinedInput label="Age" id="demo-dialog-native" />}
-              >
-                <option aria-label="None" value="" />
-                <option value={10}>Ten</option>
-                <option value={20}>Twenty</option>
-                <option value={30}>Thirty</option>
-              </Select>
-            </FormControl>
-            <FormControl sx={{ m: 1, minWidth: 100 }}>
-              <InputLabel id="demo-dialog-select-label">Age</InputLabel>
-              <Select
-                labelId="demo-dialog-select-label"
-                id="demo-dialog-select"
-                value={month}
-                onChange={handleMonthChange}
-                input={<OutlinedInput label="Age" />}
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleModalClose}>Cancel</Button>
-          <Button onClick={handleModalClose}>Ok</Button>
-        </DialogActions>
-      </Dialog>
     </Root>
   );
 };
@@ -332,7 +374,11 @@ const Root = styled("div")((theme) => ({
     maxHeight: 100,
   },
   "& .yearTabs": {
-    backgroundColor: "#5156f1",
+    backgroundColor: "#16c3a8",
+  },
+  "& .MuiTabs-indicator": {
+    backgroundColor: "#fff",
+    height: "3px",
   },
 }));
 
@@ -343,7 +389,7 @@ const MenuItems = styled("div")({
 const PaymentHeader = styled("div")({
   padding: "16px",
   minHeight: "150px",
-  background: `url("${PAYMENT_HEAD}")`,
+  background: `url("${DONATION_BG}")`,
   backgroundSize: "cover",
   backgroundPosition: "center center",
   display: "flex",
@@ -377,7 +423,7 @@ const PaymentContainer = styled(Container)({
 });
 
 const FilterSection = styled(Grid)({
-  marginBlock: "20px",
+  marginTop: "20px",
   "& .MuiSelect-select": {
     padding: "9.5px 13px",
   },
@@ -394,4 +440,19 @@ const FilterBtn = styled(Button)({
   backgroundColor: "transparent",
   borderColor: "#666666",
   color: "#666666",
+});
+
+const MemberSkeleton = styled("div")({
+  display: "flex",
+  alignItems: "start",
+  gap: "10px",
+  marginBottom: "10px",
+  "& .skeletonContent": {
+    width: "100%",
+  },
+  "& .secondText": {
+    width: "100%",
+    marginBlock: "5px",
+    flex: "1",
+  },
 });

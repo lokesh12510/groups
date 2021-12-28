@@ -30,6 +30,13 @@ const Root = styled("div")((theme) => ({
       fontSize: "16px",
       textTransform: "capitalize",
       marginBottom: "0px",
+      color: "#000",
+    },
+    "& .paymentDetails .event": {
+      fontSize: "16px",
+      textTransform: "capitalize",
+      marginBottom: "0px",
+      color: "#666666",
     },
     "& .paymentDetails .date": {
       fontSize: "13px",
@@ -41,7 +48,7 @@ const Root = styled("div")((theme) => ({
     display: "grid",
     placeItems: "center",
     padding: "10px 15px 10px 35px",
-    height: "50px",
+    height: "70px",
     "& .amount": {
       fontSize: "18px",
       fontWeight: "bold",
@@ -59,31 +66,39 @@ const Root = styled("div")((theme) => ({
   "& .card-end[data-fine=false]": { backgroundImage: `url("${PAYMENT_BG}")` },
 }));
 
-const ExpenseCard = ({ expense }) => {
+const DonationCard = ({ donation }) => {
   return (
     <Root>
       <div className="card-start">
         <div className="paymentDetails">
           <Typography
-            variant="p"
+            variant="h6"
             gutterBottom
             component="div"
             className="userName"
           >
-            {expense.event}
+            {donation.contributor}
+          </Typography>
+          <Typography
+            variant="p"
+            gutterBottom
+            component="div"
+            className="event"
+          >
+            {donation.event}
           </Typography>
           <Typography variant="p" gutterBottom component="div" className="date">
-            {moment(expense?.createdAt).utcOffset(0).calendar()}
+            {moment(donation?.createdAt).utcOffset(0).calendar()}
           </Typography>
         </div>
       </div>
-      <div className="card-end" data-fine={true}>
+      <div className="card-end" data-fine={false}>
         <Typography variant="p" gutterBottom component="div" className="amount">
-          ₹ {expense?.amount}
+          ₹ {donation?.amount}
         </Typography>
       </div>
     </Root>
   );
 };
 
-export default ExpenseCard;
+export default DonationCard;

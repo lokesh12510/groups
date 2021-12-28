@@ -82,7 +82,7 @@ const timelines = [
     title: "Sports event 2021",
     date: "1st Nov",
     image:
-      "https://img.etimg.com/thumb/msid-77734860,width-650,imgsize-951020,,resizemode-4,quality-100/sports_istock.jpg",
+      "https://res.cloudinary.com/drxjql1j7/image/upload/v1640697821/avatars/yqk6xkmfwothhtcngp2y.jpg",
   },
   {
     id: 2,
@@ -90,7 +90,7 @@ const timelines = [
     title: "Go Green 2021",
     date: "1st Jan",
     image:
-      "https://img.etimg.com/thumb/msid-77734860,width-650,imgsize-951020,,resizemode-4,quality-100/sports_istock.jpg",
+      "https://res.cloudinary.com/drxjql1j7/image/upload/v1640697821/avatars/yqk6xkmfwothhtcngp2y.jpg",
   },
   {
     id: 3,
@@ -98,7 +98,7 @@ const timelines = [
     title: "Sports event 2020",
     date: "1st Nov",
     image:
-      "https://img.etimg.com/thumb/msid-77734860,width-650,imgsize-951020,,resizemode-4,quality-100/sports_istock.jpg",
+      "https://res.cloudinary.com/drxjql1j7/image/upload/v1640697821/avatars/yqk6xkmfwothhtcngp2y.jpg",
   },
   {
     id: 4,
@@ -106,6 +106,6 @@ const timelines = [
     title: "Go Green 2020",
     date: "1st Nov",
     image:
-      "https://img.etimg.com/thumb/msid-77734860,width-650,imgsize-951020,,resizemode-4,quality-100/sports_istock.jpg",
+      "https://res.cloudinary.com/drxjql1j7/image/upload/v1640697821/avatars/yqk6xkmfwothhtcngp2y.jpg",
   },
 ];

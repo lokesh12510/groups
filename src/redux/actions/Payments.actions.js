@@ -2,6 +2,7 @@ import { GroupServices } from "../../Services/GroupServices";
 import { UserServices } from "../../Services/UserServices";
 import {
   ACCEPT_PAYMENT,
+  CLEAR_GROUP_PAYMENT_HISTORY,
   CREATE_PAYMENT,
   PENDING_PAYMENTS,
   SET_FETCH,
@@ -10,6 +11,7 @@ import {
   STOP_LOADER,
 } from "../actionTypes";
 import { store } from "../Store";
+import { getReportPayments } from "./GroupPaymentHistory.actions";
 
 export const getPendingPayments = (id, status) => (dispatch) => {
   return GroupServices.payments(
@@ -54,6 +56,10 @@ export const acceptPayment = (id) => (dispatch) => {
       dispatch({
         type: ACCEPT_PAYMENT,
       });
+      dispatch({
+        type: CLEAR_GROUP_PAYMENT_HISTORY,
+      });
+
       dispatch({
         type: SET_FETCH,
       });

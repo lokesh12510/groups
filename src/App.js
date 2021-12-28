@@ -31,19 +31,21 @@ function App() {
   return (
     <div className="App">
       {!loading && message && <Toast message={message} type={type} />}
-      {loading && location.pathname !== "/members" && (
-        <CircularProgress
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            margin: "auto",
-            zIndex: "1051",
-          }}
-        />
-      )}
+      {loading &&
+        location.pathname !== "/members" &&
+        location.pathname !== "/savings" && (
+          <CircularProgress
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              margin: "auto",
+              zIndex: "1051",
+            }}
+          />
+        )}
 
       <Routes>
         <Route path="/create/*" element={<AuthLayouts />} />

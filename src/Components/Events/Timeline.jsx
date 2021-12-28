@@ -97,7 +97,7 @@ const timelines = [
     title: "FOOTBALL LEAGUE- 4",
     date: "27th Dec",
     image:
-      "https://img.etimg.com/thumb/msid-77734860,width-650,imgsize-951020,,resizemode-4,quality-100/sports_istock.jpg",
+      "https://res.cloudinary.com/drxjql1j7/image/upload/v1640697821/avatars/yqk6xkmfwothhtcngp2y.jpg",
   },
   {
     id: 2,
@@ -105,7 +105,7 @@ const timelines = [
     title: "Plastic Free Thambatty",
     date: "27th May",
     image:
-      "https://www.readingrockets.org/sites/default/files/atoz_motivation2.jpg",
+      "https://res.cloudinary.com/drxjql1j7/image/upload/v1640697821/avatars/yqk6xkmfwothhtcngp2y.jpg",
   },
   {
     id: 3,
@@ -113,7 +113,7 @@ const timelines = [
     title: "Kids Motivational",
     date: "24th Jan",
     image:
-      "https://www.readingrockets.org/sites/default/files/atoz_motivation2.jpg",
+      "https://res.cloudinary.com/drxjql1j7/image/upload/v1640697821/avatars/yqk6xkmfwothhtcngp2y.jpg",
   },
   {
     id: 4,
@@ -121,7 +121,7 @@ const timelines = [
     title: "Society club Event",
     date: "29th Dec",
     image:
-      "https://lh3.googleusercontent.com/chat_attachment/ADMKSce7fcVVov6GChyPq1EEdZWWpY9KMh1t67xyx8PnIAq0KWOrK0uRDuUPWj2vQlE7h-MDxeKAH3LlDwp-j4x4Fhs-ZbL39zmRE9zfzi0LZQtaGllTvgVNw_BwF8KVOKyDcF4siOUrqDHiwYc9roJIKLj7xdSHC-VudKgJwf87PyASy3wTJcal3F-xNnLPomuwIvSbMlCOszuOzqDKpEOVGvkjmlA=w512",
+      "https://res.cloudinary.com/drxjql1j7/image/upload/v1640697821/avatars/yqk6xkmfwothhtcngp2y.jpg",
   },
 ];
 

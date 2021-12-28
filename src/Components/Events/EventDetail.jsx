@@ -49,7 +49,7 @@ const EventDetail = () => {
       </BackBtn>
       <div className="eventImage">
         <img
-          src="https://img.etimg.com/thumb/msid-77734860,width-650,imgsize-951020,,resizemode-4,quality-100/sports_istock.jpg"
+          src="https://res.cloudinary.com/drxjql1j7/image/upload/v1640697821/avatars/yqk6xkmfwothhtcngp2y.jpg"
           alt=""
         />
       </div>

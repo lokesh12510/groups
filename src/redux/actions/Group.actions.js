@@ -99,6 +99,10 @@ export const setDashboard = () => (dispatch) => {
         type: SET_DASHBOARD,
         payload: data.data.data,
       });
+      dispatch({
+        type: SET_MESSAGE,
+        payload: { message: "", type: "success" },
+      });
     },
     (error) => {
       console.log(error);

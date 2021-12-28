@@ -34,15 +34,12 @@ const CardBtn = styled(Button)(({ theme, h, bg }) => ({
 }));
 
 const Dashboard = () => {
-  const { dashboard } = useSelector((state) => state.dashboard);
-  const { isFetched } = useSelector((state) => state.groups);
+  const { dashboard, isFetched } = useSelector((state) => state.dashboard);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isFetched) {
-      dispatch(setDashboard());
-    }
+    dispatch(setDashboard());
   }, []);
 
   return (

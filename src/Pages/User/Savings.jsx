@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Button,
+  CircularProgress,
   Container,
   Dialog,
   DialogActions,
@@ -13,10 +14,12 @@ import {
   InputLabel,
   MenuItem,
   OutlinedInput,
+  Skeleton,
+  Stack,
   Typography,
 } from "@mui/material";
 import { PAYMENT_HEAD } from "../../UIElements/Images";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -26,8 +29,10 @@ import Select from "@mui/material/Select";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserPayments } from "../../redux/actions/UserPayments.action";
 import {
+  clearPaymentHistory,
   filterChange,
   getGroupPaymentHistory,
+  getReportPayments,
 } from "../../redux/actions/GroupPaymentHistory.actions";
 import { Box, maxHeight } from "@mui/system";
 import PropTypes from "prop-types";
@@ -36,6 +41,7 @@ import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -78,17 +84,24 @@ const Savings = () => {
   const [typeOpen, setTypeOpen] = React.useState(false);
   const [month, setMonth] = useState("All");
 
-  const years = ["2019", "2020", "2021"];
+  const [skip, setSkip] = useState(0);
+  const [limit, setLimit] = useState(10);
 
   // SELECTORS
   const { paymentHistory, isFetched, filterType } = useSelector(
     (state) => state.groupHistory
   );
-  const { currentGroupId } = useSelector((state) => state.groups);
+  const { currentGroupId, groupInfo } = useSelector((state) => state.groups);
   const { loading } = useSelector((state) => state.loader);
+  const { reportPayments } = useSelector((state) => state.groupHistory);
+
+  const location = useLocation();
 
   const theme = useTheme();
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState(0);
+
+  // const years = ["2021", "2020", "2019"];
+  const years = [...reportPayments.map((item) => item.annualYear)];
 
   // TYPE
 
@@ -101,41 +114,57 @@ const Savings = () => {
 
   // MONTH
   const handleMonthChange = (event) => {
+    setSkip(0);
+    setLimit(10);
     setMonth(event.target.value);
+    dispatch(filterChange());
+  };
+
+  useEffect(() => {
+    dispatch(clearPaymentHistory());
+  }, []);
+
+  // SERVICE CALL-> (USER PAYMENT LIST)
+  useEffect(() => {
+    dispatch(getReportPayments());
     dispatch(
       getGroupPaymentHistory(
         currentGroupId,
         "Paid",
         years[value],
-        event.target.value
+        month,
+        skip,
+        limit
       )
     );
-  };
-  // SERVICE CALL-> (USER PAYMENT LIST)
-  useEffect(() => {
-    if (!isFetched.includes(years[value])) {
-      dispatch(
-        getGroupPaymentHistory(currentGroupId, "Paid", years[value], month)
-      );
-    }
-  }, [currentGroupId, value, month, isFetched]);
+  }, [currentGroupId, value, month, skip, limit]);
   // SERVICE CALL-> (USER PAYMENT LIST)
 
   const handleTabChange = (event, newValue) => {
-    dispatch(filterChange());
     setValue(newValue);
+    setSkip(0);
+    setLimit(10);
+    dispatch(filterChange());
   };
 
   const handleChangeIndex = (index) => {
-    dispatch(filterChange());
     setValue(index);
+    setSkip(0);
+    setLimit(10);
+    dispatch(filterChange());
+  };
+
+  const fetchData = () => {
+    console.log("fetched data");
+    setSkip(skip + 10);
   };
 
   return (
     <Root>
       <PaymentHeader>
         <Button
-          onClick={() => navigate(-1)}
+          component={Link}
+          to="/"
           className="backBtn"
           variant="text"
           startIcon={<ArrowBackIcon />}
@@ -157,7 +186,7 @@ const Savings = () => {
             gutterBottom
             className="totalAmount"
           >
-            ₹ 16,590.90
+            ₹ {groupInfo?.balance}
           </Typography>
         </div>
       </PaymentHeader>
@@ -171,7 +200,7 @@ const Savings = () => {
             aria-label="full width tabs example"
           >
             {years.map((item, index) => {
-              return <Tab label={item} {...a11yProps(index)} />;
+              return item && <Tab label={item} {...a11yProps(index)} />;
             })}
           </Tabs>
         </AppBar>
@@ -180,66 +209,68 @@ const Savings = () => {
           index={value}
           onChangeIndex={handleChangeIndex}
         >
-          {years.map((item, index) => {
-            return (
-              <TabPanel value={value} index={index} dir={theme.direction}>
-                <FilterSection container justifyContent={"space-between"}>
-                  <Grid item pl={2}>
-                    <Typography variant="p" component={"div"}>
-                      Yearly - {item}
-                    </Typography>
-                    <Typography variant="h6" component={"div"} gutterBottom>
-                      ₹ 6,590.90
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <FormControl sx={{ m: 1, minWidth: 100, maxHeight: 250 }}>
-                      <InputLabel id="demo-controlled-open-select-label">
-                        Month
-                      </InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        open={typeOpen}
-                        onClose={handleTypeClose}
-                        onOpen={handleTypeOpen}
-                        value={month}
-                        label="Type"
-                        onChange={handleMonthChange}
-                        className="monthSelect"
-                        MenuProps={{ PaperProps: { sx: { maxHeight: 250 } } }}
-                      >
-                        <MenuItem value={"All"}>
-                          <em>All</em>
-                        </MenuItem>
-                        <MenuItem value={1}>JAN</MenuItem>
-                        <MenuItem value={2}>FEB</MenuItem>
-                        <MenuItem value={3}>MAR</MenuItem>
-                        <MenuItem value={4}>APR</MenuItem>
-                        <MenuItem value={5}>MAY</MenuItem>
-                        <MenuItem value={6}>JUN</MenuItem>
-                        <MenuItem value={7}>JUY</MenuItem>
-                        <MenuItem value={8}>AUG</MenuItem>
-                        <MenuItem value={9}>SEP</MenuItem>
-                        <MenuItem value={10}>OCT</MenuItem>
-                        <MenuItem value={11}>NOV</MenuItem>
-                        <MenuItem value={12}>DEC</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                </FilterSection>
+          {years
+            .filter((item) => item !== null && item)
+            .map((item, index) => {
+              return (
+                <TabPanel value={value} index={index} dir={theme.direction}>
+                  <FilterSection container justifyContent={"space-between"}>
+                    <Grid item pl={2}>
+                      <Typography variant="p" component={"div"}>
+                        Yearly - {item}
+                      </Typography>
+                      <Typography variant="h6" component={"div"} gutterBottom>
+                        ₹ {reportPayments[value].totalAmount}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <FormControl sx={{ m: 1, minWidth: 100, maxHeight: 250 }}>
+                        <InputLabel id="demo-controlled-open-select-label">
+                          Month
+                        </InputLabel>
+                        <Select
+                          labelId="demo-controlled-open-select-label"
+                          id="demo-controlled-open-select"
+                          open={typeOpen}
+                          onClose={handleTypeClose}
+                          onOpen={handleTypeOpen}
+                          value={month}
+                          label="Type"
+                          onChange={handleMonthChange}
+                          className="monthSelect"
+                          MenuProps={{ PaperProps: { sx: { maxHeight: 250 } } }}
+                        >
+                          <MenuItem value={"All"}>
+                            <em>All</em>
+                          </MenuItem>
+                          <MenuItem value={1}>JAN</MenuItem>
+                          <MenuItem value={2}>FEB</MenuItem>
+                          <MenuItem value={3}>MAR</MenuItem>
+                          <MenuItem value={4}>APR</MenuItem>
+                          <MenuItem value={5}>MAY</MenuItem>
+                          <MenuItem value={6}>JUN</MenuItem>
+                          <MenuItem value={7}>JUY</MenuItem>
+                          <MenuItem value={8}>AUG</MenuItem>
+                          <MenuItem value={9}>SEP</MenuItem>
+                          <MenuItem value={10}>OCT</MenuItem>
+                          <MenuItem value={11}>NOV</MenuItem>
+                          <MenuItem value={12}>DEC</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </FilterSection>
 
-                <PaymentContainer>
-                  <Typography
-                    variant="p"
-                    mb={2}
-                    component="div"
-                    className="sectionTitle"
-                  >
-                    <RecentTransaction width="24" height="24" />
-                    Transactions
-                  </Typography>
-                  {/* <Typography
+                  <PaymentContainer>
+                    <Typography
+                      variant="p"
+                      mb={2}
+                      component="div"
+                      className="sectionTitle"
+                    >
+                      <RecentTransaction width="24" height="24" />
+                      Transactions
+                    </Typography>
+                    {/* <Typography
                     variant="caption"
                     display="block"
                     gutterBottom
@@ -249,15 +280,78 @@ const Savings = () => {
                     Today, November 4th
                   </Typography> */}
 
-                  {!loading &&
-                    paymentHistory &&
-                    paymentHistory[years[value]]?.map((item, i) => {
-                      return <PaymentCard key={i} payment={item} />;
-                    })}
-                </PaymentContainer>
-              </TabPanel>
-            );
-          })}
+                    {paymentHistory?.length > 0 && (
+                      <InfiniteScroll
+                        dataLength={paymentHistory.length} //This is important field to render the next data
+                        next={fetchData}
+                        hasMore={filterType}
+                        loader={
+                          <MemberSkeleton>
+                            <div>
+                              <Skeleton
+                                variant="circular"
+                                width={45}
+                                height={45}
+                              />
+                            </div>
+                            <div className="skeletonContent">
+                              <Skeleton
+                                variant="rectangular"
+                                width={"100%"}
+                                height={30}
+                              />
+                              <Skeleton
+                                variant="rectangular"
+                                width={"100%"}
+                                height={10}
+                                className="secondText"
+                              />
+                            </div>
+                          </MemberSkeleton>
+                        }
+                        endMessage={
+                          <p style={{ textAlign: "center" }}>
+                            <b>Yay! You have seen it all</b>
+                          </p>
+                        }
+                      >
+                        {paymentHistory?.map((item, i) => {
+                          console.log(item);
+                          return <PaymentCard key={i} payment={item} />;
+                        })}
+                      </InfiniteScroll>
+                    )}
+                    {paymentHistory.length === 0 &&
+                      [...new Array(8)].map((item) => {
+                        return (
+                          <MemberSkeleton>
+                            <div>
+                              <Skeleton
+                                variant="circular"
+                                width={45}
+                                height={45}
+                              />
+                            </div>
+                            <div className="skeletonContent">
+                              <Skeleton
+                                variant="rectangular"
+                                width={"100%"}
+                                height={30}
+                              />
+                              <Skeleton
+                                variant="rectangular"
+                                width={"100%"}
+                                height={10}
+                                className="secondText"
+                              />
+                            </div>
+                          </MemberSkeleton>
+                        );
+                      })}
+                  </PaymentContainer>
+                </TabPanel>
+              );
+            })}
         </SwipeableViews>
       </Box>
     </Root>
@@ -276,6 +370,10 @@ const Root = styled("div")((theme) => ({
   },
   "& .yearTabs": {
     backgroundColor: "#5156f1",
+  },
+  "& .MuiTabs-indicator": {
+    backgroundColor: "#fff",
+    height: "3px",
   },
 }));
 
@@ -337,4 +435,19 @@ const FilterBtn = styled(Button)({
   backgroundColor: "transparent",
   borderColor: "#666666",
   color: "#666666",
+});
+
+const MemberSkeleton = styled("div")({
+  display: "flex",
+  alignItems: "start",
+  gap: "10px",
+  marginBottom: "10px",
+  "& .skeletonContent": {
+    width: "100%",
+  },
+  "& .secondText": {
+    width: "100%",
+    marginBlock: "5px",
+    flex: "1",
+  },
 });

@@ -41,7 +41,7 @@ const Members = () => {
 
   return (
     <Root>
-      <Container>
+      {/* <Container>
         <div className="PageTitle">
           <SearchBar
             onChange={handleSearchChange}
@@ -60,17 +60,23 @@ const Members = () => {
         <Typography variant="overline" display="block" className="memberCount">
           Active : {membersCount}
         </Typography>
-      </Container>
+      </Container> */}
       <div className="memberListSection">
         <Container>
           {isAdmin && (
             <Grid
               container
               alignItems={"center"}
-              justifyContent={"end"}
+              justifyContent={"space-between"}
               spacing={1}
               mb={2}
             >
+              <Grid item>
+                <Typography variant="overline" component={"div"}>
+                  {!addNew && "Members List"}
+                  {addNew && "Non Members List"}
+                </Typography>
+              </Grid>
               <Grid item>
                 <FormControlLabel
                   value="start"
@@ -78,6 +84,21 @@ const Members = () => {
                   label="ADD"
                   labelPlacement="start"
                 />
+              </Grid>
+            </Grid>
+          )}
+          {!isAdmin && (
+            <Grid
+              container
+              alignItems={"center"}
+              justifyContent={"start"}
+              spacing={1}
+              mb={2}
+            >
+              <Grid item>
+                <Typography variant="overline" component={"div"}>
+                  Members List
+                </Typography>
               </Grid>
             </Grid>
           )}
