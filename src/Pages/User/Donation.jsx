@@ -55,6 +55,7 @@ import {
 } from "../../redux/actions/Transaction.actions";
 import ExpenseCard from "../../Components/Payments/ExpenseCard";
 import DonationCard from "../../Components/Payments/DonationCard";
+import NotFound from "../../Components/Elements/NotFound";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -191,7 +192,7 @@ const Donation = () => {
             gutterBottom
             className="totalAmount"
           >
-            ₹ {groupInfo?.balance}
+            ₹ {groupInfo?.donation}
           </Typography>
         </div>
       </PaymentHeader>
@@ -326,7 +327,8 @@ const Donation = () => {
                         })}
                       </InfiniteScroll>
                     )}
-                    {historyList.length === 0 &&
+                    {historyList?.length === 0 &&
+                      filterChange &&
                       [...new Array(8)].map((item) => {
                         return (
                           <MemberSkeleton>
@@ -353,6 +355,7 @@ const Donation = () => {
                           </MemberSkeleton>
                         );
                       })}
+                    {!loading && historyList?.length === 0 && <NotFound />}
                   </PaymentContainer>
                 </TabPanel>
               );

@@ -16,5 +16,5 @@ const NotFound = () => {
 export default NotFound;
 
 const ImgDiv = styled(Grid)({
-  height: "420px",
+  height: "270px",
 });

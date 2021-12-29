@@ -1,5 +1,6 @@
 import { UserServices } from "../../Services/UserServices";
 import {
+  CLEAR_USER_CONTRIBUTION,
   SET_MESSAGE,
   SET_USER_CONTRIBUTION,
   START_LOADER,
@@ -33,3 +34,7 @@ export const getUserContribution = () => (dispatch) => {
     }
   );
 };
+
+export const clearContribution = () => ({
+  type: CLEAR_USER_CONTRIBUTION,
+});

@@ -17,6 +17,8 @@ import {
   CLEAR_USER,
   SET_GROUP,
   IS_ADMIN,
+  CLEAR_USER_PENDING_LIST,
+  CLEAR_USER_CONTRIBUTION,
 } from "../actionTypes";
 import { store } from "../Store";
 import { isAdmin } from "./User.actions";
@@ -134,6 +136,7 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: START_LOADER,
   });
+
   authService.logout();
 
   localStorage.removeItem("persist:root");
@@ -146,11 +149,15 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: CLEAR_USER,
   });
-
   dispatch({
     type: CLEAR_GROUP,
   });
-
+  dispatch({
+    type: CLEAR_USER_PENDING_LIST,
+  });
+  dispatch({
+    type: CLEAR_USER_CONTRIBUTION,
+  });
   dispatch({
     type: SET_MESSAGE,
     payload: message,

@@ -1,4 +1,4 @@
-import { SET_USER_CONTRIBUTION } from "../actionTypes";
+import { CLEAR_USER_CONTRIBUTION, SET_USER_CONTRIBUTION } from "../actionTypes";
 
 const initialState = {
   totalAmount: "",
@@ -16,6 +16,12 @@ export const userContributions = (state = initialState, action) => {
         totalAmount: payload.totalAmount,
         totalFine: payload.totalFine,
         isFetched: true,
+      };
+    case CLEAR_USER_CONTRIBUTION:
+      return {
+        totalAmount: "",
+        totalFine: "",
+        isFetched: false,
       };
     default:
       return state;

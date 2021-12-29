@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // Styles
 import { styled } from "@mui/material/styles";
 import {
@@ -10,6 +10,7 @@ import {
   Grid,
   InputLabel,
   MenuItem,
+  Skeleton,
   Stack,
   Typography,
 } from "@mui/material";
@@ -21,12 +22,17 @@ import { RecentTransaction } from "../../UIElements/Icons";
 import PaymentCard from "../../Components/Payments/PaymentCard";
 import Select from "@mui/material/Select";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserPayments } from "../../redux/actions/UserPayments.action";
+import {
+  getUserPayments,
+  userFilterChange,
+} from "../../redux/actions/UserPayments.action";
 import { getGroupPaymentHistory } from "../../redux/actions/GroupPaymentHistory.actions";
 import { getUserContribution } from "../../redux/actions/UserContribution.actions";
 import { PENDING_BG } from "../../UIElements/Images";
 import moment from "moment";
 import NotFound from "../../Components/Elements/NotFound";
+
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const Payments = () => {
   const navigate = useNavigate();
@@ -36,6 +42,9 @@ const Payments = () => {
   const [year, setYear] = React.useState("All");
   const [open, setOpen] = React.useState(false);
 
+  const [skip, setSkip] = useState(0);
+  const [limit, setLimit] = useState(10);
+
   // SELECTORS
   const { totalAmount, totalFine, isFetched } = useSelector(
     (state) => state.userContribution
@@ -44,12 +53,16 @@ const Payments = () => {
     payments,
     pendingPayment,
     isFetched: paymentStatus,
+    paidStatus,
   } = useSelector((state) => state.userPayments);
   const { currentGroupId } = useSelector((state) => state.groups);
   const user = useSelector((state) => state.user);
   const { loading } = useSelector((state) => state.loader);
   // YEAR
   const handleChange = (event) => {
+    dispatch(userFilterChange());
+    setSkip(0);
+    setLimit(10);
     setYear(event.target.value);
   };
   const handleClose = () => {
@@ -61,18 +74,29 @@ const Payments = () => {
 
   // SERVICE CALL-> (USER PAYMENT LIST)
   useEffect(() => {
+    dispatch(
+      getUserPayments(currentGroupId, "Paid", "desc", year, skip, limit)
+    );
+  }, [currentGroupId, dispatch, skip, limit, year]);
+  // SERVICE CALL-> (USER PAYMENT LIST)
+
+  // SERVICE CALL-> (USER PAYMENT LIST)
+  useEffect(() => {
     window.scrollTo(0, 0);
     if (!isFetched) {
       dispatch(getUserContribution());
     }
-    if (!paymentStatus.payments) {
-      dispatch(getUserPayments(currentGroupId, "Paid", "desc", "2021"));
-    }
     if (!paymentStatus.pendingPayment) {
-      dispatch(getUserPayments(currentGroupId, "Unpaid", "desc", "2021"));
+      dispatch(getUserPayments(currentGroupId, "Unpaid", "desc", year));
     }
   }, [currentGroupId, dispatch]);
   // SERVICE CALL-> (USER PAYMENT LIST)
+
+  const fetchData = () => {
+    console.log("fetch data");
+    setSkip(skip + 10);
+  };
+  console.log(skip);
 
   return (
     <Root>
@@ -184,20 +208,73 @@ const Payments = () => {
       </Container>
 
       <PaymentContainer>
-        {payments.map((item, index) => {
-          return (
-            <UserPaymentCard key={index} fullWidth fine={`${item.fine}`}>
-              <div className="paymentInfo">
-                <p>ID : {item.payment_id}</p>
-                <h5>{moment(item.date).format("MMM YYYY")}</h5>
-              </div>
-              <div className="paymentAmount">
-                <span className="amount">₹ {item.Amount} </span>
-                {item.fine && <span className="fineFlag">Fine included</span>}
-              </div>
-            </UserPaymentCard>
-          );
-        })}
+        {payments.length > 0 && (
+          <InfiniteScroll
+            dataLength={payments.length} //This is important field to render the next data
+            next={fetchData}
+            hasMore={paidStatus}
+            loader={
+              <MemberSkeleton>
+                <div>
+                  <Skeleton variant="circular" width={45} height={45} />
+                </div>
+                <div className="skeletonContent">
+                  <Skeleton variant="rectangular" width={"100%"} height={30} />
+                  <Skeleton
+                    variant="rectangular"
+                    width={"100%"}
+                    height={10}
+                    className="secondText"
+                  />
+                </div>
+              </MemberSkeleton>
+            }
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+          >
+            {payments.map((item, index) => {
+              return (
+                <UserPaymentCard key={index} fullWidth fine={`${item.fine}`}>
+                  <div className="paymentInfo">
+                    <h5>{moment(item.date).format("MMM YYYY")}</h5>
+                    <p>ID : {item.payment_id}</p>
+                  </div>
+                  <div className="paymentAmount">
+                    <span className="amount">₹ {item.Amount} </span>
+                    {item.fine && (
+                      <span className="fineFlag">Fine included</span>
+                    )}
+                  </div>
+                </UserPaymentCard>
+              );
+            })}
+          </InfiniteScroll>
+        )}
+
+        {payments?.length === 0 &&
+          paidStatus &&
+          [...new Array(8)].map((item) => {
+            return (
+              <MemberSkeleton>
+                <div>
+                  <Skeleton variant="circular" width={45} height={45} />
+                </div>
+                <div className="skeletonContent">
+                  <Skeleton variant="rectangular" width={"100%"} height={30} />
+                  <Skeleton
+                    variant="rectangular"
+                    width={"100%"}
+                    height={10}
+                    className="secondText"
+                  />
+                </div>
+              </MemberSkeleton>
+            );
+          })}
+        {!loading && payments?.length === 0 && <NotFound />}
       </PaymentContainer>
     </Root>
   );
@@ -345,9 +422,10 @@ const Successpayment = styled(Button)({
 const UserPaymentCard = styled(Button)(({ fine }) => ({
   padding: "0",
   borderRadius: "7px",
-  boxShadow: "inset -2px 3px 4px rgb(0 0 0 / 15%)",
+  marginBottom: "10px",
+  // boxShadow: "inset -2px 3px 4px rgb(0 0 0 / 15%)",
   backgroundColor: fine === "false" ? "#7BE8D8" : "#F4C2C2",
-  minHeight: "80px",
+  minHeight: "60px",
   border: `1px solid ${fine === "false" ? "#7BE8D8" : "#F4C2C2"}`,
   justifyContent: "space-between",
   overflow: "hidden",
@@ -356,16 +434,17 @@ const UserPaymentCard = styled(Button)(({ fine }) => ({
   },
   "& h5": {
     margin: "0",
-    fontSize: "20px",
+    fontSize: "16px",
   },
   "& .paymentInfo": {
-    padding: "5px 15px",
+    padding: "0px 15px",
     alignItems: "flex-start",
     display: "flex",
     flexDirection: "Column",
     zIndex: 1,
     color: "#5A5A5A",
     paddingRight: "0",
+    fontSize: "13px",
   },
   "& p": {
     margin: "0",
@@ -374,25 +453,40 @@ const UserPaymentCard = styled(Button)(({ fine }) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    padding: "9px 15px",
-    fontSize: "30px",
+    padding: "0px 15px",
+    fontSize: "20px",
     color: "#000",
     margin: 0,
     textAlign: "end",
-    minHeight: "70px",
+    minHeight: "60px",
     paddingLeft: "0",
     "& .fineFlag": {
-      fontSize: "11px",
+      fontSize: "10px",
       color: "#F44141",
     },
   },
   "&::after": {
     content: `""`,
     background: "#fff",
-    boxShadow: "5px 3px 4px rgb(0 0 0 / 15%)",
+    // boxShadow: "5px 3px 4px rgb(0 0 0 / 15%)",
     padding: "123px",
     position: "absolute",
-    left: "-50px",
+    left: "-30px",
     transform: "rotate(26deg)",
   },
 }));
+
+const MemberSkeleton = styled("div")({
+  display: "flex",
+  alignItems: "start",
+  gap: "10px",
+  marginBottom: "10px",
+  "& .skeletonContent": {
+    width: "100%",
+  },
+  "& .secondText": {
+    width: "100%",
+    marginBlock: "5px",
+    flex: "1",
+  },
+});

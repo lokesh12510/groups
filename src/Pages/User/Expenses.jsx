@@ -3,38 +3,22 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Button,
-  CircularProgress,
   Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
-  OutlinedInput,
   Skeleton,
-  Stack,
   Typography,
 } from "@mui/material";
-import { EXPENSE_BG, PAYMENT_HEAD, PENDING_BG } from "../../UIElements/Images";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
+import { EXPENSE_BG } from "../../UIElements/Images";
+import { Link } from "react-router-dom";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { RecentTransaction } from "../../UIElements/Icons";
-import PaymentCard from "../../Components/Payments/PaymentCard";
 import Select from "@mui/material/Select";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserPayments } from "../../redux/actions/UserPayments.action";
-import {
-  clearPaymentHistory,
-  filterChange,
-  getGroupPaymentHistory,
-  getReportPayments,
-} from "../../redux/actions/GroupPaymentHistory.actions";
-import { Box, maxHeight } from "@mui/system";
+import { Box } from "@mui/system";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
@@ -49,6 +33,7 @@ import {
   historyChange,
 } from "../../redux/actions/Transaction.actions";
 import ExpenseCard from "../../Components/Payments/ExpenseCard";
+import NotFound from "../../Components/Elements/NotFound";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -84,7 +69,6 @@ function a11yProps(index) {
 }
 
 const Expenses = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // STATE
@@ -95,13 +79,11 @@ const Expenses = () => {
   const [limit, setLimit] = useState(10);
 
   // SELECTORS
-  const { currentGroupId, groupInfo } = useSelector((state) => state.groups);
-  const { loading } = useSelector((state) => state.loader);
+  const { groupInfo } = useSelector((state) => state.groups);
   const { historyList, filterChange, reportTransaction } = useSelector(
     (state) => state.transactions
   );
-
-  const location = useLocation();
+  const { loading } = useSelector((state) => state.loader);
 
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -154,7 +136,6 @@ const Expenses = () => {
   };
 
   const fetchData = () => {
-    console.log("fetched data");
     setSkip(skip + 10);
   };
 
@@ -185,7 +166,7 @@ const Expenses = () => {
             gutterBottom
             className="totalAmount"
           >
-            ₹ {groupInfo?.balance}
+            ₹ {groupInfo?.expense}
           </Typography>
         </div>
       </PaymentHeader>
@@ -315,12 +296,12 @@ const Expenses = () => {
                         }
                       >
                         {historyList?.map((item, i) => {
-                          console.log(item);
                           return <ExpenseCard key={i} expense={item} />;
                         })}
                       </InfiniteScroll>
                     )}
-                    {historyList.length === 0 &&
+                    {historyList?.length === 0 &&
+                      filterChange &&
                       [...new Array(8)].map((item) => {
                         return (
                           <MemberSkeleton>
@@ -347,6 +328,7 @@ const Expenses = () => {
                           </MemberSkeleton>
                         );
                       })}
+                    {!loading && historyList?.length === 0 && <NotFound />}
                   </PaymentContainer>
                 </TabPanel>
               );
@@ -375,10 +357,6 @@ const Root = styled("div")((theme) => ({
     height: "3px",
   },
 }));
-
-const MenuItems = styled("div")({
-  maxHeight: 100,
-});
 
 const PaymentHeader = styled("div")({
   padding: "16px",
@@ -427,13 +405,6 @@ const FilterSection = styled(Grid)({
   "& .MuiInputLabel-root": {
     top: "0px",
   },
-});
-
-const FilterBtn = styled(Button)({
-  minHeight: "42px",
-  backgroundColor: "transparent",
-  borderColor: "#666666",
-  color: "#666666",
 });
 
 const MemberSkeleton = styled("div")({
