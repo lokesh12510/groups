@@ -67,6 +67,8 @@ const Dashboard = () => {
               bg="#009688"
               h="130"
               gutterBottom
+              component={Link}
+              to="/admin/manage-group"
             >
               Manage Group
             </CardBtn>

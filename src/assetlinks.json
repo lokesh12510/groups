@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.tvinmooty.webapplication",
+    "sha256_cert_fingerprints": [
+      "3B:A9:06:21:59:CB:1C:CA:84:FC:F9:49:85:C7:FA:81:8A:5F:31:8B:03:D8:FE:13:5D:38:AE:28:22:D8:B0:AF"
+    ]
+  }
+}]

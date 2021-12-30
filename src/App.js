@@ -10,6 +10,7 @@ import AdminLayouts from "./Layouts/AdminLayouts";
 import { isAdmin } from "./redux/actions/User.actions";
 import { updateGroup } from "./redux/actions/Group.actions";
 import Privacy from "./Pages/User/Privacy";
+import Download from "./Pages/User/Download";
 
 function App() {
   const { message, type } = useSelector((state) => state.message);
@@ -55,6 +56,7 @@ function App() {
           element={isAdmin ? <AdminLayouts /> : <AuthLayouts />}
         />
         <Route path="/privacy-policy" element={<Privacy />} />
+        <Route path="/download" element={<Download />} />
       </Routes>
     </div>
   );

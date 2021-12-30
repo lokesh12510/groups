@@ -9,6 +9,8 @@ const PATH = {
   payments: "group/payments",
   getDashboardDetails: "tool/dashboardDetails",
   reportPayment: "group/reportPayments",
+  updateGroupInfo: "group/updateGroup",
+  updatePosition: "group/updateMemberStatus",
 };
 
 const getMembersList = (params, start, callback, error, next) => {
@@ -50,6 +52,22 @@ const removeGroupMembers = (payload, start, callback, error, next) => {
     .finally(next);
 };
 
+const updateGroupInfo = (payload, start, callback, error, next) => {
+  start();
+  return AdminHttpClient.post(`${PATH.updateGroupInfo}`, payload)
+    .then(callback)
+    .catch(error)
+    .finally(next);
+};
+
+const updatePosition = (payload, start, callback, error, next) => {
+  start();
+  return AdminHttpClient.post(`${PATH.updatePosition}`, payload)
+    .then(callback)
+    .catch(error)
+    .finally(next);
+};
+
 const payments = (params, start, callback, error, next) => {
   start();
   return AdminHttpClient.get(`${PATH.payments}`, { params })
@@ -83,4 +101,6 @@ export const GroupServices = {
   payments,
   getDashboardDetails,
   reportPayment,
+  updateGroupInfo,
+  updatePosition,
 };

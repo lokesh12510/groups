@@ -26,6 +26,7 @@ import moment from "moment";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { updatePosition } from "../../redux/actions/Group.actions";
 
 const ManageMembers = () => {
   const dispatch = useDispatch();
@@ -162,8 +163,10 @@ const DrawerContent = ({ handleModalClose, selectedUser }) => {
   const [role, setRole] = useState("user");
   const [position, setPosition] = useState("member");
 
+  const dispatch = useDispatch();
+
   const handleSubmitPayment = () => {
-    // dispatch(getPendingPayments(currentGroupId, "Unpaid"));
+    dispatch(updatePosition(selectedUser?.user?.user_id, position));
     handleModalClose();
   };
 
@@ -177,28 +180,6 @@ const DrawerContent = ({ handleModalClose, selectedUser }) => {
           <Typography component={"div"} variant="h6" className="userName">
             {selectedUser?.user?.username}
           </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <MuiTextField
-            id="role"
-            select
-            value={role}
-            label="Role"
-            onChange={(e) => setRole(e.target.value)}
-            required
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <EditIcon
-                    style={{ color: DefaultTheme.palette.primary.main }}
-                  />
-                </InputAdornment>
-              ),
-            }}
-          >
-            <MenuItem value="admin">Admin</MenuItem>
-            <MenuItem value="user">User</MenuItem>
-          </MuiTextField>
         </Grid>
         <Grid item xs={12} mb={5}>
           <MuiTextField
@@ -220,7 +201,7 @@ const DrawerContent = ({ handleModalClose, selectedUser }) => {
           >
             <MenuItem value="president">President</MenuItem>
             <MenuItem value="casher">Casher</MenuItem>
-            <MenuItem value="vice_president">Vice-President</MenuItem>
+            <MenuItem value="vice_president">Vice President</MenuItem>
             <MenuItem value="secretory">Secretory</MenuItem>
             <MenuItem value="joint_secretory">Joint Secretory</MenuItem>
             <MenuItem value="member">Member</MenuItem>

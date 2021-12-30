@@ -15,11 +15,10 @@ import {
 } from "@mui/material";
 import { DefaultTheme } from "../../Constant";
 import moment from "moment";
-import {useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 
 const MemberCard = ({ member, handleRemoveMember }) => {
-
   const { isAdmin } = useSelector((state) => state.user);
   const [open, setOpen] = useState(false);
   const [currentId, setCurrentId] = useState("");
@@ -53,7 +52,7 @@ const MemberCard = ({ member, handleRemoveMember }) => {
           "YYYYMMDD"
         ).fromNow()}
         action={
-          isAdmin && (
+          isAdmin ? (
             <Chip
               label="Remove"
               onClick={() => handleClickOpen(member.user.user_id)}
@@ -61,6 +60,15 @@ const MemberCard = ({ member, handleRemoveMember }) => {
               color="error"
               icon={<RemoveCircleOutlineIcon />}
             />
+          ) : (
+            member.position &&
+            member.position !== "member" && (
+              <Chip
+                label={member?.position}
+                variant="outlined"
+                color="primary"
+              />
+            )
           )
         }
       />

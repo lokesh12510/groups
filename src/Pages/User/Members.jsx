@@ -41,26 +41,6 @@ const Members = () => {
 
   return (
     <Root>
-      {/* <Container>
-        <div className="PageTitle">
-          <SearchBar
-            onChange={handleSearchChange}
-            placeholder="Search..."
-            color="success"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <PersonSearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </div>
-
-        <Typography variant="overline" display="block" className="memberCount">
-          Active : {membersCount}
-        </Typography>
-      </Container> */}
       <div className="memberListSection">
         <Container>
           {isAdmin && (

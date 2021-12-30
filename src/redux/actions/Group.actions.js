@@ -1,8 +1,10 @@
 import { GroupServices } from "../../Services/GroupServices";
 import { UserServices } from "../../Services/UserServices";
 import {
+  ADD_MEMBER,
   CLEAR_GROUP,
   SET_DASHBOARD,
+  SET_FETCH,
   SET_GROUP,
   SET_MESSAGE,
   START_LOADER,
@@ -122,3 +124,91 @@ export const setDashboard = () => (dispatch) => {
 export const clearGroup = () => ({
   type: CLEAR_GROUP,
 });
+
+export const updateGroupInfo =
+  (male, female, fineAmount, finePeriod) => (dispatch) => {
+    return GroupServices.updateGroupInfo(
+      {
+        minimum_amount_female: female,
+        minimum_amount_male: male,
+        fine_amount: fineAmount,
+        fine_period: finePeriod,
+      },
+      () => {
+        dispatch({
+          type: START_LOADER,
+        });
+      },
+      (data) => {
+        dispatch({
+          type: SET_FETCH,
+        });
+        dispatch({
+          type: SET_MESSAGE,
+          payload: {
+            message: "Group Info Updated Successfully!",
+            type: "success",
+          },
+        });
+      },
+      (error) => {
+        console.log(error);
+        dispatch({
+          type: SET_MESSAGE,
+          payload: {
+            message: "Something went wrong!Try again!",
+            type: "error",
+          },
+        });
+      },
+      () => {
+        dispatch({
+          type: STOP_LOADER,
+        });
+      }
+    );
+  };
+
+export const updatePosition = (userId, position) => (dispatch) => {
+  return GroupServices.updatePosition(
+    {
+      user_id: userId,
+      position: position,
+    },
+    () => {
+      dispatch({
+        type: START_LOADER,
+      });
+    },
+    (data) => {
+      dispatch({
+        type: SET_FETCH,
+      });
+      dispatch({
+        type: ADD_MEMBER,
+      });
+      dispatch({
+        type: SET_MESSAGE,
+        payload: {
+          message: "Member Updated Successfully!",
+          type: "success",
+        },
+      });
+    },
+    (error) => {
+      console.log(error);
+      dispatch({
+        type: SET_MESSAGE,
+        payload: {
+          message: "Something went wrong!Try again!",
+          type: "error",
+        },
+      });
+    },
+    () => {
+      dispatch({
+        type: STOP_LOADER,
+      });
+    }
+  );
+};

@@ -80,12 +80,6 @@ const MembersList = ({ search }) => {
               </div>
               <div className="skeletonContent">
                 <Skeleton variant="rectangular" width={"100%"} height={45} />
-                {/* <Skeleton
-                  variant="rectangular"
-                  width={"100%"}
-                  height={5}
-                  className="secondText"
-                /> */}
               </div>
             </MemberSkeleton>
           );
