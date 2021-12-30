@@ -2,6 +2,7 @@ import { GroupServices } from "../../Services/GroupServices";
 import { UserServices } from "../../Services/UserServices";
 import {
   ADD_MEMBER,
+  CLEAR_MEMBERS,
   SET_MEMBERS,
   SET_MESSAGE,
   START_LOADER,
@@ -38,4 +39,8 @@ export const getMembersList = () => (dispatch) => {
 
 export const addMember = () => ({
   type: ADD_MEMBER,
+});
+
+export const clearMembers = () => ({
+  type: CLEAR_MEMBERS,
 });

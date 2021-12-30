@@ -3,6 +3,7 @@ import { UserServices } from "../../Services/UserServices";
 import {
   ADD_MEMBER,
   CLEAR_GROUP,
+  CLEAR_MEMBERS,
   SET_DASHBOARD,
   SET_FETCH,
   SET_GROUP,
@@ -185,12 +186,12 @@ export const updatePosition = (userId, position) => (dispatch) => {
         type: SET_FETCH,
       });
       dispatch({
-        type: ADD_MEMBER,
+        type: CLEAR_MEMBERS,
       });
       dispatch({
         type: SET_MESSAGE,
         payload: {
-          message: "Member Updated Successfully!",
+          message: "Profile Updated Successfully!",
           type: "success",
         },
       });

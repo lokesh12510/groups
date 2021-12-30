@@ -55,6 +55,7 @@ export const SET_MEMBERS = "SET_MEMBERS";
 export const SET_NON_MEMBERS = "SET_NON_MEMBERS";
 export const ADD_MEMBER = "ADD_MEMBER";
 export const REMOVE_MEMBER = "REMOVE_MEMBER";
+export const CLEAR_MEMBERS = "CLEAR_MEMBERS";
 
 // TRANSACTIONS
 export const ADD_EXPENSE = "ADD_EXPENSE";

@@ -3,6 +3,7 @@ import {
   REMOVE_MEMBER,
   SET_MEMBERS,
   SET_NON_MEMBERS,
+  CLEAR_MEMBERS,
 } from "../actionTypes";
 
 const initialState = {
@@ -33,6 +34,13 @@ export const membersReducer = (state = initialState, action) => {
         membersList: payload,
         membersCount: payload.length,
         isFetched: true,
+      };
+
+    case CLEAR_MEMBERS:
+      return {
+        membersList: [],
+        membersCount: 0,
+        isFetched: false,
       };
     default:
       return state;
