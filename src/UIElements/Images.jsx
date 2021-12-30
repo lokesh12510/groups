@@ -2,6 +2,7 @@ import Logo from "../Assets/Images/logo.svg";
 import StarterBg from "../Assets/Images/Start.svg";
 import BottomSvg from "../Assets/Images/BottomSvg.svg";
 import ThanksImg from "../Assets/Images/thanksImg.svg";
+import MobileImg from "../Assets/Images/mobile.svg";
 import { DefaultTheme } from "../Constant";
 
 export const APP_LOGO = Logo;
@@ -11,6 +12,8 @@ export const STARTER_BG = StarterBg;
 export const BOTTOM_SVG = BottomSvg;
 
 export const THANKS_IMAGE = ThanksImg;
+
+export const MOBILE_IMAGE = MobileImg;
 
 const primaryColor = DefaultTheme.palette.primary.main.slice(1);
 
