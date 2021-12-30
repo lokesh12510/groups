@@ -55,7 +55,7 @@ const Payments = () => {
     isFetched: paymentStatus,
     paidStatus,
   } = useSelector((state) => state.userPayments);
-  const { currentGroupId } = useSelector((state) => state.groups);
+  const { currentGroupId, groupInfo } = useSelector((state) => state.groups);
   const user = useSelector((state) => state.user);
   const { loading } = useSelector((state) => state.loader);
   // YEAR
@@ -151,12 +151,18 @@ const Payments = () => {
         </Stack>
       </PaymentHeader>
       <PendingPaymentsContainer>
-        {pendingPayment.length > 0 && (
+        {!loading && pendingPayment.length > 0 && (
           <PendingPayments>
-            Renew membership for the month December 2021 <br /> <h5>₹ 50</h5>
+            Renew membership for the month December 2021 <br />{" "}
+            {user.profile.gender === "Male" && (
+              <h5>₹ {groupInfo?.minimum_amount_male}</h5>
+            )}
+            {user.profile.gender === "Female" && (
+              <h5>₹ {groupInfo?.minimum_amount_female}</h5>
+            )}
           </PendingPayments>
         )}
-        {pendingPayment.length === 0 && (
+        {!loading && pendingPayment.length === 0 && (
           <Successpayment>
             Membership renewed for the month December 2021
             <br /> <h5>Active</h5>
@@ -164,47 +170,49 @@ const Payments = () => {
         )}
       </PendingPaymentsContainer>
       <Container>
-        <FilterSection
-          container
-          justifyContent={"space-between"}
-          alignItems={"center"}
-        >
-          <Grid item>
-            <Typography
-              variant="p"
-              mb={2}
-              component="div"
-              className="sectionTitle"
-            >
-              <RecentTransaction width="24" height="24" />
-              Transaction
-            </Typography>
-          </Grid>
-          <Grid item>
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-controlled-open-select-label">
-                Year
-              </InputLabel>
-              <Select
-                labelId="demo-controlled-open-select-label"
-                id="demo-controlled-open-select"
-                open={open}
-                onClose={handleClose}
-                onOpen={handleOpen}
-                value={year}
-                label="Year"
-                onChange={handleChange}
+        {!loading && (
+          <FilterSection
+            container
+            justifyContent={"space-between"}
+            alignItems={"center"}
+          >
+            <Grid item>
+              <Typography
+                variant="p"
+                mb={2}
+                component="div"
+                className="sectionTitle"
               >
-                <MenuItem value={"All"}>
-                  <em>All</em>
-                </MenuItem>
-                <MenuItem value={2021}>2021</MenuItem>
-                <MenuItem value={2020}>2020</MenuItem>
-                <MenuItem value={2019}>2019</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </FilterSection>
+                <RecentTransaction width="24" height="24" />
+                Transaction
+              </Typography>
+            </Grid>
+            <Grid item>
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="demo-controlled-open-select-label">
+                  Year
+                </InputLabel>
+                <Select
+                  labelId="demo-controlled-open-select-label"
+                  id="demo-controlled-open-select"
+                  open={open}
+                  onClose={handleClose}
+                  onOpen={handleOpen}
+                  value={year}
+                  label="Year"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={"All"}>
+                    <em>All</em>
+                  </MenuItem>
+                  <MenuItem value={2021}>2021</MenuItem>
+                  <MenuItem value={2020}>2020</MenuItem>
+                  <MenuItem value={2019}>2019</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </FilterSection>
+        )}
       </Container>
 
       <PaymentContainer>

@@ -161,7 +161,7 @@ export default ManageMembers;
 const DrawerContent = ({ handleModalClose, selectedUser }) => {
   const { loading } = useSelector((state) => state.loader);
   const [role, setRole] = useState("user");
-  const [position, setPosition] = useState("member");
+  const [position, setPosition] = useState(selectedUser.position || "member");
 
   const dispatch = useDispatch();
 

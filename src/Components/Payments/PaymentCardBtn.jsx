@@ -80,8 +80,9 @@ const Root = styled(CardActionArea)((theme) => ({
   color: "#2f2f2f",
   borderRadius: "5px",
   boxShadow: "none",
-  margin: "1px 0",
+  margin: "10px 0",
   background: "#fff",
+  border: "1px solid #dfdfdf",
   "& .MuiCardHeader-root": {
     width: "100%",
     padding: "0rem",
@@ -124,6 +125,9 @@ const Root = styled(CardActionArea)((theme) => ({
       display: "flex",
       alignItems: "center",
       gap: "7px",
+      "& h3": {
+        marginBottom: 0,
+      },
     },
   },
 }));
