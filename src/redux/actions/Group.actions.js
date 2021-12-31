@@ -43,7 +43,7 @@ export const setGroup = () => (dispatch) => {
       console.log(error);
       dispatch({
         type: SET_MESSAGE,
-        payload: { message: "Something went wrong!Try again!", type: "error" },
+        payload: { message: "", type: "error" },
       });
     },
     () => {
@@ -73,7 +73,7 @@ export const updateGroup = (groupId) => (dispatch) => {
       console.log(error);
       dispatch({
         type: SET_MESSAGE,
-        payload: { message: "Something went wrong!Try again!", type: "error" },
+        payload: { message: "", type: "error" },
       });
     },
     () => {
@@ -157,7 +157,7 @@ export const updateGroupInfo =
         dispatch({
           type: SET_MESSAGE,
           payload: {
-            message: "Something went wrong!Try again!",
+            message: "",
             type: "error",
           },
         });
