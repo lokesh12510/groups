@@ -153,7 +153,7 @@ const Payments = () => {
       <PendingPaymentsContainer>
         {!loading && pendingPayment.length > 0 && (
           <PendingPayments>
-            Renew membership for the month December 2021 <br />{" "}
+            Renew membership for the month December 2021 <br />
             {user.profile.gender === "Male" && (
               <h5>₹ {groupInfo?.minimum_amount_male}</h5>
             )}
