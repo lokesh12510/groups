@@ -47,7 +47,7 @@ const Download = () => {
           fullWidth
           startIcon={PlayIcon}
           download
-          href="https://finance-management.s3.ap-south-1.amazonaws.com/financeManagement.apk"
+          href="https://finance-management.s3.ap-south-1.amazonaws.com/tvinm.apk"
         >
           Download
         </PrimaryBtn>
