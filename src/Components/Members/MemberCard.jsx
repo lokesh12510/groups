@@ -48,9 +48,7 @@ const MemberCard = ({ member, handleRemoveMember }) => {
         }
         title={member.user?.username.slice(0, 17)}
         subheader={moment(
-          member.created_at.split("-").join("").slice(0, 8),
-          "YYYYMMDD"
-        ).fromNow()}
+          member.created_at).calendar()}
         action={
           isAdmin ? (
             <Chip

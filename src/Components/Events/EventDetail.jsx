@@ -3,7 +3,8 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import { Container, IconButton, Typography } from "@mui/material";
 import ArrowBack from "@mui/icons-material/ArrowBack";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Root = styled("div")((theme) => ({
   width: "100%",
@@ -42,6 +43,12 @@ const BackBtn = styled(IconButton)((theme) => ({
 const EventDetail = () => {
   const navigate = useNavigate();
 
+  const {blogList} = useSelector(state => state.events)
+
+  const location = useLocation()
+
+  let path = location.pathname.split('/')[2]
+
   return (
     <Root>
       <BackBtn onClick={() => navigate(-1)}>
@@ -49,7 +56,7 @@ const EventDetail = () => {
       </BackBtn>
       <div className="eventImage">
         <img
-          src="https://res.cloudinary.com/drxjql1j7/image/upload/v1640697821/avatars/yqk6xkmfwothhtcngp2y.jpg"
+          src={blogList[path].image}
           alt=""
         />
       </div>
@@ -60,7 +67,7 @@ const EventDetail = () => {
           component="p"
           gutterBottom
         >
-          Sports Event 2021
+          {blogList[path].title}
         </Typography>
         <div className="para">
           <Typography
@@ -69,11 +76,7 @@ const EventDetail = () => {
             component="p"
             gutterBottom
           >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex quaerat
-            cupiditate laboriosam, inventore illum reiciendis veritatis commodi
-            temporibus laudantium beatae dolor. Obcaecati aperiam ut aliquid
-            ipsa aspernatur? Minus ex, nulla, nihil incidunt impedit a dolorem,
-            temporibus similique ratione odio earum?
+            {blogList[path].desc1}
           </Typography>
         </div>
         <div className="para">
@@ -83,14 +86,7 @@ const EventDetail = () => {
             component="p"
             gutterBottom
           >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. In numquam
-            natus nobis, voluptatum enim quod eligendi laborum vitae alias
-            reprehenderit hic voluptatibus eius perspiciatis? Suscipit impedit
-            veritatis unde fuga ratione obcaecati totam cupiditate corrupti
-            corporis beatae officiis perspiciatis velit ipsum deserunt expedita
-            laboriosam sunt molestiae ducimus eaque, quis similique adipisci?
-            Reiciendis, impedit fugit amet et expedita quaerat provident velit
-            similique.
+            {blogList[path].desc2}
           </Typography>
         </div>
       </Container>

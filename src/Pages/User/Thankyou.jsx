@@ -30,7 +30,7 @@ const Thankyou = () => {
             alignItems="center"
           >
             <h4 className="secondaryTitle">Hi {user.username}!</h4>
-            <Link to="/profile">
+            <Link to="/settings">
               <IconButton focusRipple>
                 <ProfileImage src={user.profile.avatar} />
               </IconButton>

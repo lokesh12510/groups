@@ -17,6 +17,7 @@ import { userPaymentReducer } from "./reducers/UserPayments.reducer";
 import { groupPaymentHistoryReducer } from "./reducers/GroupPaymentHistory.reducer";
 import { userContributions } from "./reducers/UserContribution.reducer";
 import { transactionReducer } from "./reducers/Transaction.reducer";
+import { EventReducer } from "./reducers/Blog.reducer";
 
 const persistConfig = {
   key: "root",
@@ -30,6 +31,7 @@ const persistConfig = {
     "userContribution",
     "transactions",
     "dashboard",
+    "events"
   ],
 };
 
@@ -46,6 +48,7 @@ const rootReducer = combineReducers({
   userContribution: userContributions,
   transactions: transactionReducer,
   dashboard: dashboardReducer,
+  events:EventReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
