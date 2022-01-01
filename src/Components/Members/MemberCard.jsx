@@ -47,8 +47,6 @@ const MemberCard = ({ member, handleRemoveMember }) => {
           </Avatar>
         }
         title={member.user?.username.slice(0, 17)}
-        subheader={moment(
-          member.created_at).calendar()}
         action={
           isAdmin ? (
             <Chip

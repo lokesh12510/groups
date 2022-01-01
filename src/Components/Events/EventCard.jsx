@@ -2,7 +2,7 @@ import React from "react";
 // Styles
 import { styled } from "@mui/material/styles";
 import { Button, Grid, Typography } from "@mui/material";
-import { BLOG_OVERLAY } from "../../UIElements/Images";
+import { APP_LOGO, BLOG_OVERLAY } from "../../UIElements/Images";
 
 import { DefaultTheme } from "../../Constant";
 import { Link } from "react-router-dom";
@@ -77,7 +77,11 @@ const EventCard = ({ data, index }) => {
       <Link to={`/event-detail/${data.id}`}>
         <BlogCard>
           <Button className="blogCard" waves="light">
-            <img src={data.image} alt={data.title} />
+          <img
+        style={{objectFit:'contain'}}
+          src={APP_LOGO}
+          alt=""
+        />
             <div className="overlay"></div>
             <div className="blogContent">
               <Typography

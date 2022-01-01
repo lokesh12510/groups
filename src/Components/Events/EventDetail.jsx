@@ -5,6 +5,12 @@ import { Container, IconButton, Typography } from "@mui/material";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Event1 from "../../Assets/Images/event1.jpg"
+import Event2 from "../../Assets/Images/event2.jpg"
+import Event3 from "../../Assets/Images/event3.jpg"
+import Event4 from "../../Assets/Images/event4.jpg"
+import Event5 from "../../Assets/Images/event5.jpg"
+import { APP_LOGO } from "../../UIElements/Images";
 
 const Root = styled("div")((theme) => ({
   width: "100%",
@@ -56,7 +62,8 @@ const EventDetail = () => {
       </BackBtn>
       <div className="eventImage">
         <img
-          src={blogList[path].image}
+        style={{objectFit:'contain'}}
+          src={APP_LOGO}
           alt=""
         />
       </div>
