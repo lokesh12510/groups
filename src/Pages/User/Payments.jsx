@@ -207,7 +207,6 @@ const Payments = () => {
                   </MenuItem>
                   <MenuItem value={2021}>2021</MenuItem>
                   <MenuItem value={2020}>2020</MenuItem>
-                  <MenuItem value={2019}>2019</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -218,7 +217,7 @@ const Payments = () => {
       <PaymentContainer>
         {payments.length > 0 && (
           <InfiniteScroll
-            dataLength={payments.length} //This is important field to render the next data
+            dataLength={payments.length} // This is important field to render the next data
             next={fetchData}
             hasMore={paidStatus}
             loader={

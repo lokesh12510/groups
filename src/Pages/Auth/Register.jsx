@@ -301,7 +301,7 @@ const Register = () => {
           </Grid>
           <div className="cta_btns">
             <PrimaryBtn variant="contained" type="submit">
-              Let’s get stated
+              Let’s get started
             </PrimaryBtn>
           </div>
         </form>

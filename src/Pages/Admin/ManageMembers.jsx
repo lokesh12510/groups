@@ -199,11 +199,11 @@ const DrawerContent = ({ handleModalClose, selectedUser }) => {
               ),
             }}
           >
-            <MenuItem value="president">President</MenuItem>
-            <MenuItem value="casher">Casher</MenuItem>
-            <MenuItem value="vice_president">Vice President</MenuItem>
-            <MenuItem value="secretory">Secretory</MenuItem>
-            <MenuItem value="joint_secretory">Joint Secretory</MenuItem>
+            <MenuItem value="President">President</MenuItem>
+            <MenuItem value="Cashier">Cashier</MenuItem>
+            <MenuItem value="Vice President">Vice President</MenuItem>
+            <MenuItem value="Secretary">Secretary</MenuItem>
+            <MenuItem value="Joint Secretary">Joint Secretary</MenuItem>
             <MenuItem value="member">Member</MenuItem>
           </MuiTextField>
         </Grid>
