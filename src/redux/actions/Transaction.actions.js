@@ -99,7 +99,7 @@ export const getHistoryTransaction =
     return TransactionServices.historyTransaction(
       {
         type: type,
-        year: year === undefined ? 2021 : year,
+        year: year,
         month: month === "All" ? "" : month,
         skip: skip,
         limit: limit,

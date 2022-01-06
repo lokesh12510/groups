@@ -82,7 +82,7 @@ const PaymentCard = ({ payment }) => {
             {payment.username}
           </Typography>
           <Typography variant="p" gutterBottom component="div" className="date">
-            {moment(payment?.createdAt).utcOffset(0).calendar()}
+            {moment(payment?.createdAt).format("MMM Do YYYY")}
           </Typography>
         </div>
       </div>

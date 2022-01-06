@@ -77,11 +77,7 @@ const EventCard = ({ data, index }) => {
       <Link to={`/event-detail/${data.id}`}>
         <BlogCard>
           <Button className="blogCard" waves="light">
-          <img
-        style={{objectFit:'contain'}}
-          src={APP_LOGO}
-          alt=""
-        />
+            <img src={data.image} alt="" />
             <div className="overlay"></div>
             <div className="blogContent">
               <Typography

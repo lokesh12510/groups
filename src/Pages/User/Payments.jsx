@@ -96,7 +96,6 @@ const Payments = () => {
     console.log("fetch data");
     setSkip(skip + 10);
   };
-  console.log(skip);
 
   return (
     <Root>
@@ -164,7 +163,8 @@ const Payments = () => {
         )}
         {!loading && pendingPayment.length === 0 && (
           <Successpayment>
-            Membership renewed for the month December 2021
+            Membership renewed for the month{" "}
+            {moment(new Date()).format("MMM YYYY")}
             <br /> <h5>Active</h5>
           </Successpayment>
         )}

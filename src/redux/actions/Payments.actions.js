@@ -13,11 +13,13 @@ import {
 import { store } from "../Store";
 import { getReportPayments } from "./GroupPaymentHistory.actions";
 
-export const getPendingPayments = (id, status) => (dispatch) => {
+export const getPendingPayments = (id, status, skip, limit) => (dispatch) => {
   return GroupServices.payments(
     {
       group_id: id,
       status: status,
+      skip: skip,
+      limit: limit,
     },
     () => {
       dispatch({

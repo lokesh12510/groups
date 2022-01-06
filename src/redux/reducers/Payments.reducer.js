@@ -10,6 +10,7 @@ const initialState = {
   pendingList: [],
   pendingCount: 0,
   isFetched: false,
+  hasMore: true,
 };
 
 export const paymentsReducer = (state = initialState, action) => {
@@ -19,8 +20,9 @@ export const paymentsReducer = (state = initialState, action) => {
     case PENDING_PAYMENTS:
       return {
         ...state,
-        pendingList: payload,
+        pendingList: [...state.pendingList, ...payload],
         pendingCount: payload.length,
+        hasMore: payload.length > 0 ? true : false,
       };
 
     case ACCEPT_PAYMENT:

@@ -47,7 +47,7 @@ const Download = () => {
           fullWidth
           startIcon={PlayIcon}
           download
-          href="https://finance-management.s3.ap-south-1.amazonaws.com/tvinm.apk"
+          href="https://play.google.com/store/apps/details?id=com.tvinmooty.webapplication"
         >
           Download
         </PrimaryBtn>

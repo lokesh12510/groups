@@ -47,6 +47,8 @@ import { PrimaryBtn } from "../../UIElements/Buttons";
 import { getMembersList } from "../../redux/actions/Members.actions";
 import NotFound from "../../Components/Elements/NotFound";
 
+import InfiniteScroll from "react-infinite-scroll-component";
+
 const Root = styled("div")((theme) => ({
   width: "100%",
   height: "100vh",
@@ -98,9 +100,13 @@ const ManagePayments = () => {
 
   const { currentGroupId } = useSelector((state) => state.groups);
   const { loading } = useSelector((state) => state.loader);
-  const { pendingList, isFetched } = useSelector((state) => state.payment);
+  const { pendingList, isFetched, hasMore } = useSelector(
+    (state) => state.payment
+  );
   const { isFetched: isMembers } = useSelector((state) => state.members);
   const [currentId, setCurrentId] = useState("");
+  const [skip, setSkip] = useState(0);
+  const [limit, setLimit] = useState(10);
 
   const [open, setOpen] = useState(false);
 
@@ -122,8 +128,8 @@ const ManagePayments = () => {
   };
 
   useEffect(() => {
-    dispatch(getPendingPayments(currentGroupId, "Unpaid"));
-  }, [isFetched, currentGroupId, dispatch]);
+    dispatch(getPendingPayments(currentGroupId, "Unpaid", skip, limit));
+  }, [isFetched, currentGroupId, dispatch, skip, limit]);
 
   const handleModalClose = () => {
     setOpenDrawer(false);
@@ -132,6 +138,11 @@ const ManagePayments = () => {
   const handleOpenModal = () => {
     setOpenDrawer(true);
     !isMembers && dispatch(getMembersList());
+  };
+
+  const fetchData = () => {
+    console.log("fetched data");
+    setSkip(skip + 10);
   };
 
   return (
@@ -156,17 +167,45 @@ const ManagePayments = () => {
           Pending Payments
         </Typography>
 
-        {!loading &&
-          pendingList.length > 0 &&
-          pendingList.map((payment, index) => {
-            return (
-              <PaymentCardBtn
-                key={index}
-                payment={payment}
-                handleClickOpen={handleClickOpen}
-              />
-            );
-          })}
+        {!loading && pendingList.length > 0 && (
+          <InfiniteScroll
+            dataLength={pendingList.length} //This is important field to render the next data
+            next={fetchData}
+            hasMore={hasMore}
+            loader={
+              <MemberSkeleton>
+                <div>
+                  <Skeleton variant="circular" width={45} height={45} />
+                </div>
+                <div className="skeletonContent">
+                  <Skeleton variant="rectangular" width={"100%"} height={30} />
+                  <Skeleton
+                    variant="rectangular"
+                    width={"100%"}
+                    height={10}
+                    className="secondText"
+                  />
+                </div>
+              </MemberSkeleton>
+            }
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+          >
+            {pendingList.map((payment, index) => {
+              return (
+                <PaymentCardBtn
+                  key={index}
+                  payment={payment}
+                  handleClickOpen={handleClickOpen}
+                />
+              );
+            })}
+          </InfiniteScroll>
+        )}
+
         {loading &&
           [...new Array(3)].map((item) => {
             return (
