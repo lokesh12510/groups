@@ -102,7 +102,7 @@ const ManagePayments = () => {
   const { isFetched: isMembers } = useSelector((state) => state.members);
   const [currentId, setCurrentId] = useState("");
   const [skip, setSkip] = useState(0);
-      // eslint-disable-next-line
+  // eslint-disable-next-line
   const [limit, setLimit] = useState(10);
 
   const [open, setOpen] = useState(false);
@@ -164,7 +164,7 @@ const ManagePayments = () => {
           Pending Payments
         </Typography>
 
-        {!loading && pendingList.length > 0 && (
+        {pendingList.length > 0 && (
           <InfiniteScroll
             dataLength={pendingList.length} //This is important field to render the next data
             next={fetchData}
@@ -204,6 +204,7 @@ const ManagePayments = () => {
         )}
 
         {loading &&
+          !pendingList &&
           [...new Array(3)].map((item) => {
             return (
               <MemberSkeleton>
