@@ -6,17 +6,9 @@ import {
   Grid,
   InputAdornment,
   TextField,
-  MenuItem,
   Container,
 } from "@mui/material";
 
-import ChatIcon from "@mui/icons-material/Chat";
-import DatePicker from "@mui/lab/DatePicker";
-import DateAdapter from "@mui/lab/AdapterMoment";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DateRangeIcon from "@mui/icons-material/DateRange";
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import LocalActivityIcon from "@mui/icons-material/LocalActivity";
 import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
 import TimerIcon from "@mui/icons-material/Timer";
@@ -26,10 +18,6 @@ import { Link } from "react-router-dom";
 import { PrimaryBtn } from "../../UIElements/Buttons";
 import { DefaultTheme } from "../../Constant";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addDonation,
-  addExpense,
-} from "../../redux/actions/Transaction.actions";
 import { updateGroupInfo } from "../../redux/actions/Group.actions";
 
 const Root = styled("div")((theme) => ({
@@ -42,7 +30,6 @@ const Root = styled("div")((theme) => ({
 
 const ManageGroup = () => {
   // SELECTOR
-  const { loading } = useSelector((state) => state.loader);
   const {
     minimum_amount_male,
     minimum_amount_female,

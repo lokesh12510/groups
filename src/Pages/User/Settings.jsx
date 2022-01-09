@@ -11,14 +11,11 @@ import {
   DialogContentText,
   DialogTitle,
   Grid,
-  IconButton,
   Typography,
 } from "@mui/material";
 import { DefaultTheme } from "../../Constant";
-import { DEFAULT_PROFILE } from "../../UIElements/Images";
 // ICON
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import CameraEnhanceIcon from "@mui/icons-material/CameraEnhance";
 import EditIcon from "@mui/icons-material/Edit";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import BadgeIcon from "@mui/icons-material/Badge";
@@ -94,17 +91,6 @@ const ProfileImageContainer = styled("div")((theme) => ({
   },
 }));
 
-const EditIconBtn = styled(IconButton)((theme) => ({
-  background: "#ffffff9e",
-  borderRadius: "50%",
-  position: "absolute",
-  border: `1px solid ${DefaultTheme.palette.secondary.main}`,
-  padding: "6px",
-  inset: 0,
-  width: 42,
-  height: 42,
-  margin: "auto",
-}));
 
 const Input = styled("input")({
   display: "none",
@@ -117,11 +103,11 @@ const Settings = () => {
   const user = useSelector((state) => state.user);
 
   const [open, setOpen] = useState(false);
-  const [profileImg, setProfileImg] = useState(user.profile.avatar);
+  const [profileImg,] = useState(user.profile.avatar);
   const [selectedImage, setSelectedImage] = useState("");
   const [preview, setPreview] = useState("");
 
-  const [cloudImg, setCloudImg] = useState("");
+  const [, setCloudImg] = useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -134,7 +120,6 @@ const Settings = () => {
   const handleLogout = () => {
     dispatch(logout());
   };
-  const formData = new FormData();
 
   const handleImageSelect = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -168,7 +153,8 @@ const Settings = () => {
       handleError,
       () => dispatch(stopLoader)
     );
-  }, [preview, selectedImage]);
+    // eslint-disable-next-line 
+  }, [preview, selectedImage,dispatch]);
 
   const handleUploadImage = (data) => {
     dispatch(startLoader());

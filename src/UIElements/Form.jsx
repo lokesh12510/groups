@@ -1,7 +1,7 @@
 import { TextField } from "formik-mui";
 import { styled } from "@mui/material/styles";
 import { DefaultTheme } from "../Constant";
-import { FormControl, Select } from "@mui/material";
+import { FormControl } from "@mui/material";
 
 export const FormTextField = styled(TextField)(({ theme }) => ({
   width: "100%",

@@ -20,7 +20,7 @@ const AuthLayouts = () => {
     if (accessToken && isLoggedIn) {
       navigate("/");
     }
-  }, [accessToken, isLoggedIn]);
+  }, [accessToken, isLoggedIn,navigate]);
 
   return (
     <div>

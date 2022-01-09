@@ -14,19 +14,15 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { PAYMENT_HEAD, PROFILE_BG, SUCCESS_BG } from "../../UIElements/Images";
-import { Link, useNavigate } from "react-router-dom";
+import { PROFILE_BG, SUCCESS_BG } from "../../UIElements/Images";
 
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { RecentTransaction } from "../../UIElements/Icons";
-import PaymentCard from "../../Components/Payments/PaymentCard";
 import Select from "@mui/material/Select";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getUserPayments,
   userFilterChange,
 } from "../../redux/actions/UserPayments.action";
-import { getGroupPaymentHistory } from "../../redux/actions/GroupPaymentHistory.actions";
 import { getUserContribution } from "../../redux/actions/UserContribution.actions";
 import { PENDING_BG } from "../../UIElements/Images";
 import moment from "moment";
@@ -35,7 +31,6 @@ import NotFound from "../../Components/Elements/NotFound";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const Payments = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // STATE
@@ -55,7 +50,7 @@ const Payments = () => {
     isFetched: paymentStatus,
     paidStatus,
   } = useSelector((state) => state.userPayments);
-  const { currentGroupId, groupInfo } = useSelector((state) => state.groups);
+  const { currentGroupId } = useSelector((state) => state.groups);
   const user = useSelector((state) => state.user);
   const { loading } = useSelector((state) => state.loader);
   // YEAR
@@ -89,6 +84,7 @@ const Payments = () => {
     if (!paymentStatus.pendingPayment) {
       dispatch(getUserPayments(currentGroupId, "Unpaid", "desc", year));
     }
+    // eslint-disable-next-line
   }, [currentGroupId, dispatch]);
   // SERVICE CALL-> (USER PAYMENT LIST)
 
@@ -150,17 +146,22 @@ const Payments = () => {
         </Stack>
       </PaymentHeader>
       <PendingPaymentsContainer>
-        {!loading && pendingPayment.length > 0 && (
-          <PendingPayments>
-            Renew membership for the month December 2021 <br />
-            {user.profile.gender === "Male" && (
-              <h5>₹ {groupInfo?.minimum_amount_male}</h5>
-            )}
-            {user.profile.gender === "Female" && (
-              <h5>₹ {groupInfo?.minimum_amount_female}</h5>
-            )}
-          </PendingPayments>
-        )}
+        {!loading &&
+          pendingPayment.length > 0 &&
+          pendingPayment.map((item) => {
+            return (
+              <PendingPayments>
+                Renew membership for the month{" "}
+                {moment(new Date()).format("MMM YYYY")} <br />
+                {user.profile.gender === "Male" && (
+                  <h5>₹ {item.Amount + (item.fine && item.fine)}</h5>
+                )}
+                {user.profile.gender === "Female" && (
+                  <h5>₹ {item.Amount + (item.fine && item.fine)}</h5>
+                )}
+              </PendingPayments>
+            );
+          })}
         {!loading && pendingPayment.length === 0 && (
           <Successpayment>
             Membership renewed for the month{" "}

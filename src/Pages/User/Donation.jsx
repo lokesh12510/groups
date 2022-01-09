@@ -3,43 +3,25 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Button,
-  CircularProgress,
   Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
-  OutlinedInput,
   Skeleton,
-  Stack,
   Typography,
 } from "@mui/material";
 import {
   DONATION_BG,
-  EXPENSE_BG,
-  PAYMENT_HEAD,
-  PENDING_BG,
 } from "../../UIElements/Images";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
+import { Link } from "react-router-dom";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { RecentTransaction } from "../../UIElements/Icons";
-import PaymentCard from "../../Components/Payments/PaymentCard";
 import Select from "@mui/material/Select";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserPayments } from "../../redux/actions/UserPayments.action";
-import {
-  clearPaymentHistory,
-  filterChange,
-  getGroupPaymentHistory,
-  getReportPayments,
-} from "../../redux/actions/GroupPaymentHistory.actions";
-import { Box, maxHeight } from "@mui/system";
+
+import { Box} from "@mui/system";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
@@ -53,7 +35,6 @@ import {
   getReportTransaction,
   historyChange,
 } from "../../redux/actions/Transaction.actions";
-import ExpenseCard from "../../Components/Payments/ExpenseCard";
 import DonationCard from "../../Components/Payments/DonationCard";
 import NotFound from "../../Components/Elements/NotFound";
 
@@ -91,7 +72,6 @@ function a11yProps(index) {
 }
 
 const Donation = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // STATE
@@ -102,13 +82,12 @@ const Donation = () => {
   const [limit, setLimit] = useState(10);
 
   // SELECTORS
-  const { currentGroupId, groupInfo } = useSelector((state) => state.groups);
+  const {  groupInfo } = useSelector((state) => state.groups);
   const { loading } = useSelector((state) => state.loader);
   const { historyList, filterChange, reportTransaction } = useSelector(
     (state) => state.transactions
   );
 
-  const location = useLocation();
 
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -135,7 +114,7 @@ const Donation = () => {
 
   useEffect(() => {
     dispatch(clearTransaction());
-  }, []);
+  }, [dispatch]);
 
   // SERVICE CALL-> (USER PAYMENT LIST)
   useEffect(() => {
@@ -143,6 +122,7 @@ const Donation = () => {
     dispatch(
       getHistoryTransaction("Donation", years[value], month, skip, limit)
     );
+        // eslint-disable-next-line
   }, [value, month, skip, limit]);
   // SERVICE CALL-> (USER PAYMENT LIST)
 
@@ -385,10 +365,6 @@ const Root = styled("div")((theme) => ({
   },
 }));
 
-const MenuItems = styled("div")({
-  maxHeight: 100,
-});
-
 const PaymentHeader = styled("div")({
   padding: "16px",
   minHeight: "150px",
@@ -436,13 +412,6 @@ const FilterSection = styled(Grid)({
   "& .MuiInputLabel-root": {
     top: "0px",
   },
-});
-
-const FilterBtn = styled(Button)({
-  minHeight: "42px",
-  backgroundColor: "transparent",
-  borderColor: "#666666",
-  color: "#666666",
 });
 
 const MemberSkeleton = styled("div")({

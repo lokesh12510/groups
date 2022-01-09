@@ -2,7 +2,7 @@ import React from "react";
 // Styles
 import { styled } from "@mui/material/styles";
 import { Button, Grid, Typography } from "@mui/material";
-import { APP_LOGO, BLOG_OVERLAY } from "../../UIElements/Images";
+import { BLOG_OVERLAY } from "../../UIElements/Images";
 
 import { DefaultTheme } from "../../Constant";
 import { Link } from "react-router-dom";

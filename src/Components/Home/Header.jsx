@@ -31,6 +31,7 @@ const Header = () => {
     if (!isFetched) {
       dispatch(updateGroup(currentGroupId));
     }
+        // eslint-disable-next-line
   }, []);
 
   return (

@@ -4,7 +4,6 @@ import { styled } from "@mui/material/styles";
 import { Container, Grid, Typography } from "@mui/material";
 import { TopEventsIcon } from "../../UIElements/Icons";
 import EventCard from "../Events/EventCard";
-import { useSelector } from "react-redux";
 
 const Root = styled("section")((theme) => ({
   paddingBottom: "30px",
@@ -52,7 +51,6 @@ const Root = styled("section")((theme) => ({
 }));
 
 const EventSection = () => {
-  const { blogList } = useSelector((state) => state.events);
 
   return (
     <Root>

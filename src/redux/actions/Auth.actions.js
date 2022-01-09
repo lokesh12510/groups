@@ -1,10 +1,6 @@
 import authService from "../../Services/auth.service";
-import { UserService } from "../../Services/UserServices";
-import { HttpClient } from "../../utils/httpClient";
 import {
-  LOAD_PROFILE,
   LOGIN_FAIL,
-  REQUEST,
   LOGIN_SUCCESS,
   LOG_OUT,
   REGISTER_FAIL,
@@ -16,12 +12,9 @@ import {
   SET_USER,
   CLEAR_USER,
   SET_GROUP,
-  IS_ADMIN,
   CLEAR_USER_PENDING_LIST,
   CLEAR_USER_CONTRIBUTION,
 } from "../actionTypes";
-import { store } from "../Store";
-import { isAdmin } from "./User.actions";
 
 // Register action (working)
 export const register =
@@ -82,7 +75,6 @@ export const login = (emailId, username, password) => (dispatch) => {
   });
   return authService.login(emailId, username, password).then(
     (data) => {
-      const state = store.getState();
       dispatch({
         type: LOGIN_SUCCESS,
         payload: data,

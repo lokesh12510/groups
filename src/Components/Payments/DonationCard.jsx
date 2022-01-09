@@ -88,7 +88,7 @@ const DonationCard = ({ donation }) => {
             {donation.event}
           </Typography>
           <Typography variant="p" gutterBottom component="div" className="date">
-            {moment(donation?.createdAt).utcOffset(0).calendar()}
+            {moment(donation?.createdAt).format('MMM Do YYYY')}
           </Typography>
         </div>
       </div>

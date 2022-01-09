@@ -6,7 +6,6 @@ import {
   SET_FETCH,
   SET_DASHBOARD,
 } from "../actionTypes";
-import { store } from "../Store";
 
 const initialState = {
   groupName: "",

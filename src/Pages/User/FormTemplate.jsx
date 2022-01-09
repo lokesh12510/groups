@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 // Styles
 import { styled } from "@mui/material/styles";
 import { Button, Container, IconButton, InputAdornment } from "@mui/material";
 import { Link } from "react-router-dom";
-import { APP_LOGO, BOTTOM_SVG } from "../../UIElements/Images";
+import { APP_LOGO } from "../../UIElements/Images";
 import Grid from "@mui/material/Grid";
 import { FormTextField } from "../../UIElements/Form";
 import { DefaultTheme } from "../../Constant";
@@ -18,11 +18,8 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 // FUNCTION
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/actions/Auth.actions";
-import { useNavigate } from "react-router";
 import { Formik } from "formik";
-import { LinearProgress } from "@mui/material";
 import { Form, Field } from "formik";
-import { TextField } from "formik-mui";
 import { object, string } from "yup";
 
 const Root = styled("div")((theme) => ({
@@ -71,28 +68,8 @@ const FormTemplate = () => {
     setPassToggle((passToggle) => !passToggle);
   };
 
-  // Form data
-  // const [formData, setFormData] = useState({
-  //   email: "",
-  //   password: "",
-  // });
-  // const handleFormData = (data) => {
-  //   setFormData({
-  //     ...formData,
-  //     email: data.email,
-  //     password: data.password,
-  //   });
-  // };
-
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  // const handleLogin = (e) => {
-  //   e.preventDefault();
 
-  //   // dispatch(login(formData.emailId, formData.password));
-  // };
-
-  const navigate = useNavigate();
 
   return (
     <Root>

@@ -5,9 +5,6 @@ import EventCard from "./EventCard";
 import { Grid, Typography } from "@mui/material";
 import { DefaultTheme } from "../../Constant";
 
-import Event4 from "../../Assets/Images/event4.jpg";
-import Event3 from "../../Assets/Images/event3.jpg";
-
 const Root = styled("div")((theme) => ({
   width: "100%",
   "& .timeline_year": {

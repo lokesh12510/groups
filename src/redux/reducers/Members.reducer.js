@@ -2,7 +2,6 @@ import {
   ADD_MEMBER,
   REMOVE_MEMBER,
   SET_MEMBERS,
-  SET_NON_MEMBERS,
   CLEAR_MEMBERS,
 } from "../actionTypes";
 

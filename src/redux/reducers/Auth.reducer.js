@@ -1,5 +1,4 @@
 import {
-  LOAD_PROFILE,
   LOGIN_FAIL,
   REQUEST,
   LOGIN_SUCCESS,

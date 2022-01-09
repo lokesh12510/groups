@@ -1,6 +1,5 @@
 import axios from "axios";
 import { BASE_URL } from "../Constant";
-import { HttpClient } from "../utils/httpClient";
 
 const API_URL = `${BASE_URL}user/`;
 

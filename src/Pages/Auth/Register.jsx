@@ -10,9 +10,8 @@ import {
   TextField,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { APP_LOGO, BOTTOM_SVG } from "../../UIElements/Images";
+import { APP_LOGO } from "../../UIElements/Images";
 import Grid from "@mui/material/Grid";
-import { FormTextField } from "../../UIElements/Form";
 import { DefaultTheme } from "../../Constant";
 import { PrimaryBtn } from "../../UIElements/Buttons";
 import DatePicker from "@mui/lab/DatePicker";
@@ -31,8 +30,6 @@ import WcIcon from "@mui/icons-material/Wc";
 // Func
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/actions/Auth.actions";
-import { useNavigate } from "react-router";
-import moment from "moment";
 
 const Root = styled("div")((theme) => ({
   width: "100%",
@@ -129,7 +126,6 @@ const Register = () => {
   //   });
   // };
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState("");

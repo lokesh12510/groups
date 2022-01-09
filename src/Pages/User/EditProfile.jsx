@@ -4,16 +4,12 @@ import { styled } from "@mui/material/styles";
 import {
   Button,
   Container,
-  FormControl,
-  IconButton,
   InputAdornment,
-  InputLabel,
   MenuItem,
-  Select,
   TextField,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-import { BOTTOM_SVG, DEFAULT_PROFILE } from "../../UIElements/Images";
+import { useNavigate } from "react-router-dom";
+import { BOTTOM_SVG } from "../../UIElements/Images";
 import Grid from "@mui/material/Grid";
 import { DefaultTheme } from "../../Constant";
 import { SecondaryBtn, ViewOutlinedBtn } from "../../UIElements/Buttons";
@@ -22,23 +18,16 @@ import DateAdapter from "@mui/lab/AdapterMoment";
 
 // ICONS
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import DateRangeIcon from "@mui/icons-material/DateRange";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import CameraEnhanceIcon from "@mui/icons-material/CameraEnhance";
 import { useDispatch, useSelector } from "react-redux";
-import { FormField } from "../../UIElements/Form";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import WcIcon from "@mui/icons-material/Wc";
 
 // FUNC
 import { UserServices } from "../../Services/UserServices";
 import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
-import { SET_USER } from "../../redux/actionTypes";
-import { setUser, updateUser } from "../../redux/actions/User.actions";
 import { setMessage } from "../../redux/actions/Message.actions";
 
 const Root = styled("div")((theme) => ({
@@ -113,40 +102,14 @@ const HeaderSection = styled("div")((theme) => ({
   marginBottom: "40px",
 }));
 
-const ProfileImageContainer = styled("div")((theme) => ({
-  width: 100,
-  height: 100,
-  borderRadius: "50%",
-  objectFit: "cover",
-  overflow: "hidden",
-  border: `1px solid ${DefaultTheme.palette.primary.main}`,
-}));
-
-const EditIconBtn = styled("div")((theme) => ({
-  background: "#fff",
-  borderRadius: "50%",
-  position: "absolute",
-  bottom: "5px",
-  right: "10px",
-  border: `1px solid ${DefaultTheme.palette.secondary.main}`,
-}));
 
 const EditProfile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // Password Field
-  const [passToggle, setPassToggle] = useState(false);
-
-  const handlePassToggle = () => {
-    setPassToggle((passToggle) => !passToggle);
-  };
-
   // Data
   const user = useSelector((state) => state.user);
 
   const [username, setUsername] = useState(user.username);
-  const [password, setPassword] = useState("");
-  const [dob, setDob] = useState("");
   const [emailId, setEmailId] = useState(user.profile.emailId);
   const [gender, setGender] = useState(user.profile.gender);
 

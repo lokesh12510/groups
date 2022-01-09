@@ -5,7 +5,6 @@ import { Container, Grid } from "@mui/material";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPendingPayments } from "../../redux/actions/Payments.actions";
 import { setDashboard } from "../../redux/actions/Group.actions";
 
 const Root = styled("div")((theme) => ({
@@ -34,13 +33,13 @@ const CardBtn = styled(Button)(({ theme, h, bg }) => ({
 }));
 
 const Dashboard = () => {
-  const { dashboard, isFetched } = useSelector((state) => state.dashboard);
+  const { dashboard } = useSelector((state) => state.dashboard);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setDashboard());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Root>

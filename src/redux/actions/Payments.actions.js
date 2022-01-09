@@ -11,7 +11,6 @@ import {
   STOP_LOADER,
 } from "../actionTypes";
 import { store } from "../Store";
-import { getReportPayments } from "./GroupPaymentHistory.actions";
 
 export const getPendingPayments = (id, status, skip, limit) => (dispatch) => {
   return GroupServices.payments(

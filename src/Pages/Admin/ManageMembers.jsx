@@ -159,7 +159,7 @@ const ManageMembers = () => {
 export default ManageMembers;
 
 const DrawerContent = ({ handleModalClose, selectedUser }) => {
-  const { loading } = useSelector((state) => state.loader);
+      // eslint-disable-next-line
   const [role, setRole] = useState("user");
   const [position, setPosition] = useState(selectedUser.position || "member");
 

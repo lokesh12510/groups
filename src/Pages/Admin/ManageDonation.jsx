@@ -10,7 +10,6 @@ import {
   Container,
 } from "@mui/material";
 
-import ChatIcon from "@mui/icons-material/Chat";
 import DatePicker from "@mui/lab/DatePicker";
 import DateAdapter from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -22,10 +21,9 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
 import { PrimaryBtn } from "../../UIElements/Buttons";
 import { DefaultTheme } from "../../Constant";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   addDonation,
-  addExpense,
 } from "../../redux/actions/Transaction.actions";
 
 const Root = styled("div")((theme) => ({
@@ -38,7 +36,6 @@ const Root = styled("div")((theme) => ({
 
 const ManageExpenses = () => {
   // SELECTOR
-  const { loading } = useSelector((state) => state.loader);
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");

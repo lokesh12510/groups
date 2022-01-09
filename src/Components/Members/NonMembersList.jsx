@@ -24,6 +24,7 @@ const NonMembersList = ({ search }) => {
 
   useEffect(() => {
     getNonMembers(currentGroupId);
+        // eslint-disable-next-line
   }, [currentGroupId]);
 
   const getNonMembers = (currentGroupId) => {

@@ -27,7 +27,7 @@ function App() {
     if (currentGroupId) {
       dispatch(updateGroup(currentGroupId));
     }
-  }, [currentGroupId]);
+  }, [currentGroupId,dispatch]);
 
   return (
     <div className="App">

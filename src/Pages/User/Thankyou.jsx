@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 // Styles
 import { styled } from "@mui/material/styles";
-import { Button, Container, IconButton, Stack } from "@mui/material";
+import {Container, IconButton, Stack } from "@mui/material";
 import { THANKS_IMAGE } from "../../UIElements/Images";
 import { DefaultTheme } from "../../Constant";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setGroup } from "../../redux/actions/Group.actions";
 
@@ -18,7 +17,8 @@ const Thankyou = () => {
     if (!groupStatus) {
       dispatch(setGroup());
     }
-  }, []);
+    // eslint-disable-next-line
+  }, [dispatch]);
 
   return (
     <Root>

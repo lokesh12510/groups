@@ -47,6 +47,7 @@ const Appbar = (props) => {
           TabIndicatorProps={{ style: { display: "none" } }}
         >
           <Tab
+              // eslint-disable-next-line
             aria-title="home"
             value="home"
             icon={
@@ -60,6 +61,7 @@ const Appbar = (props) => {
             to={"/"}
           />
           <Tab
+              // eslint-disable-next-line
             aria-title="members"
             value="members"
             icon={
@@ -74,6 +76,7 @@ const Appbar = (props) => {
           />
           {user.isAdmin && (
             <Tab
+                // eslint-disable-next-line
               aria-title="admin"
               value="admin"
               icon={
@@ -89,6 +92,7 @@ const Appbar = (props) => {
           )}
 
           <Tab
+              // eslint-disable-next-line
             aria-title="events"
             value="events"
             icon={
@@ -102,6 +106,7 @@ const Appbar = (props) => {
             to={"/events"}
           />
           <Tab
+              // eslint-disable-next-line
             aria-title="payments"
             value="payments"
             icon={
@@ -158,14 +163,3 @@ const Root = styled("div")(({ theme }) => ({
   },
 }));
 
-const ProfileImage = styled("img")(({ theme }) => ({
-  width: 45,
-  height: 45,
-  borderRadius: "50%",
-  objectFit: "cover",
-  border: "1px solid #d3d3d3",
-}));
-
-const ProfileImageSrc = ({ src }) => (
-  <ProfileImage src={src} width="45" height="45" loading="lazy" />
-);

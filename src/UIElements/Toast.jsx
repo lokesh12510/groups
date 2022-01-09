@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Snackbar } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { clearMessage } from "../redux/actions/Message.actions";
 
 const Toast = ({ message, type }) => {
@@ -11,12 +11,10 @@ const Toast = ({ message, type }) => {
     setTimeout(() => {
       dispatch(clearMessage());
     }, 5000);
-  }, [message]);
+  }, [message,dispatch]);
 
   const [open, setOpen] = useState(true);
-  const handleClick = () => {
-    setOpen(true);
-  };
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;

@@ -1,4 +1,4 @@
-import { GroupServices } from "../../Services/GroupServices";
+
 import { UserServices } from "../../Services/UserServices";
 import {
   SET_MESSAGE,
@@ -10,7 +10,6 @@ import {
   USER_FILTER_CHANGE,
 } from "../actionTypes";
 
-import { store } from "../Store";
 
 export const getUserPayments =
   (groupId, status, sort, year, skip, limit) => (dispatch) => {

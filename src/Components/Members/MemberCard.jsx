@@ -14,7 +14,6 @@ import {
   Grid,
 } from "@mui/material";
 import { DefaultTheme } from "../../Constant";
-import moment from "moment";
 import { useSelector } from "react-redux";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 

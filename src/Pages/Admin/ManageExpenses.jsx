@@ -20,7 +20,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
 import { PrimaryBtn } from "../../UIElements/Buttons";
 import { DefaultTheme } from "../../Constant";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addExpense } from "../../redux/actions/Transaction.actions";
 
 const Root = styled("div")((theme) => ({
@@ -33,7 +33,6 @@ const Root = styled("div")((theme) => ({
 
 const ManageExpenses = () => {
   // SELECTOR
-  const { loading } = useSelector((state) => state.loader);
 
   const [reason, setReason] = useState("");
   const [price, setPrice] = useState("");

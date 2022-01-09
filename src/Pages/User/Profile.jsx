@@ -1,34 +1,21 @@
 import React, { useEffect } from "react";
 // Styles
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { Container, Icon, IconButton, Stack, Typography } from "@mui/material";
 import {
   BG_VARIANT_1,
-  DEFAULT_PROFILE,
   PROFILE_BG,
 } from "../../UIElements/Images";
 import { GradientCard } from "../../UIElements/Card";
 import { VerifiedIcon, WalletIcon } from "../../UIElements/Icons";
-import EditIcon from "@mui/icons-material/Edit";
 import { DefaultTheme } from "../../Constant";
-import Chip from "@mui/material/Chip";
 import { Link } from "react-router-dom";
-import EventDetail from "../../Components/Events/EventDetail";
-import { PrimaryBtn } from "../../UIElements/Buttons";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../redux/actions/Auth.actions";
 import moment from "moment";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { UserServices } from "../../Services/UserServices";
 import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
-import { setUser, updateUser } from "../../redux/actions/User.actions";
+import { updateUser } from "../../redux/actions/User.actions";
 
 const Root = styled("div")((theme) => ({
   width: "100%",
@@ -119,6 +106,7 @@ const Profile = () => {
       handleError,
       () => dispatch(stopLoader)
     );
+        // eslint-disable-next-line
   }, []);
 
   const handleSuccess = (data) => {

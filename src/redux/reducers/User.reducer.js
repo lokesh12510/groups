@@ -1,6 +1,4 @@
-import { Groups } from "@mui/icons-material";
 import { CLEAR_USER, SET_USER, UPDATE_USER, IS_ADMIN } from "../actionTypes";
-import { store } from "../Store";
 
 const initialState = {
   profile: {},

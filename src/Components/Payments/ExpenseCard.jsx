@@ -73,7 +73,7 @@ const ExpenseCard = ({ expense }) => {
             {expense.event}
           </Typography>
           <Typography variant="p" gutterBottom component="div" className="date">
-            {moment(expense?.createdAt).utcOffset(0).calendar()}
+            {moment(expense?.createdAt).format('MMM D0 YYYY')}
           </Typography>
         </div>
       </div>

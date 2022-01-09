@@ -1,17 +1,13 @@
 import React, { useEffect } from "react";
 // Styles
 import { styled } from "@mui/material/styles";
-import { Button, Container, IconButton, Stack } from "@mui/material";
+import { Container,  Stack } from "@mui/material";
 import { APP_LOGO, MOBILE_IMAGE } from "../../UIElements/Images";
-import { DefaultTheme } from "../../Constant";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setGroup } from "../../redux/actions/Group.actions";
-import { PrimaryBtn, SecondaryBtn } from "../../UIElements/Buttons";
+import { PrimaryBtn} from "../../UIElements/Buttons";
 
 const Download = () => {
-  const user = useSelector((state) => state.user);
   const { groupStatus } = useSelector((state) => state.groups);
   const dispatch = useDispatch();
 
@@ -19,6 +15,7 @@ const Download = () => {
     if (!groupStatus) {
       dispatch(setGroup());
     }
+        // eslint-disable-next-line
   }, []);
 
   return (

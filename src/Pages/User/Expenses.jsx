@@ -110,7 +110,7 @@ const Expenses = () => {
 
   useEffect(() => {
     dispatch(clearTransaction());
-  }, []);
+  }, [dispatch]);
 
   // SERVICE CALL-> (USER PAYMENT LIST)
   useEffect(() => {
@@ -118,6 +118,7 @@ const Expenses = () => {
     dispatch(
       getHistoryTransaction("Expense", years[value], month, skip, limit)
     );
+        // eslint-disable-next-line
   }, [value, month, skip, limit]);
   // SERVICE CALL-> (USER PAYMENT LIST)
 

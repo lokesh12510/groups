@@ -12,7 +12,6 @@ import {
   DialogContentText,
   DialogActions,
   SwipeableDrawer,
-  Paper,
   TextField,
   InputAdornment,
   Grid,
@@ -30,10 +29,7 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AddIcon from "@mui/icons-material/Add";
 import { RecentTransaction } from "../../UIElements/Icons";
-import PaymentCard from "../../Components/Payments/PaymentCard";
-import { GroupServices } from "../../Services/GroupServices";
 import { useDispatch, useSelector } from "react-redux";
-import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
 import { useEffect } from "react";
 import PaymentCardBtn from "../../Components/Payments/PaymentCardBtn";
 import {
@@ -106,6 +102,7 @@ const ManagePayments = () => {
   const { isFetched: isMembers } = useSelector((state) => state.members);
   const [currentId, setCurrentId] = useState("");
   const [skip, setSkip] = useState(0);
+      // eslint-disable-next-line
   const [limit, setLimit] = useState(10);
 
   const [open, setOpen] = useState(false);

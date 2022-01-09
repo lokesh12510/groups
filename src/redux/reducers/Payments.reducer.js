@@ -1,9 +1,7 @@
 import {
   ACCEPT_PAYMENT,
-  CLEAR_MESSAGE,
   CREATE_PAYMENT,
   PENDING_PAYMENTS,
-  SET_MESSAGE,
 } from "../actionTypes";
 
 const initialState = {

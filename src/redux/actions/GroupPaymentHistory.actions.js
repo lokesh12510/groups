@@ -1,5 +1,4 @@
 import { GroupServices } from "../../Services/GroupServices";
-import { UserServices } from "../../Services/UserServices";
 import {
   CLEAR_GROUP_PAYMENT_HISTORY,
   FILTER_CHANGE,
@@ -9,8 +8,6 @@ import {
   START_LOADER,
   STOP_LOADER,
 } from "../actionTypes";
-
-import { store } from "../Store";
 
 export const getGroupPaymentHistory =
   (id, status, year, month, skip, limit) => (dispatch) => {

@@ -1,36 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 // Styles
 import { styled } from "@mui/material/styles";
 import {
   Container,
   FormControlLabel,
   Grid,
-  InputAdornment,
-  Switch,
   TextField,
   Typography,
 } from "@mui/material";
-import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-import MemberCard from "../../Components/Members/MemberCard";
 import { DefaultTheme } from "../../Constant";
-import { GroupServices } from "../../Services/GroupServices";
-import { useDispatch, useSelector } from "react-redux";
-import { startLoader, stopLoader } from "../../redux/actions/Loader.action";
-import { setMessage } from "../../redux/actions/Message.actions";
+import { useSelector } from "react-redux";
 import { SwitchBtn } from "../../UIElements/Buttons";
-import NonMemberCard from "../../Components/Members/NonMemberCard";
 import MembersList from "../../Components/Members/MembersList";
 import NonMembersList from "../../Components/Members/NonMembersList";
 
 const Members = () => {
-  const dispatch = useDispatch();
-  const { membersCount } = useSelector((state) => state.members);
   const { isAdmin } = useSelector((state) => state.user);
 
   const [addNew, setAddNew] = useState(false);
 
   const [search, setSearch] = useState("");
 
+      // eslint-disable-next-line
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
   };

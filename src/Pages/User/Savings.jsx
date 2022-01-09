@@ -3,38 +3,29 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Button,
-  CircularProgress,
   Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
-  OutlinedInput,
   Skeleton,
-  Stack,
   Typography,
 } from "@mui/material";
 import { PAYMENT_HEAD } from "../../UIElements/Images";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
+import { Link } from "react-router-dom";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { RecentTransaction } from "../../UIElements/Icons";
 import PaymentCard from "../../Components/Payments/PaymentCard";
 import Select from "@mui/material/Select";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserPayments } from "../../redux/actions/UserPayments.action";
 import {
   clearPaymentHistory,
   filterChange,
   getGroupPaymentHistory,
   getReportPayments,
 } from "../../redux/actions/GroupPaymentHistory.actions";
-import { Box, maxHeight } from "@mui/system";
+import { Box} from "@mui/system";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
@@ -77,7 +68,6 @@ function a11yProps(index) {
 }
 
 const Savings = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // STATE
@@ -88,14 +78,12 @@ const Savings = () => {
   const [limit, setLimit] = useState(10);
 
   // SELECTORS
-  const { paymentHistory, isFetched, filterType } = useSelector(
+  const { paymentHistory,  filterType } = useSelector(
     (state) => state.groupHistory
   );
   const { currentGroupId, groupInfo } = useSelector((state) => state.groups);
-  const { loading } = useSelector((state) => state.loader);
   const { reportPayments } = useSelector((state) => state.groupHistory);
 
-  const location = useLocation();
 
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -122,7 +110,7 @@ const Savings = () => {
 
   useEffect(() => {
     dispatch(clearPaymentHistory());
-  }, []);
+  }, [dispatch]);
 
   // SERVICE CALL-> (USER PAYMENT LIST)
   useEffect(() => {
@@ -137,7 +125,8 @@ const Savings = () => {
         limit
       )
     );
-  }, [currentGroupId, value, month, skip, limit]);
+    // eslint-disable-next-line
+  }, [currentGroupId, value, month, skip, limit,dispatch]);
   // SERVICE CALL-> (USER PAYMENT LIST)
 
   const handleTabChange = (event, newValue) => {
@@ -155,7 +144,6 @@ const Savings = () => {
   };
 
   const fetchData = () => {
-    console.log("fetched data");
     setSkip(skip + 10);
   };
 
@@ -316,7 +304,6 @@ const Savings = () => {
                         }
                       >
                         {paymentHistory?.map((item, i) => {
-                          console.log(item);
                           return <PaymentCard key={i} payment={item} />;
                         })}
                       </InfiniteScroll>
@@ -377,10 +364,6 @@ const Root = styled("div")((theme) => ({
   },
 }));
 
-const MenuItems = styled("div")({
-  maxHeight: 100,
-});
-
 const PaymentHeader = styled("div")({
   padding: "16px",
   minHeight: "150px",
@@ -430,12 +413,6 @@ const FilterSection = styled(Grid)({
   },
 });
 
-const FilterBtn = styled(Button)({
-  minHeight: "42px",
-  backgroundColor: "transparent",
-  borderColor: "#666666",
-  color: "#666666",
-});
 
 const MemberSkeleton = styled("div")({
   display: "flex",
