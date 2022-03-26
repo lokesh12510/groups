@@ -1,10 +1,6 @@
 import React, { useEffect } from "react";
 
-import {
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Onboard from "../Pages/Auth/Onboard";
 import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
@@ -20,7 +16,7 @@ const AuthLayouts = () => {
     if (accessToken && isLoggedIn) {
       navigate("/");
     }
-  }, [accessToken, isLoggedIn,navigate]);
+  }, [accessToken, isLoggedIn, navigate]);
 
   return (
     <div>

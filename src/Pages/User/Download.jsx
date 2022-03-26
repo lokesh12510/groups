@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 // Styles
 import { styled } from "@mui/material/styles";
-import { Container,  Stack } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import { APP_LOGO, MOBILE_IMAGE } from "../../UIElements/Images";
 import { useDispatch, useSelector } from "react-redux";
 import { setGroup } from "../../redux/actions/Group.actions";
-import { PrimaryBtn} from "../../UIElements/Buttons";
+import { PrimaryBtn } from "../../UIElements/Buttons";
 
 const Download = () => {
   const { groupStatus } = useSelector((state) => state.groups);
@@ -15,7 +15,7 @@ const Download = () => {
     if (!groupStatus) {
       dispatch(setGroup());
     }
-        // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -48,9 +48,6 @@ const Download = () => {
         >
           Download
         </PrimaryBtn>
-        <div className="pageBottom">
-          <p>Soon our app will be published in playstore.</p>
-        </div>
       </Container>
     </Root>
   );

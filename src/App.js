@@ -11,6 +11,7 @@ import { isAdmin } from "./redux/actions/User.actions";
 import { updateGroup } from "./redux/actions/Group.actions";
 import Privacy from "./Pages/User/Privacy";
 import Download from "./Pages/User/Download";
+import AboutUs from "./Pages/User/AboutUs";
 
 function App() {
   const { message, type } = useSelector((state) => state.message);
@@ -27,7 +28,7 @@ function App() {
     if (currentGroupId) {
       dispatch(updateGroup(currentGroupId));
     }
-  }, [currentGroupId,dispatch]);
+  }, [currentGroupId, dispatch]);
 
   return (
     <div className="App">
@@ -56,6 +57,7 @@ function App() {
           element={isAdmin ? <AdminLayouts /> : <AuthLayouts />}
         />
         <Route path="/privacy-policy" element={<Privacy />} />
+        <Route path="/about-us" element={<AboutUs />} />
         <Route path="/download" element={<Download />} />
       </Routes>
     </div>
