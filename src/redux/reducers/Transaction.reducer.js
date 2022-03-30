@@ -5,6 +5,7 @@ import {
   CLEAR_TRANSACTION,
   HISTORY_FILTER_CHANGE,
   SET_REPORT_TRANSACTION,
+  DELETE_TRANSACTION,
 } from "../actionTypes";
 
 const initialState = {
@@ -63,6 +64,12 @@ export const transactionReducer = (state = initialState, action) => {
         ...state,
         filterChange: false,
         historyList: [],
+      };
+
+    case DELETE_TRANSACTION:
+      return {
+        ...state,
+        filterChange: false,
       };
 
     default:

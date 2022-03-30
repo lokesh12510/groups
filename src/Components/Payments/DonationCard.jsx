@@ -14,6 +14,7 @@ const Root = styled("div")((theme) => ({
   borderRadius: "5px",
   overflow: "hidden",
   border: "1px solid #e8e8e8",
+  cursor: "pointer",
   "& .card-start": {
     display: "flex",
     padding: "10px",
@@ -66,9 +67,9 @@ const Root = styled("div")((theme) => ({
   "& .card-end[data-fine=false]": { backgroundImage: `url("${PAYMENT_BG}")` },
 }));
 
-const DonationCard = ({ donation }) => {
+const DonationCard = ({ donation, handleDeleteDonation }) => {
   return (
-    <Root>
+    <Root onClick={() => handleDeleteDonation(donation)}>
       <div className="card-start">
         <div className="paymentDetails">
           <Typography
@@ -88,7 +89,7 @@ const DonationCard = ({ donation }) => {
             {donation.event}
           </Typography>
           <Typography variant="p" gutterBottom component="div" className="date">
-            {moment(donation?.createdAt).format('MMM Do YYYY')}
+            {moment(donation?.createdAt).format("MMM Do YYYY")}
           </Typography>
         </div>
       </div>

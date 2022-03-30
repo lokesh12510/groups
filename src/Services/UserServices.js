@@ -9,6 +9,7 @@ const PATH = {
   createPayment: "user/createPayment",
   userPayments: "user/payment",
   userContribution: "user/groupContribution",
+  deletePayment: "user/deletePayment",
 };
 
 const userUpdate = (payload, start, callback, error, next) => {
@@ -66,6 +67,14 @@ const userContribution = (params, start, callback, error, next) => {
     .finally(next);
 };
 
+const deletePayment = (payload, start, callback, error, next) => {
+  start();
+  return AdminHttpClient.delete(`${PATH.deletePayment}`, payload)
+    .then(callback)
+    .catch(error)
+    .finally(next);
+};
+
 export const UserServices = {
   userUpdate,
   userInfo,
@@ -74,4 +83,5 @@ export const UserServices = {
   createPayment,
   userContribution,
   userPayments,
+  deletePayment,
 };

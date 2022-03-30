@@ -9,6 +9,23 @@ import { styled } from "@mui/material/styles";
 import React from "react";
 import { APP_LOGO } from "../../UIElements/Images";
 import Image from "../../Assets/Images/event6.jpg";
+import Janani from "../../Assets/Images/janani.jpg";
+import Keerthi from "../../Assets/Images/keerthi.jpg";
+import Magisha from "../../Assets/Images/magisha.jpg";
+import Rakshana from "../../Assets/Images/rakshana.jpg";
+import Rithick from "../../Assets/Images/rithick.png";
+import Sathya from "../../Assets/Images/sathya.jpg";
+import Varun from "../../Assets/Images/varun.jpg";
+import Akshaya from "../../Assets/Images/akshaya.jpg";
+import Lokesh from "../../Assets/Images/lokesh.jpg";
+import Sanjay from "../../Assets/Images/sanjay.png";
+import Dheeki from "../../Assets/Images/dheeki.JPG";
+import Shyam from "../../Assets/Images/shyam.png";
+import Somesh from "../../Assets/Images/somesh.png";
+import Kishor from "../../Assets/Images/kishor.png";
+import Naresh from "../../Assets/Images/naresh.png";
+import Shri from "../../Assets/Images/shri.png";
+import Janani_s from "../../Assets/Images/janani_s.png";
 import { DefaultTheme } from "../../Constant";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -24,6 +41,8 @@ import EmailIcon from "@mui/icons-material/Email";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import { Link } from "react-router-dom";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const AboutUs = () => {
   return (
@@ -88,6 +107,126 @@ const AboutUs = () => {
           variant="h6"
           component="div"
           gutterBottom
+          style={{ textTransform: "uppercase" }}
+          className="title"
+        >
+          History
+        </Typography>
+        <ul>
+          <li>
+            <Typography gutterBottom component="div">
+              December 27, 2019- Start of Society club and affiliation
+              certificate received from Nehru Yuva Kendra, The Nilgiris-
+              Government of India.
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              December 28, 2019- Organized few competitions for Kids. (Chess,
+              Carrom, Badminton)
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              Jan 18, 2020- Started Plastic Free society camp by collecting
+              plastic wastes in and around the village.
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              February 24, 2020- Our society name "THAMBATTY VIVEKANANDAR
+              ILLAIGNAR NARPANI MANDRAM" was officially registered by
+              Government.
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              May 31, 2020- Organized second set of Competitions (Drawing,
+              Dance, Essay, Handwriting, Quiz, Speech, Spell bee, Singing)
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              June 12, 2020- Distributed Sports Jerseys for the village kids by
+              TVINM at free of cost.
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              July 4, 2020- Competition 3 ( Carrom, Chess, Badminton)
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              August 30, 2020- Fit India Youth Club program was organized.
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              November 16, 2020- Village Ground renovation project
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              November 26, 2020- Constitution day program was organized with the
+              help of NYK, The Nilgiris.
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              December 2, 2020- Thambatty Football League-4 was organized by
+              TVINM.
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              January 13, 2021- Competition 4 (Speech, Essay, Thirukural,
+              Singing, Dancing, Quiz, Drawing/Coloring, Monoact, Handwriting,
+              Poem, Rangoli, Chess, Badminton, Carrom, Running)
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              May 2021- Formed a special team during the Covid times in
+              providing essentials at their doorstep.
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              June 10, 2021- Tree plantation activity. Planted tree saplings in
+              and around the Village.
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              January 1, 2022- TVINM App launching Event.
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              January 22, 2022- Disposal of over 500kgs plastics which were
+              collected over the past few years.
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              February 20, 2022- Rs. 10000 was received from Sri Sathya Sai
+              Maruthi Seva charitable trust as an honourable gift.
+            </Typography>
+          </li>
+          <li>
+            <Typography gutterBottom component="div">
+              March 27, 2022- "Social Worker Award" was honoured to our club by
+              BADUGAR KALACHARA PADHUKAPPU IYAKKAM.
+            </Typography>
+          </li>
+        </ul>
+      </Container>
+      <Container>
+        <Typography
+          variant="h6"
+          component="div"
+          gutterBottom
           className="title"
           style={{ textTransform: "uppercase" }}
         >
@@ -96,17 +235,47 @@ const AboutUs = () => {
 
         <Box sx={{ width: "100%" }}>
           <ImageList variant="masonry" cols={2} gap={15}>
-            {itemData.map((item) => (
-              <ImageListItem key={item.img}>
-                <img
-                  src={`${item.img}?w=248&fit=crop&auto=format`}
-                  srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                  alt={item.title}
-                  loading="lazy"
-                />
-                <ImageListItemBar position="below" title={item.author} />
-              </ImageListItem>
-            ))}
+            <ImageListItem>
+              <img src={Kishor} alt="Kishor" loading="lazy" />
+              <ImageListItemBar
+                position="below"
+                title="Kishor T"
+                subtitle="President"
+              />
+              <ImageListItemBar position="above" title="President" />
+            </ImageListItem>
+            <ImageListItem>
+              <img src={Somesh} alt="Somesh" loading="lazy" />
+              <ImageListItemBar
+                position="below"
+                title="Somesh N"
+                subtitle="Secretary"
+              />
+            </ImageListItem>
+            <ImageListItem>
+              <img src={Dheeki} alt="Dheekshith" loading="lazy" />
+              <ImageListItemBar
+                position="below"
+                title="Dheekshith S"
+                subtitle="Treasurer"
+              />
+            </ImageListItem>
+            <ImageListItem>
+              <img src={Sanjay} alt="Sanjay.R" loading="lazy" />
+              <ImageListItemBar
+                position="below"
+                title="Sanjay R"
+                subtitle="Vice-President"
+              />
+            </ImageListItem>
+            <ImageListItem>
+              <img src={Lokesh} alt="Lokesh" loading="lazy" />
+              <ImageListItemBar
+                position="below"
+                title="Lokesh K"
+                subtitle="Vice-Secretary"
+              />
+            </ImageListItem>
           </ImageList>
         </Box>
 
@@ -115,10 +284,10 @@ const AboutUs = () => {
         >
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt="Naveen" src="/static/images/avatar/1.jpg" />
+              <Avatar alt="Naveen" src={Naresh} />
             </ListItemAvatar>
             <ListItemText
-              primary="Naveen"
+              primary="Naveen N"
               secondary={
                 <React.Fragment>
                   <Typography
@@ -129,7 +298,6 @@ const AboutUs = () => {
                   >
                     Leader
                   </Typography>
-                  {" — I'll be in your neighborhood doing errands this…"}
                 </React.Fragment>
               }
             />
@@ -137,7 +305,7 @@ const AboutUs = () => {
           <Divider variant="inset" component="li" />
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt="Janani S" src="/static/images/avatar/2.jpg" />
+              <Avatar alt="Janani S" src={Janani_s} />
             </ListItemAvatar>
             <ListItemText
               primary="Janani S"
@@ -151,7 +319,6 @@ const AboutUs = () => {
                   >
                     Leader
                   </Typography>
-                  {" — Wish I could come, but I'm out of town this…"}
                 </React.Fragment>
               }
             />
@@ -159,10 +326,10 @@ const AboutUs = () => {
           <Divider variant="inset" component="li" />
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt="Rithick" src="/static/images/avatar/3.jpg" />
+              <Avatar alt="Rithick" src={Rithick} />
             </ListItemAvatar>
             <ListItemText
-              primary="Rithick"
+              primary="Rithick V"
               secondary={
                 <React.Fragment>
                   <Typography
@@ -173,7 +340,6 @@ const AboutUs = () => {
                   >
                     Assistant leader
                   </Typography>
-                  {" — Do you have Paris recommendations? Have you ever…"}
                 </React.Fragment>
               }
             />
@@ -181,10 +347,10 @@ const AboutUs = () => {
           <Divider variant="inset" component="li" />
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt="Shrinitha" src="/static/images/avatar/3.jpg" />
+              <Avatar alt="Shrinitha" src={Shri} />
             </ListItemAvatar>
             <ListItemText
-              primary="Shrinitha"
+              primary="Shrinitha R"
               secondary={
                 <React.Fragment>
                   <Typography
@@ -195,7 +361,6 @@ const AboutUs = () => {
                   >
                     Assistant leader
                   </Typography>
-                  {" — Do you have Paris recommendations? Have you ever…"}
                 </React.Fragment>
               }
             />
@@ -203,10 +368,10 @@ const AboutUs = () => {
           <Divider variant="inset" component="li" />
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt="Sathya" src="/static/images/avatar/3.jpg" />
+              <Avatar alt="Sathya" src={Sathya} />
             </ListItemAvatar>
             <ListItemText
-              primary="Sathya"
+              primary="Sathya S"
               secondary={
                 <React.Fragment>
                   <Typography
@@ -217,7 +382,6 @@ const AboutUs = () => {
                   >
                     Assistant Treasurer
                   </Typography>
-                  {" — Do you have Paris recommendations? Have you ever…"}
                 </React.Fragment>
               }
             />
@@ -225,10 +389,10 @@ const AboutUs = () => {
           <Divider variant="inset" component="li" />
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt="Keerthika" src="/static/images/avatar/3.jpg" />
+              <Avatar alt="Keerthika" src={Keerthi} />
             </ListItemAvatar>
             <ListItemText
-              primary="Keerthika"
+              primary="Keerthika R"
               secondary={
                 <React.Fragment>
                   <Typography
@@ -239,7 +403,6 @@ const AboutUs = () => {
                   >
                     Assistant Treasurer
                   </Typography>
-                  {" — Do you have Paris recommendations? Have you ever…"}
                 </React.Fragment>
               }
             />
@@ -247,10 +410,10 @@ const AboutUs = () => {
           <Divider variant="inset" component="li" />
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt="Magisha" src="/static/images/avatar/3.jpg" />
+              <Avatar alt="Magisha" src={Magisha} />
             </ListItemAvatar>
             <ListItemText
-              primary="Magisha"
+              primary="Magisha K"
               secondary={
                 <React.Fragment>
                   <Typography
@@ -261,7 +424,6 @@ const AboutUs = () => {
                   >
                     Youth Representative
                   </Typography>
-                  {" — Do you have Paris recommendations? Have you ever…"}
                 </React.Fragment>
               }
             />
@@ -269,10 +431,10 @@ const AboutUs = () => {
           <Divider variant="inset" component="li" />
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt="Rakshana" src="/static/images/avatar/3.jpg" />
+              <Avatar alt="Rakshana" src={Rakshana} />
             </ListItemAvatar>
             <ListItemText
-              primary="Rakshana"
+              primary="Rakshana B"
               secondary={
                 <React.Fragment>
                   <Typography
@@ -283,7 +445,6 @@ const AboutUs = () => {
                   >
                     Youth Representative
                   </Typography>
-                  {" — Do you have Paris recommendations? Have you ever…"}
                 </React.Fragment>
               }
             />
@@ -291,10 +452,10 @@ const AboutUs = () => {
           <Divider variant="inset" component="li" />
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt="Varun" src="/static/images/avatar/3.jpg" />
+              <Avatar alt="Varun" src={Varun} />
             </ListItemAvatar>
             <ListItemText
-              primary="Varun"
+              primary="Varun C"
               secondary={
                 <React.Fragment>
                   <Typography
@@ -305,7 +466,6 @@ const AboutUs = () => {
                   >
                     Youth Representative
                   </Typography>
-                  {" — Do you have Paris recommendations? Have you ever…"}
                 </React.Fragment>
               }
             />
@@ -313,10 +473,10 @@ const AboutUs = () => {
           <Divider variant="inset" component="li" />
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt="Shyam" src="/static/images/avatar/3.jpg" />
+              <Avatar alt="Shyam T K" src={Shyam} />
             </ListItemAvatar>
             <ListItemText
-              primary="Shyam"
+              primary="Shyam T K"
               secondary={
                 <React.Fragment>
                   <Typography
@@ -327,7 +487,6 @@ const AboutUs = () => {
                   >
                     Youth Representative
                   </Typography>
-                  {" — Do you have Paris recommendations? Have you ever…"}
                 </React.Fragment>
               }
             />
@@ -335,10 +494,10 @@ const AboutUs = () => {
           <Divider variant="inset" component="li" />
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt="Akshaya" src="/static/images/avatar/3.jpg" />
+              <Avatar alt="Akshaya" src={Akshaya} />
             </ListItemAvatar>
             <ListItemText
-              primary="Akshaya"
+              primary="Akshaya R"
               secondary={
                 <React.Fragment>
                   <Typography
@@ -349,7 +508,6 @@ const AboutUs = () => {
                   >
                     Event Coordinator
                   </Typography>
-                  {" — Do you have Paris recommendations? Have you ever…"}
                 </React.Fragment>
               }
             />
@@ -357,7 +515,7 @@ const AboutUs = () => {
           <Divider variant="inset" component="li" />
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt="Janani B" src="/static/images/avatar/3.jpg" />
+              <Avatar alt="Janani B" src={Janani} />
             </ListItemAvatar>
             <ListItemText
               primary="Janani B"
@@ -371,7 +529,6 @@ const AboutUs = () => {
                   >
                     Event Coordinator
                   </Typography>
-                  {" — Do you have Paris recommendations? Have you ever…"}
                 </React.Fragment>
               }
             />
@@ -379,51 +536,102 @@ const AboutUs = () => {
         </List>
       </Container>
       <Container className="footer">
-        <Stack alignItems={"center"} justifyContent="center" spacing={3}>
+        <Stack alignItems={"center"} justifyContent="start" spacing={3}>
           <img className="footer_logo" src={APP_LOGO} alt="" />
-          <Typography align="center" mb={4} variant="overline" component="div">
-            THAMBATTY <br /> VIVEKANANDHAR ILLAINGAR NARPANI MANDRAM
+          <Typography align="center" mb={4} variant="h6" component="div">
+            THAMBATTY <br /> VIVEKANANDAR ILLAIGNAR NARPANI MANDRAM
           </Typography>
           <Typography
             variant="p"
             component="div"
             gutterBottom
-            style={{ textTransform: "uppercase" }}
+            style={{ textTransform: "uppercase", fontWeight: "bold" }}
           >
-            follow Us On
+            Write to Us
           </Typography>
 
           <List>
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton
+                component={"a"}
+                target="_blank"
+                href="mailto:thambattyinm@gmail.com"
+              >
                 <ListItemIcon>
                   <EmailIcon />
                 </ListItemIcon>
                 <ListItemText primary="thambattyinm@gmail.com" />
               </ListItemButton>
             </ListItem>
+          </List>
+
+          <Typography
+            variant="p"
+            component="div"
+            gutterBottom
+            style={{ textTransform: "uppercase", fontWeight: "bold" }}
+          >
+            follow Us On
+          </Typography>
+
+          <List>
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton
+                component={"a"}
+                target="_blank"
+                href="https://www.facebook.com/profile.php?id=100076436983948"
+              >
                 <ListItemIcon>
                   <FacebookIcon />
                 </ListItemIcon>
-                <ListItemText primary="thambatty_kunnavae" />
+                <ListItemText primary="Thambatty Vinm" />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton
+                component={"a"}
+                target="_blank"
+                href="https://instagram.com/thambatty_vinm?utm_medium=copy_link"
+              >
                 <ListItemIcon>
                   <InstagramIcon />
                 </ListItemIcon>
-                <ListItemText primary="thambatty_kunnavae" />
+                <ListItemText primary="thambatty_vinm" />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton
+                component={"a"}
+                target="_blank"
+                href="https://youtube.com/channel/UCnTY6RgbP4dvKU9c8I5LKXQ"
+              >
                 <ListItemIcon>
                   <YouTubeIcon />
                 </ListItemIcon>
-                <ListItemText primary="thambatty_kunnavae" />
+                <ListItemText primary="THAMBATTY KUNNAVAE" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+          <Typography
+            variant="p"
+            component="div"
+            gutterBottom
+            style={{ textTransform: "uppercase", fontWeight: "bold" }}
+          >
+            Find Us
+          </Typography>
+
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton
+                component={"a"}
+                target="_blank"
+                href="https://maps.app.goo.gl/ByB1uXVM3o2yFKMC8"
+              >
+                <ListItemIcon>
+                  <LocationOnIcon />
+                </ListItemIcon>
+                <ListItemText primary="Our Location" />
               </ListItemButton>
             </ListItem>
           </List>
@@ -477,6 +685,12 @@ const Root = styled("div")((theme) => ({
   "& .MuiList-root": {
     marginTop: 0,
   },
+  "& .MuiImageListItemBar-title": {
+    whiteSpace: "break-spaces",
+  },
+  "& .MuiListItemButton-root": {
+    minWidth: 320,
+  },
 }));
 
 const itemData = [
@@ -486,7 +700,7 @@ const itemData = [
     author: "President",
   },
   {
-    img: "https://images.unsplash.com/photo-1525097487452-6278ff080c31",
+    img: { Sanjay },
     title: "Books",
     author: "Vice-President",
   },
@@ -496,7 +710,7 @@ const itemData = [
     author: "Secretary",
   },
   {
-    img: "https://images.unsplash.com/photo-1563298723-dcfebaa392e3",
+    img: { Lokesh },
     title: "Kitchen",
     author: "Vice-Secretary",
   },

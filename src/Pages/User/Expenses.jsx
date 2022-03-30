@@ -4,6 +4,11 @@ import { styled } from "@mui/material/styles";
 import {
   Button,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControl,
   Grid,
   InputLabel,
@@ -28,6 +33,7 @@ import Tab from "@mui/material/Tab";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {
   clearTransaction,
+  deleteTransaction,
   getHistoryTransaction,
   getReportTransaction,
   historyChange,
@@ -78,12 +84,15 @@ const Expenses = () => {
   const [skip, setSkip] = useState(0);
   const [limit, setLimit] = useState(10);
 
+  const [deleteExpense, setDeleteExpense] = useState("");
+
   // SELECTORS
   const { groupInfo } = useSelector((state) => state.groups);
   const { historyList, filterChange, reportTransaction } = useSelector(
     (state) => state.transactions
   );
   const { loading } = useSelector((state) => state.loader);
+  const { isAdmin } = useSelector((state) => state.user);
 
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -118,7 +127,7 @@ const Expenses = () => {
     dispatch(
       getHistoryTransaction("Expense", years[value], month, skip, limit)
     );
-        // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [value, month, skip, limit]);
   // SERVICE CALL-> (USER PAYMENT LIST)
 
@@ -138,6 +147,30 @@ const Expenses = () => {
 
   const fetchData = () => {
     setSkip(skip + 10);
+  };
+
+  const handleDeleteExpense = (index) => {
+    if (isAdmin) {
+      setDeleteExpense(index);
+      handleClickOpen();
+    }
+  };
+  // <Modal></Modal>
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleDelete = () => {
+    dispatch(deleteTransaction(deleteExpense.transaction_id));
+    dispatch(
+      getHistoryTransaction("Expense", years[value], month, skip, limit)
+    );
+    setOpen(false);
   };
 
   return (
@@ -297,7 +330,13 @@ const Expenses = () => {
                         }
                       >
                         {historyList?.map((item, i) => {
-                          return <ExpenseCard key={i} expense={item} />;
+                          return (
+                            <ExpenseCard
+                              key={item.transaction_id}
+                              expense={item}
+                              handleDeleteExpense={handleDeleteExpense}
+                            />
+                          );
                         })}
                       </InfiniteScroll>
                     )}
@@ -336,6 +375,21 @@ const Expenses = () => {
             })}
         </SwipeableViews>
       </Box>
+
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Remove Expense</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure want to remove this Expense!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button variant="outlined" color="error" onClick={handleDelete}>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Root>
   );
 };

@@ -1,6 +1,7 @@
 import {
   ACCEPT_PAYMENT,
   CREATE_PAYMENT,
+  DELETE_PAYMENT,
   PENDING_PAYMENTS,
 } from "../actionTypes";
 
@@ -33,6 +34,13 @@ export const paymentsReducer = (state = initialState, action) => {
     case CREATE_PAYMENT:
       return {
         ...state,
+        isFetched: !state.isFetched,
+      };
+
+    case DELETE_PAYMENT:
+      return {
+        ...state,
+        pendingCount: state.pendingCount > 0 && state.pendingCount--,
         isFetched: !state.isFetched,
       };
 

@@ -10,17 +10,17 @@ import {
 } from "@mui/material";
 import { DefaultTheme } from "../../Constant";
 import moment from "moment";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 
 const PaymentCardBtn = ({ payment, handleAccept, handleClickOpen }) => {
-
   const { isAdmin } = useSelector((state) => state.user);
 
   return (
     <Root
-    // component={Link} to={"/profile"}
+      // component={Link} to={"/profile"}
+      onClick={() => handleClickOpen(true, payment.payment_id)}
     >
       <CardHeader
         avatar={
@@ -38,7 +38,6 @@ const PaymentCardBtn = ({ payment, handleAccept, handleClickOpen }) => {
           isAdmin && (
             <Chip
               label="Accept"
-              onDelete={() => handleClickOpen(true, payment.payment_id)}
               variant="contained"
               deleteIcon={
                 <CheckCircleOutlineIcon style={{ color: "#696DF3" }} />

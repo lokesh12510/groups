@@ -4,6 +4,11 @@ import { styled } from "@mui/material/styles";
 import {
   Button,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControl,
   Grid,
   InputLabel,
@@ -11,9 +16,7 @@ import {
   Skeleton,
   Typography,
 } from "@mui/material";
-import {
-  DONATION_BG,
-} from "../../UIElements/Images";
+import { DONATION_BG } from "../../UIElements/Images";
 import { Link } from "react-router-dom";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -21,7 +24,7 @@ import { RecentTransaction } from "../../UIElements/Icons";
 import Select from "@mui/material/Select";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Box} from "@mui/system";
+import { Box } from "@mui/system";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
@@ -31,6 +34,7 @@ import Tab from "@mui/material/Tab";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {
   clearTransaction,
+  deleteTransaction,
   getHistoryTransaction,
   getReportTransaction,
   historyChange,
@@ -81,13 +85,15 @@ const Donation = () => {
   const [skip, setSkip] = useState(0);
   const [limit, setLimit] = useState(10);
 
+  const [deleteDonation, setDeleteDonation] = useState("");
+  const { isAdmin } = useSelector((state) => state.user);
+
   // SELECTORS
-  const {  groupInfo } = useSelector((state) => state.groups);
+  const { groupInfo } = useSelector((state) => state.groups);
   const { loading } = useSelector((state) => state.loader);
   const { historyList, filterChange, reportTransaction } = useSelector(
     (state) => state.transactions
   );
-
 
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -122,7 +128,7 @@ const Donation = () => {
     dispatch(
       getHistoryTransaction("Donation", years[value], month, skip, limit)
     );
-        // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [value, month, skip, limit]);
   // SERVICE CALL-> (USER PAYMENT LIST)
 
@@ -143,6 +149,30 @@ const Donation = () => {
   const fetchData = () => {
     console.log("fetched data");
     setSkip(skip + 10);
+  };
+
+  const handleDeleteDonation = (index) => {
+    if (isAdmin) {
+      setDeleteDonation(index);
+      handleClickOpen();
+    }
+  };
+  // <Modal></Modal>
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleDelete = () => {
+    dispatch(deleteTransaction(deleteDonation.transaction_id));
+    dispatch(
+      getHistoryTransaction("Expense", years[value], month, skip, limit)
+    );
+    setOpen(false);
   };
 
   return (
@@ -302,8 +332,13 @@ const Donation = () => {
                         }
                       >
                         {historyList?.map((item, i) => {
-                          console.log(item);
-                          return <DonationCard key={i} donation={item} />;
+                          return (
+                            <DonationCard
+                              key={item.transaction_id}
+                              donation={item}
+                              handleDeleteDonation={handleDeleteDonation}
+                            />
+                          );
                         })}
                       </InfiniteScroll>
                     )}
@@ -342,6 +377,20 @@ const Donation = () => {
             })}
         </SwipeableViews>
       </Box>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Remove Expense</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure want to remove this Expense!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button variant="outlined" color="error" onClick={handleDelete}>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Root>
   );
 };

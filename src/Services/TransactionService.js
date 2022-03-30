@@ -5,6 +5,7 @@ const PATH = {
   createTransaction: "transaction/create-Transaction",
   historyTransaction: "transaction/history-Transaction",
   reportTransaction: "transaction/report-Transaction",
+  deleteTransaction: "transaction/remove",
 };
 
 const getReport = (params, start, callback, error, next) => {
@@ -39,9 +40,18 @@ const createTransaction = (payload, start, callback, error, next) => {
     .finally(next);
 };
 
+const deleteTransaction = (params, start, callback, error, next) => {
+  start();
+  return AdminHttpClient.delete(`${PATH.deleteTransaction}`, { params })
+    .then(callback)
+    .catch(error)
+    .finally(next);
+};
+
 export const TransactionServices = {
   getReport,
   createTransaction,
   historyTransaction,
   reportTransaction,
+  deleteTransaction,
 };

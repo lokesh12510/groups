@@ -35,6 +35,7 @@ import PaymentCardBtn from "../../Components/Payments/PaymentCardBtn";
 import {
   acceptPayment,
   createPayment,
+  deletePayment,
   getPendingPayments,
 } from "../../redux/actions/Payments.actions";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -142,6 +143,13 @@ const ManagePayments = () => {
     setSkip(skip + 10);
   };
 
+  const handleDelete = () => {
+    console.log(currentId);
+    dispatch(deletePayment(currentId));
+
+    setOpen(false);
+  };
+
   return (
     <Root>
       <HeaderSection>
@@ -236,11 +244,11 @@ const ManagePayments = () => {
         <DialogActions>
           <Button
             variant="outlined"
-            color="info"
-            onClick={handleClose}
+            color="error"
+            onClick={handleDelete}
             fullWidth
           >
-            No
+            Delete
           </Button>
           <Button
             variant="contained"
@@ -248,7 +256,7 @@ const ManagePayments = () => {
             onClick={handleAcceptPayment}
             fullWidth
           >
-            Yes
+            Accept
           </Button>
         </DialogActions>
       </Dialog>

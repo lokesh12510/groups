@@ -3,6 +3,7 @@ import {
   ADD_DONATION,
   ADD_EXPENSE,
   CLEAR_TRANSACTION,
+  DELETE_TRANSACTION,
   HISTORY_FILTER_CHANGE,
   SET_FETCH,
   SET_MESSAGE,
@@ -136,6 +137,35 @@ export const clearTransaction = () => ({
 export const historyChange = () => ({
   type: HISTORY_FILTER_CHANGE,
 });
+
+export const deleteTransaction = (id) => (dispatch) => {
+  return TransactionServices.deleteTransaction(
+    {
+      transaction_id: id,
+    },
+    () => {
+      dispatch({
+        type: START_LOADER,
+      });
+    },
+    (data) => {
+      dispatch({
+        type: DELETE_TRANSACTION,
+      });
+    },
+    (error) => {
+      dispatch({
+        type: SET_MESSAGE,
+        payload: { message: "", type: "error" },
+      });
+    },
+    () => {
+      dispatch({
+        type: STOP_LOADER,
+      });
+    }
+  );
+};
 
 export const getReportTransaction = (type) => (dispatch) => {
   return TransactionServices.reportTransaction(

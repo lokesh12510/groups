@@ -4,6 +4,7 @@ import {
   ACCEPT_PAYMENT,
   CLEAR_GROUP_PAYMENT_HISTORY,
   CREATE_PAYMENT,
+  DELETE_PAYMENT,
   PENDING_PAYMENTS,
   SET_FETCH,
   SET_MESSAGE,
@@ -67,6 +68,44 @@ export const acceptPayment = (id) => (dispatch) => {
       dispatch({
         type: SET_MESSAGE,
         payload: { message: "Payment Accepted Successfully!", type: "success" },
+      });
+    },
+    (error) => {
+      dispatch({
+        type: SET_MESSAGE,
+        payload: { message: "Something went wrong!Try again!", type: "error" },
+      });
+    },
+    () => {
+      dispatch({
+        type: STOP_LOADER,
+      });
+    }
+  );
+};
+
+export const deletePayment = (id) => (dispatch) => {
+  return UserServices.deletePayment(
+    { payment_id: id },
+    () => {
+      dispatch({
+        type: START_LOADER,
+      });
+    },
+    (data) => {
+      dispatch({
+        type: DELETE_PAYMENT,
+      });
+      dispatch({
+        type: CLEAR_GROUP_PAYMENT_HISTORY,
+      });
+
+      dispatch({
+        type: SET_FETCH,
+      });
+      dispatch({
+        type: SET_MESSAGE,
+        payload: { message: "Payment Deleted Successfully!", type: "success" },
       });
     },
     (error) => {

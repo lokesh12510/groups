@@ -1,7 +1,7 @@
 import { HttpClient } from "../utils/httpClient";
 
 const PATH = {
-  getMembersList: "tool/app/upload",
+  getMembersList: "tool/app/s3/upload",
 };
 
 const uploadProfile = (payload, start, callback, error, next) => {

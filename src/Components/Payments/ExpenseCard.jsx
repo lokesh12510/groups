@@ -14,6 +14,7 @@ const Root = styled("div")((theme) => ({
   borderRadius: "5px",
   overflow: "hidden",
   border: "1px solid #e8e8e8",
+  cursor: "pointer",
   "& .card-start": {
     display: "flex",
     padding: "10px",
@@ -59,9 +60,9 @@ const Root = styled("div")((theme) => ({
   "& .card-end[data-fine=false]": { backgroundImage: `url("${PAYMENT_BG}")` },
 }));
 
-const ExpenseCard = ({ expense }) => {
+const ExpenseCard = ({ expense, handleDeleteExpense }) => {
   return (
-    <Root>
+    <Root onClick={() => handleDeleteExpense(expense)}>
       <div className="card-start">
         <div className="paymentDetails">
           <Typography
@@ -73,7 +74,7 @@ const ExpenseCard = ({ expense }) => {
             {expense.event}
           </Typography>
           <Typography variant="p" gutterBottom component="div" className="date">
-            {moment(expense?.createdAt).format('MMM D0 YYYY')}
+            {moment(expense?.createdAt).format("MMM Do YYYY")}
           </Typography>
         </div>
       </div>
