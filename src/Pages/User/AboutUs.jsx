@@ -41,7 +41,6 @@ import EmailIcon from "@mui/icons-material/Email";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-import { Link } from "react-router-dom";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const AboutUs = () => {
@@ -692,31 +691,3 @@ const Root = styled("div")((theme) => ({
     minWidth: 320,
   },
 }));
-
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1549388604-817d15aa0110",
-    title: "Bed",
-    author: "President",
-  },
-  {
-    img: { Sanjay },
-    title: "Books",
-    author: "Vice-President",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1523413651479-597eb2da0ad6",
-    title: "Sink",
-    author: "Secretary",
-  },
-  {
-    img: { Lokesh },
-    title: "Kitchen",
-    author: "Vice-Secretary",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1588436706487-9d55d73a39e3",
-    title: "Blinds",
-    author: "Treasury",
-  },
-];

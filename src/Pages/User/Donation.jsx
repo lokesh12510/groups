@@ -170,7 +170,7 @@ const Donation = () => {
   const handleDelete = () => {
     dispatch(deleteTransaction(deleteDonation.transaction_id));
     dispatch(
-      getHistoryTransaction("Expense", years[value], month, skip, limit)
+      getHistoryTransaction("Donation", years[value], month, skip, limit)
     );
     setOpen(false);
   };
