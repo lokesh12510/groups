@@ -68,8 +68,9 @@ export const transactionReducer = (state = initialState, action) => {
 
     case DELETE_TRANSACTION:
       return {
-        ...state,
-        filterChange: false,
+        expense: { isFetched: false },
+        donation: { isFetched: false },
+        filterChange: true,
       };
 
     default:

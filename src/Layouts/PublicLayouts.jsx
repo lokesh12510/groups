@@ -4,12 +4,7 @@ import Profile from "../Pages/User/Profile";
 import EditProfile from "../Pages/User/EditProfile";
 import Members from "../Pages/User/Members";
 
-import {
-  Routes,
-  Route,
-  Navigate,
-  Outlet,
-} from "react-router-dom";
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Events from "../Pages/User/Events";
 import EventDetail from "../Components/Events/EventDetail";
 import { useSelector } from "react-redux";
@@ -81,7 +76,7 @@ const PublicLayouts = () => {
         <Route path="/change-password" element={<PrivateRoute nav={false} />}>
           <Route path="/change-password" element={<ChangePassword />} />
         </Route>
-        <Route path="*" element={<Navigate replace to="/404" />} />
+        <Route path="*" element={<Navigate exact replace to="/" />} />
       </Routes>
     </div>
   );

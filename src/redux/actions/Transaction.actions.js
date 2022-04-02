@@ -149,8 +149,14 @@ export const deleteTransaction = (id) => (dispatch) => {
       });
     },
     (data) => {
+      console.log("delete");
+
       dispatch({
-        type: DELETE_TRANSACTION,
+        type: SET_MESSAGE,
+        payload: {
+          message: "Transaction Deleted Successfully!",
+          type: "success",
+        },
       });
     },
     (error) => {

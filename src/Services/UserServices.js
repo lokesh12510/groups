@@ -68,8 +68,9 @@ const userContribution = (params, start, callback, error, next) => {
 };
 
 const deletePayment = (payload, start, callback, error, next) => {
+  console.log(payload);
   start();
-  return AdminHttpClient.delete(`${PATH.deletePayment}`, payload)
+  return AdminHttpClient.delete(`${PATH.deletePayment}`, { data: payload })
     .then(callback)
     .catch(error)
     .finally(next);

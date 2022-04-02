@@ -40,9 +40,10 @@ const createTransaction = (payload, start, callback, error, next) => {
     .finally(next);
 };
 
-const deleteTransaction = (params, start, callback, error, next) => {
+const deleteTransaction = (payload, start, callback, error, next) => {
+  console.log(payload);
   start();
-  return AdminHttpClient.delete(`${PATH.deleteTransaction}`, { params })
+  return AdminHttpClient.delete(`${PATH.deleteTransaction}`, { data: payload })
     .then(callback)
     .catch(error)
     .finally(next);

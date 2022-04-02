@@ -167,6 +167,9 @@ const Expenses = () => {
   };
   const handleDelete = () => {
     dispatch(deleteTransaction(deleteExpense.transaction_id));
+    dispatch(clearTransaction());
+    dispatch(getReportTransaction("Expense"));
+    setSkip(0);
     dispatch(
       getHistoryTransaction("Expense", years[value], month, skip, limit)
     );

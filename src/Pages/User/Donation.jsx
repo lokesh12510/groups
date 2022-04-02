@@ -152,8 +152,8 @@ const Donation = () => {
   };
 
   const handleDeleteDonation = (index) => {
+    setDeleteDonation(index);
     if (isAdmin) {
-      setDeleteDonation(index);
       handleClickOpen();
     }
   };
@@ -169,6 +169,8 @@ const Donation = () => {
   };
   const handleDelete = () => {
     dispatch(deleteTransaction(deleteDonation.transaction_id));
+    dispatch(clearTransaction());
+    dispatch(getReportTransaction("Donation"));
     dispatch(
       getHistoryTransaction("Donation", years[value], month, skip, limit)
     );
