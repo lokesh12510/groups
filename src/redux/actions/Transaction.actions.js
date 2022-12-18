@@ -3,7 +3,6 @@ import {
   ADD_DONATION,
   ADD_EXPENSE,
   CLEAR_TRANSACTION,
-  DELETE_TRANSACTION,
   HISTORY_FILTER_CHANGE,
   SET_FETCH,
   SET_MESSAGE,
@@ -95,15 +94,16 @@ export const addDonation =
   };
 
 export const getHistoryTransaction =
-  (type, year, month, skip, limit) => (dispatch) => {
+  (type, year, month, skip, limit, searchTerm) => (dispatch) => {
     console.log(year);
     return TransactionServices.historyTransaction(
       {
-        type: type,
-        year: year,
+        type,
+        year,
         month: month === "All" ? "" : month,
-        skip: skip,
-        limit: limit,
+        skip,
+        limit,
+        searchTerm,
       },
       () => {
         dispatch({

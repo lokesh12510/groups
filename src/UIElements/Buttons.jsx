@@ -1,7 +1,7 @@
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import { DefaultTheme } from "../Constant";
-import { Switch } from "@mui/material";
+import { IconButton, Switch } from "@mui/material";
 
 export const PrimaryBtn = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(DefaultTheme.palette.primary.main),
@@ -86,5 +86,16 @@ export const SwitchBtn = styled(Switch)(({ theme }) => ({
   },
   "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
     backgroundColor: DefaultTheme.palette.primary.main,
+  },
+}));
+
+export const StyledIconBtn = styled(IconButton)(({ theme }) => ({
+  "&:focus": {
+    backgroundColor: "unset",
+    color: "unset",
+  },
+  "&:hover": {
+    backgroundColor: "unset",
+    color: "unset",
   },
 }));

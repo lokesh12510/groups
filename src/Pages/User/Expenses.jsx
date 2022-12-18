@@ -14,6 +14,8 @@ import {
   InputLabel,
   MenuItem,
   Skeleton,
+  Stack,
+  TextField,
   Typography,
 } from "@mui/material";
 import { EXPENSE_BG } from "../../UIElements/Images";
@@ -40,6 +42,8 @@ import {
 } from "../../redux/actions/Transaction.actions";
 import ExpenseCard from "../../Components/Payments/ExpenseCard";
 import NotFound from "../../Components/Elements/NotFound";
+import { StyledIconBtn } from "../../UIElements/Buttons";
+import { Search } from "@mui/icons-material";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,11 +56,7 @@ function TabPanel(props) {
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box>{children}</Box>}
     </div>
   );
 }
@@ -80,6 +80,7 @@ const Expenses = () => {
   // STATE
   const [typeOpen, setTypeOpen] = React.useState(false);
   const [month, setMonth] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [skip, setSkip] = useState(0);
   const [limit, setLimit] = useState(10);
@@ -117,6 +118,25 @@ const Expenses = () => {
     dispatch(historyChange());
   };
 
+  // SEARCH
+  const handleSearchTeam = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const hanldeSearch = () => {
+    dispatch(historyChange());
+    dispatch(
+      getHistoryTransaction(
+        "Expense",
+        years[value],
+        month,
+        skip,
+        limit,
+        searchTerm
+      )
+    );
+  };
+
   useEffect(() => {
     dispatch(clearTransaction());
   }, [dispatch]);
@@ -125,7 +145,14 @@ const Expenses = () => {
   useEffect(() => {
     dispatch(getReportTransaction("Expense"));
     dispatch(
-      getHistoryTransaction("Expense", years[value], month, skip, limit)
+      getHistoryTransaction(
+        "Expense",
+        years[value],
+        month,
+        skip,
+        limit,
+        searchTerm
+      )
     );
     // eslint-disable-next-line
   }, [value, month, skip, limit]);
@@ -171,7 +198,14 @@ const Expenses = () => {
     dispatch(getReportTransaction("Expense"));
     setSkip(0);
     dispatch(
-      getHistoryTransaction("Expense", years[value], month, skip, limit)
+      getHistoryTransaction(
+        "Expense",
+        years[value],
+        month,
+        skip,
+        limit,
+        searchTerm
+      )
     );
     setOpen(false);
   };
@@ -217,7 +251,9 @@ const Expenses = () => {
             aria-label="full width tabs example"
           >
             {years.map((item, index) => {
-              return item && <Tab label={item} {...a11yProps(index)} />;
+              return (
+                item && <Tab label={item} {...a11yProps(index)} key={index} />
+              );
             })}
           </Tabs>
         </AppBar>
@@ -230,54 +266,88 @@ const Expenses = () => {
             .filter((item) => item !== null && item)
             .map((item, index) => {
               return (
-                <TabPanel value={value} index={index} dir={theme.direction}>
-                  <FilterSection container justifyContent={"space-between"}>
-                    <Grid item pl={2}>
-                      <Typography variant="p" component={"div"}>
-                        Yearly - {item}
-                      </Typography>
-                      <Typography variant="h6" component={"div"} gutterBottom>
-                        ₹ {reportTransaction[value].totalAmount}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <FormControl sx={{ m: 1, minWidth: 100, maxHeight: 250 }}>
-                        <InputLabel id="demo-controlled-open-select-label">
-                          Month
-                        </InputLabel>
-                        <Select
-                          labelId="demo-controlled-open-select-label"
-                          id="demo-controlled-open-select"
-                          open={typeOpen}
-                          onClose={handleTypeClose}
-                          onOpen={handleTypeOpen}
-                          value={month}
-                          label="Type"
-                          onChange={handleMonthChange}
-                          className="monthSelect"
-                          MenuProps={{ PaperProps: { sx: { maxHeight: 250 } } }}
-                        >
-                          <MenuItem value={"All"}>
-                            <em>All</em>
-                          </MenuItem>
-                          <MenuItem value={1}>JAN</MenuItem>
-                          <MenuItem value={2}>FEB</MenuItem>
-                          <MenuItem value={3}>MAR</MenuItem>
-                          <MenuItem value={4}>APR</MenuItem>
-                          <MenuItem value={5}>MAY</MenuItem>
-                          <MenuItem value={6}>JUN</MenuItem>
-                          <MenuItem value={7}>JUY</MenuItem>
-                          <MenuItem value={8}>AUG</MenuItem>
-                          <MenuItem value={9}>SEP</MenuItem>
-                          <MenuItem value={10}>OCT</MenuItem>
-                          <MenuItem value={11}>NOV</MenuItem>
-                          <MenuItem value={12}>DEC</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                  </FilterSection>
-
+                <TabPanel
+                  value={value}
+                  index={index}
+                  dir={theme.direction}
+                  key={index}
+                >
                   <PaymentContainer>
+                    <FilterSection
+                      container
+                      justifyContent={"space-between"}
+                      spacing={2}
+                    >
+                      <Grid item xs={12}>
+                        <Stack
+                          direction={"row"}
+                          alignItems="center"
+                          justifyContent={"space-between"}
+                          spacing={1}
+                        >
+                          <TextField
+                            size="small"
+                            variant="outlined"
+                            value={searchTerm}
+                            placeholder="Enter Name, Amount, Event"
+                            fullWidth
+                            label="Search"
+                            onChange={handleSearchTeam}
+                          />
+                          <StyledIconBtn
+                            sx={{ background: "#dd7c53", color: "#fff" }}
+                            onClick={hanldeSearch}
+                          >
+                            <Search />
+                          </StyledIconBtn>
+                        </Stack>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="p" component={"div"}>
+                          Yearly - {item}
+                        </Typography>
+                        <Typography variant="h6" component={"div"} gutterBottom>
+                          ₹ {reportTransaction[value].totalAmount}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={5}>
+                        <FormControl sx={{ maxHeight: 250 }} fullWidth>
+                          <InputLabel id="demo-controlled-open-select-label">
+                            Month
+                          </InputLabel>
+                          <Select
+                            labelId="demo-controlled-open-select-label"
+                            id="demo-controlled-open-select"
+                            open={typeOpen}
+                            onClose={handleTypeClose}
+                            onOpen={handleTypeOpen}
+                            value={month}
+                            label="Type"
+                            onChange={handleMonthChange}
+                            className="monthSelect"
+                            MenuProps={{
+                              PaperProps: { sx: { maxHeight: 250 } },
+                            }}
+                          >
+                            <MenuItem value={"All"}>
+                              <em>All</em>
+                            </MenuItem>
+                            <MenuItem value={1}>JAN</MenuItem>
+                            <MenuItem value={2}>FEB</MenuItem>
+                            <MenuItem value={3}>MAR</MenuItem>
+                            <MenuItem value={4}>APR</MenuItem>
+                            <MenuItem value={5}>MAY</MenuItem>
+                            <MenuItem value={6}>JUN</MenuItem>
+                            <MenuItem value={7}>JUY</MenuItem>
+                            <MenuItem value={8}>AUG</MenuItem>
+                            <MenuItem value={9}>SEP</MenuItem>
+                            <MenuItem value={10}>OCT</MenuItem>
+                            <MenuItem value={11}>NOV</MenuItem>
+                            <MenuItem value={12}>DEC</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                    </FilterSection>
                     <Typography
                       variant="p"
                       mb={2}
@@ -345,9 +415,9 @@ const Expenses = () => {
                     )}
                     {historyList?.length === 0 &&
                       filterChange &&
-                      [...new Array(8)].map((item) => {
+                      [...new Array(8)].map((item, i) => {
                         return (
-                          <MemberSkeleton>
+                          <MemberSkeleton key={i}>
                             <div>
                               <Skeleton
                                 variant="circular"
@@ -453,7 +523,7 @@ const PaymentContainer = styled(Container)({
 });
 
 const FilterSection = styled(Grid)({
-  marginTop: "20px",
+  marginBottom: "5px",
   "& .MuiSelect-select": {
     padding: "9.5px 13px",
   },
