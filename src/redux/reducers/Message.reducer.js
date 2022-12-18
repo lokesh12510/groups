@@ -3,6 +3,7 @@ import { CLEAR_MESSAGE, SET_MESSAGE } from "../actionTypes";
 const initialState = {
   message: "",
   type: "",
+  position: "bottom",
 };
 
 export const messageReducer = (state = initialState, action) => {
@@ -10,7 +11,11 @@ export const messageReducer = (state = initialState, action) => {
 
   switch (type) {
     case SET_MESSAGE:
-      return { message: payload.message, type: payload.type };
+      return {
+        message: payload.message,
+        type: payload.type,
+        position: payload.position || "bottom",
+      };
 
     case CLEAR_MESSAGE:
       return { message: "" };

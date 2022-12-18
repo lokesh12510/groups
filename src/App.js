@@ -14,7 +14,7 @@ import Download from "./Pages/User/Download";
 import AboutUs from "./Pages/User/AboutUs";
 
 function App() {
-  const { message, type } = useSelector((state) => state.message);
+  const { message, type, position } = useSelector((state) => state.message);
   const { loading } = useSelector((state) => state.loader);
 
   const dispatch = useDispatch();
@@ -32,7 +32,9 @@ function App() {
 
   return (
     <div className="App">
-      {!loading && message && <Toast message={message} type={type} />}
+      {!loading && message && (
+        <Toast message={message} type={type} position={position} />
+      )}
       {loading &&
         location.pathname !== "/members" &&
         location.pathname !== "/savings" && (

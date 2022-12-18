@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 // Styles
 import { styled } from "@mui/material/styles";
-import { Button, Container, IconButton, InputAdornment } from "@mui/material";
+import {
+  Button,
+  Container,
+  IconButton,
+  InputAdornment,
+  Typography,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { APP_LOGO } from "../../UIElements/Images";
 import Grid from "@mui/material/Grid";
@@ -48,7 +54,7 @@ const Root = styled("div")((theme) => ({
     fontSize: "18px",
     color: "#000",
   },
-  "& .formFields": { marginBottom: "30px" },
+  "& .formFields": { marginBottom: "10px" },
   "& .cta_btns a": {
     textDecoration: "none",
   },
@@ -191,6 +197,11 @@ const Login = () => {
                   />
                 </Grid>
               </Grid>
+              <Link to={"/create/reset-password"}>
+                <Typography textDecoration="underline" align="center" mb={4}>
+                  Forgot password?
+                </Typography>
+              </Link>
               <div className="cta_btns">
                 <PrimaryBtn
                   variant="contained"

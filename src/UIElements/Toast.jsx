@@ -3,7 +3,7 @@ import { Alert, Snackbar } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { clearMessage } from "../redux/actions/Message.actions";
 
-const Toast = ({ message, type }) => {
+const Toast = ({ message, type, position = "bottom" }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -11,7 +11,7 @@ const Toast = ({ message, type }) => {
     setTimeout(() => {
       dispatch(clearMessage());
     }, 5000);
-  }, [message,dispatch]);
+  }, [message, dispatch]);
 
   const [open, setOpen] = useState(true);
 
@@ -25,13 +25,13 @@ const Toast = ({ message, type }) => {
   return (
     <Snackbar
       open={open}
-      autoHideDuration={6000}
+      autoHideDuration={60000}
       onClose={handleClose}
       anchorOrigin={{
-        vertical: "bottom",
+        vertical: position,
         horizontal: "right",
       }}
-      sx={{ bottom: { xs: 80, sm: 0 } }}
+      sx={{ bottom: { xs: 80, sm: 0 }, zIndex: 1201 }}
     >
       <Alert
         onClose={handleClose}

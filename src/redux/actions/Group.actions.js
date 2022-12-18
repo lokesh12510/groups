@@ -169,11 +169,12 @@ export const updateGroupInfo =
     );
   };
 
-export const updatePosition = (userId, position) => (dispatch) => {
+export const updatePosition = (userId, position, plan) => (dispatch) => {
   return GroupServices.updatePosition(
     {
       user_id: userId,
       position: position,
+      plan,
     },
     () => {
       dispatch({

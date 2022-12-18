@@ -6,6 +6,7 @@ import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
 import Thankyou from "../Pages/User/Thankyou";
 import { useSelector } from "react-redux";
+import ResetPassword from "../Pages/Auth/ResetPassword";
 
 const AuthLayouts = () => {
   const { accessToken, isLoggedIn } = useSelector((state) => state.auth);
@@ -25,6 +26,7 @@ const AuthLayouts = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/thankyou" element={<Thankyou />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </div>
   );

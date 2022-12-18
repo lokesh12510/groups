@@ -11,6 +11,7 @@ const PATH = {
   reportPayment: "group/reportPayments",
   updateGroupInfo: "group/updateGroup",
   updatePosition: "group/updateMemberStatus",
+  getSubscriptions: "group/plan",
 };
 
 const getMembersList = (params, start, callback, error, next) => {
@@ -92,6 +93,38 @@ const getDashboardDetails = (params, start, callback, error, next) => {
     .finally(next);
 };
 
+const getSubscriptions = (params, start, callback, error, next) => {
+  start();
+  return AdminHttpClient.get(`${PATH.getSubscriptions}`, { params })
+    .then(callback)
+    .catch(error)
+    .finally(next);
+};
+
+const createSubscriptions = (payload, start, callback, error, next) => {
+  start();
+  return AdminHttpClient.post(`${PATH.getSubscriptions}`, payload)
+    .then(callback)
+    .catch(error)
+    .finally(next);
+};
+
+const updateSubscriptions = (payload, start, callback, error, next) => {
+  start();
+  return AdminHttpClient.put(`${PATH.getSubscriptions}`, payload)
+    .then(callback)
+    .catch(error)
+    .finally(next);
+};
+
+const deleteSubscriptions = (payload, start, callback, error, next) => {
+  start();
+  return AdminHttpClient.delete(`${PATH.getSubscriptions}`, { data: payload })
+    .then(callback)
+    .catch(error)
+    .finally(next);
+};
+
 export const GroupServices = {
   getMembersList,
   getGroupInfo,
@@ -102,5 +135,9 @@ export const GroupServices = {
   getDashboardDetails,
   reportPayment,
   updateGroupInfo,
+  getSubscriptions,
+  createSubscriptions,
+  updateSubscriptions,
   updatePosition,
+  deleteSubscriptions,
 };

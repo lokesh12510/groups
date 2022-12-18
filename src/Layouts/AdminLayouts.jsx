@@ -9,6 +9,7 @@ import ManageMembers from "../Pages/Admin/ManageMembers";
 import ManageExpenses from "../Pages/Admin/ManageExpenses";
 import ManageDonation from "../Pages/Admin/ManageDonation";
 import ManageGroup from "../Pages/Admin/ManageGroup";
+import ManageSubscriptions from "../Pages/Admin/ManageSubscriptions";
 
 const AdminRoute = ({ nav = true }) => {
   const { isLoggedIn, accessToken } = useSelector((state) => state.auth); // determine if authorized, from context or however you're doing it
@@ -61,6 +62,17 @@ const AdminLayouts = () => {
         </Route>
         <Route exact path="/manage-group" element={<AdminRoute nav={false} />}>
           <Route exact path="/manage-group" element={<ManageGroup />} />
+        </Route>
+        <Route
+          exact
+          path="/manage-subscriptions"
+          element={<AdminRoute nav={false} />}
+        >
+          <Route
+            exact
+            path="/manage-subscriptions"
+            element={<ManageSubscriptions />}
+          />
         </Route>
       </Routes>
     </div>

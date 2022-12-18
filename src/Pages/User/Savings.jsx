@@ -25,7 +25,7 @@ import {
   getGroupPaymentHistory,
   getReportPayments,
 } from "../../redux/actions/GroupPaymentHistory.actions";
-import { Box} from "@mui/system";
+import { Box } from "@mui/system";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
@@ -78,12 +78,11 @@ const Savings = () => {
   const [limit, setLimit] = useState(10);
 
   // SELECTORS
-  const { paymentHistory,  filterType } = useSelector(
+  const { paymentHistory, filterType } = useSelector(
     (state) => state.groupHistory
   );
   const { currentGroupId, groupInfo } = useSelector((state) => state.groups);
   const { reportPayments } = useSelector((state) => state.groupHistory);
-
 
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -126,7 +125,7 @@ const Savings = () => {
       )
     );
     // eslint-disable-next-line
-  }, [currentGroupId, value, month, skip, limit,dispatch]);
+  }, [currentGroupId, value, month, skip, limit, dispatch]);
   // SERVICE CALL-> (USER PAYMENT LIST)
 
   const handleTabChange = (event, newValue) => {
@@ -174,7 +173,7 @@ const Savings = () => {
             gutterBottom
             className="totalAmount"
           >
-            ₹ {groupInfo?.balance}
+            ₹ {groupInfo?.totalSavings}
           </Typography>
         </div>
       </PaymentHeader>
@@ -412,7 +411,6 @@ const FilterSection = styled(Grid)({
     top: "0px",
   },
 });
-
 
 const MemberSkeleton = styled("div")({
   display: "flex",

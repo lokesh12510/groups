@@ -50,6 +50,17 @@ const Dashboard = () => {
             <CardBtn
               fullWidth
               variant="contained"
+              bg="#96007a"
+              h="130"
+              gutterBottom
+              component={Link}
+              to="/admin/manage-subscriptions"
+            >
+              Manage Subscriptions
+            </CardBtn>
+            <CardBtn
+              fullWidth
+              variant="contained"
               color="primary"
               h="180"
               bg="#3f51b5"

@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Avatar,
+  Box,
   Button,
   CardHeader,
+  CircularProgress,
   Container,
   Grid,
   InputAdornment,
@@ -27,6 +29,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { updatePosition } from "../../redux/actions/Group.actions";
+import { GroupServices } from "../../Services/GroupServices";
+import { SET_MESSAGE } from "../../redux/actionTypes";
 
 const ManageMembers = () => {
   const dispatch = useDispatch();
@@ -159,16 +163,46 @@ const ManageMembers = () => {
 export default ManageMembers;
 
 const DrawerContent = ({ handleModalClose, selectedUser }) => {
-      // eslint-disable-next-line
-  const [role, setRole] = useState("user");
+  // eslint-disable-next-line
+
   const [position, setPosition] = useState(selectedUser.position || "member");
+  const [plan, setPlan] = useState(selectedUser.plan || "member");
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [list, setList] = useState([]);
 
   const dispatch = useDispatch();
 
   const handleSubmitPayment = () => {
-    dispatch(updatePosition(selectedUser?.user?.user_id, position));
+    dispatch(updatePosition(selectedUser?.user?.user_id, position, plan));
     handleModalClose();
   };
+
+  // sideEffects
+
+  useEffect(() => {
+    GroupServices.getSubscriptions(
+      {},
+      () => {
+        setIsLoading(true);
+      },
+      (data) => {
+        console.log(data);
+        setList(data.data.data);
+      },
+      (error) => {
+        console.log(error);
+        dispatch({
+          type: SET_MESSAGE,
+          payload: { message: "", type: "error" },
+        });
+      },
+      () => {
+        setIsLoading(false);
+      }
+    );
+  }, [dispatch]);
 
   return (
     <>
@@ -199,17 +233,60 @@ const DrawerContent = ({ handleModalClose, selectedUser }) => {
               ),
             }}
           >
-            <MenuItem value="President">President</MenuItem>
-            <MenuItem value="Cashier">Cashier</MenuItem>
-            <MenuItem value="Vice President">Vice President</MenuItem>
-            <MenuItem value="Secretary">Secretary</MenuItem>
-            <MenuItem value="Joint Secretary">Joint Secretary</MenuItem>
+            <MenuItem value="president">President</MenuItem>
+            <MenuItem value="cashier">Cashier</MenuItem>
+            <MenuItem value="vice_president">Vice President</MenuItem>
+            <MenuItem value="secretary">Secretary</MenuItem>
+            <MenuItem value="joint_secretory">Joint Secretary</MenuItem>
             <MenuItem value="member">Member</MenuItem>
           </MuiTextField>
         </Grid>
+
+        {isLoading ? (
+          <>
+            <Box
+              display={"flex"}
+              justifyContent="center"
+              alignItems={"center"}
+              width="100%"
+              mb={2}
+            >
+              <CircularProgress />
+            </Box>
+          </>
+        ) : (
+          <Grid item xs={12} mb={5}>
+            <MuiTextField
+              id="plan"
+              select
+              value={plan}
+              label="Subscription"
+              placeholder="Select Subscription"
+              onChange={(e) => setPlan(e.target.value)}
+              required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EditIcon
+                      style={{ color: DefaultTheme.palette.primary.main }}
+                    />
+                  </InputAdornment>
+                ),
+              }}
+            >
+              {list.map((item, i) => {
+                return (
+                  <MenuItem value={item.planName} key={i}>
+                    {item.planName} - {item.amount}
+                  </MenuItem>
+                );
+              })}
+            </MuiTextField>
+          </Grid>
+        )}
         <Grid item xs={12}>
           <PrimaryBtn
-            disabled={position && role ? false : true}
+            disabled={position ? false : true}
             onClick={handleSubmitPayment}
           >
             Update
@@ -294,7 +371,7 @@ export const MuiTextField = styled(TextField)(({ theme }) => ({
     },
   },
   "& .MuiInputLabel-root": { color: DefaultTheme.palette.primary.main },
-  marginBottom: "30px",
+
   "&::-webkit-calendar-picker-indicator": {
     display: "none",
     "-webkit-appearance": "none",
