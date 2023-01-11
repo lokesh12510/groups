@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // Styles
 import { styled } from "@mui/material/styles";
 import {
@@ -86,18 +86,33 @@ const ChangePassword = () => {
 
   const dispatch = useDispatch();
 
+  const { p1, p2 } = useParams();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    UserServices.userUpdate(
-      {
-        password: password,
-      },
-      () => dispatch(startLoader()),
-      handleUpdateSuccess,
-      handleError,
-      () => dispatch(stopLoader())
-    );
+    if (p1 && p2) {
+      UserServices.changePassword(
+        `${p1}/${p2}`,
+        {
+          password: password,
+        },
+        () => dispatch(startLoader()),
+        handleUpdateSuccess,
+        handleResetError,
+        () => dispatch(stopLoader())
+      );
+    } else {
+      UserServices.userUpdate(
+        {
+          password: password,
+        },
+        () => dispatch(startLoader()),
+        handleUpdateSuccess,
+        handleError,
+        () => dispatch(stopLoader())
+      );
+    }
   };
 
   const handleUpdateSuccess = (data) => {
@@ -110,6 +125,13 @@ const ChangePassword = () => {
   const handleError = (error) => {
     console.log(error);
     dispatch(setMessage({ message: error.message, type: "error" }));
+  };
+
+  const handleResetError = (error) => {
+    console.log(error);
+    dispatch(
+      setMessage({ message: "Token has Expired or Invalid", type: "error" })
+    );
   };
   return (
     <Root>

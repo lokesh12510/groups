@@ -12,6 +12,7 @@ import { updateGroup } from "./redux/actions/Group.actions";
 import Privacy from "./Pages/User/Privacy";
 import Download from "./Pages/User/Download";
 import AboutUs from "./Pages/User/AboutUs";
+import Aboutus from "./Pages/User/About-us";
 
 function App() {
   const { message, type, position } = useSelector((state) => state.message);
@@ -60,6 +61,7 @@ function App() {
         />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/aboutus" element={<Aboutus />} />
         <Route path="/download" element={<Download />} />
       </Routes>
     </div>

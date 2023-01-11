@@ -2,6 +2,8 @@ import { AdminHttpClient } from "../utils/AdminhttpClient";
 import { HttpClient } from "../utils/httpClient";
 
 const PATH = {
+  resetPassword: "user/reset-password/send-invite",
+  changePassword: "user/reset-password",
   userUpdate: "user/update",
   userInfo: "/user/userInfo",
   home: "user/home",
@@ -10,6 +12,22 @@ const PATH = {
   userPayments: "user/payment",
   userContribution: "user/groupContribution",
   deletePayment: "user/deletePayment",
+};
+
+const resetPassword = (payload, start, callback, error, next) => {
+  start();
+  return AdminHttpClient.post(`${PATH.resetPassword}`, payload)
+    .then(callback)
+    .catch(error)
+    .finally(next);
+};
+
+const changePassword = (params, payload, start, callback, error, next) => {
+  start();
+  return AdminHttpClient.post(`${PATH.changePassword}/${params}`, payload)
+    .then(callback)
+    .catch(error)
+    .finally(next);
 };
 
 const userUpdate = (payload, start, callback, error, next) => {
@@ -85,4 +103,6 @@ export const UserServices = {
   userContribution,
   userPayments,
   deletePayment,
+  resetPassword,
+  changePassword,
 };
