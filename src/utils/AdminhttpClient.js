@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../Constant";
+import { logout } from "../redux/actions/Auth.actions";
 import { store } from "../redux/Store";
 
 const HEADERS = {
@@ -17,7 +18,9 @@ export const AdminHttpClient = axios.create({
 AdminHttpClient.interceptors.request.use((config) => {
   const state = store.getState();
   let token = state.auth.accessToken;
-  config.headers.Authorization = `Bearer ${token}`;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
   config.headers.group_id = state.groups.currentGroupId;
   return config;
 });
@@ -28,6 +31,13 @@ AdminHttpClient.interceptors.response.use(
   },
   (error) => {
     console.log(error);
+    if (error.response && error.respones.status) {
+      const resStatus = error.respones.status;
+      if (resStatus === 401 || resStatus === 403) {
+        store.dispatch(logout());
+        window.location.reload();
+      }
+    }
     return Promise.reject(error);
   }
 );

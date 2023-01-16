@@ -4,7 +4,7 @@ import { Button, Container, TextField, Typography } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   SET_MESSAGE,
   START_LOADER,
@@ -18,6 +18,8 @@ const ResetPassword = () => {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState(false);
 
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const handleResetPassword = () => {
@@ -30,6 +32,7 @@ const ResetPassword = () => {
       },
       (data) => {
         setStatus(true);
+        navigate("/");
         dispatch({
           type: SET_MESSAGE,
           payload: {
