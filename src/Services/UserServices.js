@@ -16,7 +16,7 @@ const PATH = {
 
 const resetPassword = (payload, start, callback, error, next) => {
   start();
-  return AdminHttpClient.post(`${PATH.resetPassword}`, payload)
+  return HttpClient.post(`${PATH.resetPassword}`, payload)
     .then(callback)
     .catch(error)
     .finally(next);
@@ -24,7 +24,7 @@ const resetPassword = (payload, start, callback, error, next) => {
 
 const changePassword = (params, payload, start, callback, error, next) => {
   start();
-  return AdminHttpClient.post(`${PATH.changePassword}/${params}`, payload)
+  return HttpClient.post(`${PATH.changePassword}/${params}`, payload)
     .then(callback)
     .catch(error)
     .finally(next);
